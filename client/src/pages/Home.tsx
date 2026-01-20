@@ -1,7 +1,10 @@
 import React from "react";
-
+import Logo from "../assets/logo/Logo.png"
+import NavigationBar from "../reusable/Navigation";
 export default function HomePage(){
     return (
-        <div>Welcome to Zylo Home Page</div>
+       <div className="min-h-screen">
+        <NavigationBar />
+       </div>
     )
 }

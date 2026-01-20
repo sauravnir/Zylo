@@ -1,5 +1,17 @@
+
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Optional: custom CSS */
+@font-face {
+    font-family : 'Estrella';
+    src : url('./assets/fonts/estrella-early.otf') format('opentype');
+    font-weight:400; 
+    font-style: normal;
+}
+
+/* Default Font */
+body {
+    font-family:'Helvetica', 'Arial', sans-serif;
+}
