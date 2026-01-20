@@ -1,11 +1,15 @@
-import {useState, useEffect} from "react"
-import './App.css'
+import React from 'react';
+import { HashRouter, Routes, Route } from "react-router-dom";
+import './index.css'
+import HomePage from './pages/Home';
 function App() {
-
-  
   return (
-    <>
-    <div className="font-extrabold">Hello World</div>  
+    <>  
+   <HashRouter>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+      </Routes>
+   </HashRouter>
     </>
   )
 }
