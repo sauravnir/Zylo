@@ -1,0 +1,23 @@
+{
+  "name": "zylo",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/sauravnir/Zylo#readme",
+  "bugs": {
+    "url": "https://github.com/sauravnir/Zylo/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sauravnir/Zylo.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "Hello World"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  }
+}
