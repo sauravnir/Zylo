@@ -14,7 +14,7 @@ const menuItems = [
 const cta = [
     {title:"INR", link:"/"},
     {title:"Search", link:"/"},
-    {title:"Cart", link:"/"}
+    {title:"Haina hola", link:"/"}
 ]
 export default function NavigationBar(){
     return (
