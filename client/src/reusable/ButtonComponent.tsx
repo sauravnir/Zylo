@@ -32,7 +32,6 @@ export const LinkDown = ({ id, offset = 0 }: ScrollButtonProps) => {
       <motion.button
         initial="rest"
         whileHover="hover"
-        
         animate="rest"
         className=" flex items-center justify-center shadow-xl"
       >
@@ -54,3 +53,56 @@ export const LinkDown = ({ id, offset = 0 }: ScrollButtonProps) => {
   );
 };
 
+interface PrimaryButtonProps {
+    name: string , 
+    isDisabled : boolean , 
+    
+}
+
+export const PrimaryButton = ({name , isDisabled}:PrimaryButtonProps) => {
+    return (
+        <Button
+            variant={"default"}
+            className="relative overflow-hidden rounded-none p-0 group border border-primary w-full"
+            asChild
+            size={"lg"}
+            disabled ={isDisabled}
+        >
+             <motion.button
+        initial="rest"
+        whileHover="hover"
+        animate="rest"
+        className=" flex items-center justify-center "
+      >
+        <span className="relative z-10 text-background text-button uppercase  transition-colors duration-300 group-hover:text-primary group-active:text-muted">{name}</span>
+        <motion.div
+          variants={{
+            rest: { x: "-100%" },
+            hover: { x: "0%" },
+          }}
+          transition={{ duration: 0.6, ease: "circOut" }}
+          className="absolute inset-0 bg-background z-0 flex items-center justify-center text-primary"
+        />
+      </motion.button>
+        </Button>
+    )
+}
+
+
+interface PaymentButtonProps {
+    name:string , 
+    isDisabled : boolean, 
+}
+
+export const PaymentButton = ({name , isDisabled}:PaymentButtonProps) => {
+    return (
+        <Button
+            variant={"default"}
+            className="relative overflow-hidden rounded-none p-0 group border border-accent w-full bg-secondary/90 hover:bg-secondary"
+            disabled ={isDisabled}
+            size={"lg"}
+        >
+             <span className="text-button uppercase text-background ">{name}</span>
+        </Button>
+    )
+}

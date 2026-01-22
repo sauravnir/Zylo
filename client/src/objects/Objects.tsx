@@ -206,7 +206,7 @@ export const PRODUCTS_LIST = [
       { name: "Sand", hex: "#D2B48C" },
       { name: "Slate", hex: "#708090" }
     ],
-    sizes: ["ONE SIZE"],
+    sizes: ["XL"],
     availability: "In Stock"
   },
   {
@@ -227,5 +227,66 @@ export const PRODUCTS_LIST = [
     ],
     sizes: ["XS", "S", "M", "L", "XL"],
     availability: "Sold Out"
+  },
+  {
+    id: "sc-16",
+    title: "Heritage Varsity Jacket",
+    category: "Outerwear",
+    price: 285,
+    primaryImage: "https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=800",
+    images: [
+      "https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=800",
+      "https://images.unsplash.com/photo-1520975954732-35dd22299614?q=80&w=800",
+      "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=800"
+    ],
+    description: "Wool-blend body with premium vegan leather sleeves. Features chenille 'C' patch and custom striped rib-knit cuffs. Interior is satin-lined with a hidden chest pocket.",
+    productCare: "Professional leather clean only. Do not wash.",
+    colors: [
+      { name: "Forest/Cream", hex: "#2D392B" },
+      { name: "Onyx/White", hex: "#1A1A1A" }
+    ],
+    sizes: ["S", "M", "L", "XL"],
+    availability: "Limited Release"
+  },
+  {
+    id: "sc-18",
+    title: "Double-Layered Mesh Shorts",
+    category: "Bottoms",
+    price: 75,
+    primaryImage: "https://images.unsplash.com/photo-1515434126000-961d90ff09db?q=80&w=800",
+    images: [
+      "https://images.unsplash.com/photo-1515434126000-961d90ff09db?q=80&w=800",
+      "https://images.unsplash.com/photo-1565041496146-12fec0b8ce8d?q=80&w=800",
+      "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?q=80&w=800"
+    ],
+    description: "Heavyweight double-layer mesh construction. Features an oversized fit, extra-long waxed drawstrings, and deep side pockets. Designed for maximum breathability.",
+    productCare: "Machine wash cold. Hang dry to maintain drawstring wax.",
+    colors: [
+      { name: "Cream", hex: "#F5F5F0" },
+      { name: "Onyx", hex: "#1A1A1A" }
+    ],
+    sizes: ["S", "M", "L", "XL"],
+    availability: "In Stock"
+  },
+  {
+    id: "sc-19",
+    title: "Symmetry Graphic Tee",
+    category: "Essentials",
+    price: 55,
+    primaryImage: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=800",
+    images: [
+      "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=800",
+      "https://images.unsplash.com/photo-1554568212-3c16f5c75051?q=80&w=800",
+      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=800"
+    ],
+    description: "300GSM heavy combed cotton. Features a high-density puff print graphic on the center chest and a small screen-printed logo on the back neck.",
+    productCare: "Wash inside out to protect print. Do not iron directly on graphic.",
+    colors: [
+      { name: "Onyx", hex: "#1A1A1A" },
+      { name: "Bone", hex: "#F5F5F0" }
+    ],
+    sizes: ["S", "M", "L", "XL", "XXL"],
+    availability: "Limited Release"
   }
+
 ];

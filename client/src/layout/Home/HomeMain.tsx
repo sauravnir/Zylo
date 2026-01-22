@@ -33,16 +33,8 @@ export function HomeMain() {
             transition={{ duration: 0.6, ease: "easeOut" }}
           >
             <ProductCard
-              title={items.title}
-              category={items.category}
-              price={items.price}
-              primaryImage={items.primaryImage}
-              images={items.images}
-              description={items.description}
-              productCare={items.productCare}
-              colors={items.colors}
-              sizes={items.sizes}
-              availability={items.availability}
+              key={items.id}
+              {...items}
             />
           </motion.div>
         ))}

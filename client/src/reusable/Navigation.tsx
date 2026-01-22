@@ -38,17 +38,17 @@ const CartSheet = () => {
     <Sheet>
       <SheetTrigger asChild>
         <Badge
-          badgeContent={2}
+          badgeContent={0}
+          showZero
           // Customizing the badge 
           sx={{
             "& .MuiBadge-badge": {
-              backgroundColor: "#d4cccc",
-              color: "#2b2b2b",
+              backgroundColor: "#f0ecec",
+              color: "#575757",
               fontSize: "12px",
               minWidth: "20px",
               height: "20px",
-              top: "4px",
-              right: "4px",
+             
             },
           }}
           className="p-2 cursor-pointer transition-all duration-300 hover:opacity-70"
@@ -177,7 +177,7 @@ const DownMenuCTA = ({ item }: { item: any }) => {
       </DropdownMenuTrigger>
       <DropdownMenuContent
         className="w-auto mt-6 p-2 border bg-card max-h-[350px] md:max-h-[250px]"
-        align="start"
+        align="end"
       >
         <motion.div
           variants={parentVariants}
@@ -226,7 +226,7 @@ const DownMenu = ({ item }: { item: any }) => {
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="w-[300px] md:w-auto mt-6 p-2 py-4 border bg-card h-auto overflow-y-hidden"
+        className="w-[200px] md:w-auto mt-6 p-2 py-4 border bg-card h-auto overflow-y-hidden"
         align="start"
       >
         <motion.div

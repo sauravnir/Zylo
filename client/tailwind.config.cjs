@@ -21,7 +21,8 @@ module.exports = {
   			main: '#2b2b2b',
   			border: '#E5E5E5',
   			card: '#fafbfc',
-  			primary: '#0c0c0c'
+  			primary: '#0c0c0c',
+			secondary:'#2E5BFF'
   		},
   		fontSize: {
   			nav: [
@@ -57,7 +58,7 @@ module.exports = {
   			h3: [
   				'clamp(1.5rem, 2vw, 1.875rem)',
   				{
-  					letterSpacing: '0.18em'
+  					letterSpacing: '0.18em', lineHeight:"2rem"
   				}
   			],
   			paragraph: [
@@ -86,6 +87,14 @@ module.exports = {
   					lineHeight: '1.5'
   				}
   			],
+			'modal-title': [
+    'clamp(1.4rem, 2.5vw, 1.5rem)', 
+    {
+        letterSpacing: '-0.04em',     
+        lineHeight: '1.1',             
+                      
+    }
+],
   			display: [
   				'clamp(4rem, 10vw, 8rem)',
   				{
