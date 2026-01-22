@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Logo from "../assets/logo/Logo.png";
+import Logo from "../assets/logo/Logo.svg";
 import { Link } from "react-router-dom";
 
 import {
@@ -27,24 +27,42 @@ import { Input } from "@/components/ui/input";
 
 import { Menu, Search, ShoppingCart, User, X, ChevronDown } from "lucide-react";
 import { motion } from "motion/react";
-import type { Variants } from "motion/react";
 
 import { menuItems, cta } from "@/objects/Objects";
+
+import { parentVariants , itemVariants } from "@/objects/Animations";
 
 // Cart Sheet
 const CartSheet = () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Badge badgeContent={0} showZero className="p-1 cursor-pointer">
-          {/* This shows on small screens (mobile) and hides on small screens and up (sm:hidden) */}
-          <ShoppingCart size={20} className="text-muted sm:hidden" />
+        <Badge
+          badgeContent={2}
+          // Customizing the badge 
+          sx={{
+            "& .MuiBadge-badge": {
+              backgroundColor: "#d4cccc",
+              color: "#2b2b2b",
+              fontSize: "12px",
+              minWidth: "20px",
+              height: "20px",
+              top: "4px",
+              right: "4px",
+            },
+          }}
+          className="p-2 cursor-pointer transition-all duration-300 hover:opacity-70"
+        >
+          {/* Mobile Icon */}
+          <ShoppingCart size={24} className="text-muted sm:hidden" />
+          {/* Desktop Text */}
+          <span className="hidden sm:block text-muted uppercase text-menu tracking-widest">
+            {cta[3].title}
+          </span>
 
-          {/* This hides on mobile and shows on small screens and up (sm:block) */}
-          <span className="hidden sm:block text-muted">{cta[3].title}</span>
         </Badge>
       </SheetTrigger>
-      <SheetContent className="py-4 bg-card" side="right">
+      <SheetContent className="py-8 bg-card" side="right">
         <SheetHeader>
           <SheetTitle className="flex items-center justify-between">
             <span className="text-base text-muted uppercase font-medium">
@@ -58,7 +76,7 @@ const CartSheet = () => {
             </SheetClose>
           </SheetTitle>
         </SheetHeader>
-        <Separator className="w-full mt-4" />
+        <Separator className="w-full mt-6" />
 
         <SheetDescription className="flex justify-center items-center h-full">
           <div className="">
@@ -72,33 +90,7 @@ const CartSheet = () => {
   );
 };
 
-// Creating Menu Entrance Animation Objects
-const parentVariants: Variants = {
-  // For Parent Container
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.3, // delay between items
-      delayChildren: 0.3, // delay before first item
-    },
-  },
-};
 
-const itemVariants: Variants = {
-  //For Each Item
-  hidden: {
-    opacity: 0,
-    y: 12,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.4,
-      ease: [0.25, 0.46, 0.45, 0.94],
-    },
-  },
-};
 
 // Mobile menu sheet
 const MobileMenuSheet = () => {
@@ -111,9 +103,9 @@ const MobileMenuSheet = () => {
 
         <SheetContent side="left" className="bg-card flex flex-col h-full py-4">
           {/* Header */}
-          <div className="flex items-center justify-start px-4">
+          <div className="flex items-center justify-start py-6 px-2">
             <SheetClose>
-              <X size={20} className="text-muted hover:text-main" />
+              <X size={24} className="text-muted hover:text-main" />
             </SheetClose>
           </div>
 
@@ -267,43 +259,42 @@ const DownMenu = ({ item }: { item: any }) => {
 // Search Bar Dropdown
 const DownSearch = ({ title }: { title: string }) => {
   const [open, setOpen] = useState(false);
-  
+
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
         <div>
-        <button className="hidden md:block text-muted uppercase text-menu hover:text-main outline-none">
-          {title}
-        </button>
-        <Search size={20} className="md:hidden lg:hidden text-muted" />
+          <button className="hidden md:block text-muted uppercase text-menu hover:text-main outline-none">
+            {title}
+          </button>
+          <Search size={24} className="md:hidden lg:hidden text-muted" />
         </div>
-        
       </DropdownMenuTrigger>
-      
-      <DropdownMenuContent 
+
+      <DropdownMenuContent
         sideOffset={20}
         className="w-screen rounded-none border-x-0 border-b border-t-0 bg-card py-8 mt-3"
       >
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: "circOut" }}
           className="flex flex-row items-center justify-between px-6 md:px-12"
         >
           <div className="flex items-center gap-4 flex-1">
-            <Search className="text-muted shrink-0" size={20}/>
-            <Input 
+            <Search className="text-muted shrink-0" size={20} />
+            <Input
               autoFocus
-              className="text-h3 uppercase placeholder:text-muted/50 border-none bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 w-full p-0 h-auto" 
+              className="text-h3 uppercase placeholder:text-muted/50 border-none bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 w-full p-0 h-auto"
               placeholder="Search here"
             />
           </div>
           {/* Close Button */}
-          <button 
-            onClick={() => setOpen(false)} 
-            className="ml-8 shrink-0"
-          >
-            <X size={20} className="text-muted hover:text-main transition-colors"/>
+          <button onClick={() => setOpen(false)} className="ml-8 shrink-0">
+            <X
+              size={20}
+              className="text-muted hover:text-main transition-colors"
+            />
           </button>
         </motion.div>
       </DropdownMenuContent>
@@ -311,10 +302,9 @@ const DownSearch = ({ title }: { title: string }) => {
   );
 };
 
-
 export default function NavigationBar() {
   return (
-    <div className="fixed w-full z-10">
+    <div className="fixed w-full z-50">
       <div className="grid grid-cols-3 items-center h-20 bg-background border px-4 md:px-14">
         {/* Logo Component */}
         <div className="hidden md:flex justify-start">
@@ -348,8 +338,7 @@ export default function NavigationBar() {
               to={item.link}
               className="uppercase hover:text-main transition-colors duration-400 ease-in-out"
             >
-
-                {/* Nested Looping to conditionally render CTA buttons */}
+              {/* Nested Looping to conditionally render CTA buttons */}
               {item.title === "Cart" ? (
                 <div className="h-full ">
                   <CartSheet />
@@ -380,7 +369,7 @@ export default function NavigationBar() {
 
           {/* Right - Search & Cart */}
           <div className="flex justify-end items-center gap-6">
-            <DownSearch title={""}/>
+            <DownSearch title={""} />
             <div className="h-full">
               <CartSheet />
             </div>
