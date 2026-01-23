@@ -50,7 +50,7 @@ export const cta = [
   },
   { title: "Search", link: "/" },
   { title: "Login", link: "/" },
-  { title: "Cart", link: "/" },
+  { title: "Cart", link: "" },
 ];
 
 // Product Items Objects 

@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "motion/react";
 
-export const CustomLoader = () => {
+interface CustomLoaderProp{
+  onFinish : ()=> void;
+}
+
+export const CustomLoader = ({ onFinish }:CustomLoaderProp ) => {
   const [loading, setLoading] = useState(100); // for text fill
   const [open, setOpen] = useState(true); // loader visibility
 
@@ -10,8 +14,8 @@ export const CustomLoader = () => {
     setTimeout(() => setLoading(70), 400);
     setTimeout(() => setLoading(40), 1400);
     setTimeout(() => setLoading(0), 2400);
-  }, []);
-
+    setTimeout(() => {onFinish()},3500);
+  }, [onFinish]);
 
   // Handle exit after loader finishes
   useEffect(() => {
