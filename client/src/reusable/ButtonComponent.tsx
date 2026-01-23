@@ -100,7 +100,7 @@ export const PaymentButton = ({name , isDisabled}:PaymentButtonProps) => {
     return (
         <Button
             variant={"default"}
-            className="relative overflow-hidden rounded-none p-0 group border border-accent w-full bg-secondary/90 hover:bg-secondary"
+            className="relative overflow-hidden rounded-none p-0 group border border-secondary w-full bg-secondary/90 hover:bg-secondary"
             disabled ={isDisabled}
             size={"lg"}
         >

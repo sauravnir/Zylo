@@ -3,6 +3,8 @@ import { LinkDown } from "@/reusable/ButtonComponent";
 import { motion } from "motion/react";
 import ProductCard from "@/reusable/CardComponent";
 import { PRODUCTS_LIST } from "@/objects/Objects";
+import { parentVariants } from "@/objects/Animations";
+import { CollectionHero } from "../layout/Home/CollectionSectionHero";
 
 export function HomeMain() {
   return (
@@ -21,7 +23,7 @@ export function HomeMain() {
         <h1 className="font-body text-main text-h2 uppercase">NEW</h1>
       </div>
 
-      <motion.div  initial="hidden" whileInView={"visible"} viewport={{once:true}} id="homecard" className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-y-4 gap-x-4 md:gap-y-10 md:gap-x-10 mt-40">
+      <motion.div variants={parentVariants} initial="hidden" whileInView={"visible"} viewport={{once:true}} id="homecard" className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-y-4 gap-x-4 md:gap-y-10 md:gap-x-10 mt-40">
         {PRODUCTS_LIST.map((items) => (
           <motion.div
             key={items.id}

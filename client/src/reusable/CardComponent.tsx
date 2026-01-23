@@ -4,8 +4,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "motion/react";
 import { Plus } from "lucide-react";
 import { itemVariants } from "@/objects/Animations";
-import ProductModal from "./ModalComponent";
+import {ProductModal} from "./ModalComponent";
+import { Link } from "react-router-dom";
 
+
+// Type casting all the object data and passing as a prop
 export interface ProductCardProps {
   id:string,
   title: string;
@@ -18,8 +21,9 @@ export interface ProductCardProps {
   colors?: {name:string,hex:string}[];
   sizes: string[];
   availability: string;
+  slug:string;
 }
-//Props is the array scattering of ProductCardProps interface 
+// Product Card Display Component 
 export function ProductCard(props: ProductCardProps) {
   // Handle Image Hover
   const hoverImage = props.images && props.images.length > 1 ? props.images[1] : props.primaryImage;
@@ -30,25 +34,26 @@ const [isOpenModal , setIsOpenModal] = useState(false);
 
   return (
     <motion.div
-        variants={itemVariants}
+        // variants={itemVariants}
         className="w-full"
     >
-         <motion.div
+      <motion.div
         initial="rest"
         whileHover="hover"
         animate="rest"
-        onMouseEnter={() => setCurrImage(hoverImage)}
-        onMouseLeave={() => setCurrImage(props.primaryImage)}
         className="cursor-pointer"
       >
         <Card className="border-none bg-transparent shadow-none rounded-none overflow-hidden ">
           <CardContent className="p-0 relative aspect-[3/4]">
-            
-            {/* Desktop Image Section */}
-            <img
+          {/* Routing to Products Page */}
+           <Link to={`/products/${props.slug}`}>
+           {/* Desktop Image Section */}
+           <img
               src={Error ? props.primaryImage : currImage}
               alt={props.title}
               className="w-full h-full object-cover hidden md:block"
+              onMouseEnter={() => setCurrImage(hoverImage)}
+              onMouseLeave={() => setCurrImage(props.primaryImage)}
               onError={() => setError(true)}
             />
 
@@ -56,7 +61,8 @@ const [isOpenModal , setIsOpenModal] = useState(false);
             <div className="block md:hidden h-full"> 
               <img src={props.primaryImage} alt={props.title} className="w-full h-full object-cover"/>
             </div>
-
+           </Link>
+            
             {/* Desktop Add to Cart (Animated via Hover Variant) */}
             {props.availability !== "Sold Out" && (
               <motion.div
@@ -82,10 +88,10 @@ const [isOpenModal , setIsOpenModal] = useState(false);
               </div>
             )}
 
-            {/* Sold Out Badge */}
+            {/* Items Availability Badge */}
             {props.availability === "Sold Out" && (
-              <div className="absolute top-4 left-4">
-                <span className="bg-muted text-white text-[10px] uppercase px-2 py-1 font-medium tracking-widest">
+              <div className="absolute top-2 left-2">
+                <span className="bg-muted text-white text-tiny uppercase px-2 py-1 font-medium tracking-widest">
                   {props.availability}
                 </span>
               </div>
@@ -103,6 +109,7 @@ const [isOpenModal , setIsOpenModal] = useState(false);
           </span>
         </div>
       </motion.div>
+
       {/* Opening the modal content */}
       <ProductModal isOpenModal={isOpenModal} isSetOpenModal={setIsOpenModal} {...props}/>
     </motion.div>

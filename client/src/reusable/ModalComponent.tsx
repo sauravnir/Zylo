@@ -8,20 +8,52 @@ import { Link } from "react-router-dom";
 
 import { motion, AnimatePresence } from "motion/react";
 import type { ProductCardProps } from "./CardComponent";
-import { X, ChevronLeft, ChevronRight, Plus, Minus } from "lucide-react";
+import { X, ChevronLeft, ChevronRight, Plus, Minus, Dot } from "lucide-react";
 import { PaymentButton, PrimaryButton } from "./ButtonComponent";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 
 // Scattering the two defined props and all the details from the ProductCardProps Component.
 interface ProductModalProps extends ProductCardProps {
   isOpenModal: boolean;
   isSetOpenModal: (open: boolean) => void;
 }
-
-export default function ProductModal({
+// Modal Component of product cards
+export function ProductModal({
   isOpenModal,
   isSetOpenModal,
   ...props
 }: ProductModalProps) {
+  return (
+    <AlertDialog open={isOpenModal} onOpenChange={isSetOpenModal}>
+      <AlertDialogContent className="max-w-4xl p-0 border-none rounded-none md:h-[85vh] max-h-[95vh] md:max-h-[700px] overflow-y-auto md:overflow-hidden ">
+        {/* Absolute Close Button */}
+        <div className="absolute right-2 top-2 md:right-4 md:top-4 z-50 group">
+          <AlertDialogCancel className="h-8 w-8 rounded-none border-none bg-card/80 backdrop-blur-sm p-0 text-muted hover:bg-transparent shadow-none group-hover:text-main">
+            <X size={20} />
+          </AlertDialogCancel>
+        </div>
+        {/* Rendering the product detail component inside the modal with custom viewMode property */}
+        <ProductDetail props={props} viewMode={"modal"} />
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+}
+
+// Type casting the required parameters
+// Adding the viewMode to toggle between the page and modal
+// Destructuring all the objects inside ProductCardProps
+interface ProductDetailProps {
+  viewMode: "modal" | "page";
+  props: ProductCardProps;
+}
+
+// Details Component of the Products
+export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
   // Handling the carousel images in the modal
   const [currSlide, setCurrSlide] = useState(0);
   // Storing the images in a variable
@@ -31,161 +63,383 @@ export default function ProductModal({
   const nextSlide = () => {
     setCurrSlide((slide) => (slide + 1) % modalImage.length);
   };
-
   const prevSlide = () => {
     setCurrSlide(
       (slide) => (slide - 1 + modalImage.length) % modalImage.length,
     );
   };
-
   const [error, setError] = useState(false);
-
   // Handling the increment and decrement of the Quantity button
   const [num, setNum] = useState(1);
   const increment = () => setNum((prev) => prev + 1);
   const decrement = () => setNum((prev) => (prev > 1 ? prev - 1 : 1));
 
-  return (
-    <AlertDialog open={isOpenModal} onOpenChange={isSetOpenModal}>
-      <AlertDialogContent className="max-w-4xl p-0 border-none rounded-none bg-card md:h-[85vh] max-h-[95vh] md:max-h-[700px] overflow-y-auto md:overflow-hidden">
-        {/* Absolute Close Button */}
-        <div className="absolute right-2 top-2 md:right-4 md:top-4 z-50 group">
-          <AlertDialogCancel className="h-8 w-8 rounded-none border-none bg-card/80 backdrop-blur-sm p-0 text-muted hover:bg-transparent shadow-none group-hover:text-main">
-            <X size={20} />
-          </AlertDialogCancel>
-        </div>
+  // Splitting the string into an array of the Description and ProductCare field
+  const descriptionPoints = props.description
+    .split(".")
+    .filter((dot) => dot.trim().length > 0);
+  const productCarePoints = props.productCare
+    .split(".")
+    .filter((dot) => dot.trim().length > 0);
 
-        <div className="flex flex-col md:flex-row w-full h-full">
-          <div className="w-full md:w-1/2 flex flex-col items-center justify-center bg-card py-10 md:py-0 group border-b md:border-b-0 ">
-            <div className="relative w-full max-w-[300px] md:max-w-[350px] aspect-[3/4] overflow-hidden">
-              <AnimatePresence mode="wait">
-                <motion.img
-                  key={currSlide}
-                  src={error ? props.primaryImage : modalImage[currSlide]}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                  transition={{ duration: 0.2 }}
-                  className="w-full h-full object-cover"
-                  onError={() => setError(true)}
-                />
-              </AnimatePresence>
-
-              {/* Arrows */}
-              {modalImage.length > 1 && (
-                <>
-                  <button
-                    onClick={prevSlide}
-                    className="absolute left-2 top-1/2 -translate-y-1/2 z-50 p-2  text-muted rounded-none opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-400 active:scale-105"
-                  >
-                    <ChevronLeft size={24} className="hover:text-background transition-colors duration-300"/>
-                  </button>
-
-                  <button
-                    onClick={nextSlide}
-                    className="absolute right-2 top-1/2 -translate-y-1/2 z-50 p-2  text-muted rounded-none opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-400 active:scale-105"
-                  >
-                    <ChevronRight size={24} className="hover:text-background transition-colors duration-300"/>
-                  </button>
-                </>
-              )}
-            </div>
-
-            {/* Dots */}
-            {modalImage.length > 1 && (
-              <div className="mt-4 flex gap-4 ">
-                {modalImage.map((_, index) => (
-                  <button
-                    key={index}
-                    onClick={() => setCurrSlide(index)}
-                    className={`h-2 rounded-full transition-all duration-300 ${
-                      currSlide === index ? "w-2 bg-main" : "w-2 bg-muted"
-                    }`}
-                  />
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* RIGHT SIDE */}
-          <div className="w-full md:w-1/2 flex flex-col p-6 md:p-10 md:overflow-y-auto">
-            <div className="space-y-8 flex-1">
-              {/* Title & Price */}
-              <div className="space-y-2">
-                <h1 className="text-main/80 uppercase  md:text-modal-title leading-tight">
-                  {props.title}
-                </h1>
-                <span className="text-muted uppercase text-base tracking-widest block">
-                  Rs. {props.price}
-                </span>
-              </div>
-
-              {/* Size Selection */}
-              <div className="space-y-4">
-                <div className="text-main text-xs uppercase tracking-widest font-medium">
-                  Select Size:
-                </div>
-                <div className="flex flex-cols gap-3 w-full">
-                  {props.sizes.map((size) => (
-                    <button
-                      key={size}
-                      className="w-full h-12 border border-border text-muted text-xs uppercase transition-all hover:border-main hover:text-main"
-                    >
-                      {size}
-                    </button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Quantity */}
-              <div className="space-y-4">
-                <div className="text-main text-xs uppercase tracking-widest font-medium">
-                  Quantity:
-                </div>
-                <div className="flex items-center border border-border w-fit">
-                  <button
-                    onClick={decrement}
-                    className="w-10 h-10 flex items-center justify-center text-muted hover:text-primary border-r border-border"
-                  >
-                    <Minus size={16} />
-                  </button>
-                  <div className="text-muted w-12 flex items-center justify-center text-sm tabular-nums">
-                    {num}
-                  </div>
-                  <button
-                    onClick={increment}
-                    className="w-10 h-10 flex items-center justify-center  text-muted hover:text-primary  border-l border-border"
-                  >
-                    <Plus size={16} />
-                  </button>
-                </div>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="pt-6 space-y-3 pb-10 md:pb-0">
-                <PrimaryButton
-                  isDisabled={props.availability === "Sold Out"}
-                  name={
-                    props.availability === "Sold Out"
-                      ? props.availability
-                      : "Add to cart"
-                  }
-                />
-                <PaymentButton isDisabled={false} name="Pay with E-sewa" />
-              </div>
-
-              {/* Optional Text  */}
-              <div className="space-y-3 text-center">
-                <Link to="/">
-                  <span className="text-muted transition-all duration-400 hover:text-main text-xs uppercase underline  ">
-                    View Details
-                  </span>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </AlertDialogContent>
-    </AlertDialog>
+  // Storing the colors and sizes in a state to render in the front
+  //Setting the default size to the first size index
+  const [productSize, setProductSize] = useState(props.sizes[0] || "");
+  const [productColor, setProductColor] = useState(
+    props.colors ? props.colors[0].name : "",
   );
-}
+
+  // Handling the image click method
+  const [clicked, isClicked] = useState(false);
+  // Handling the the zoom function
+  const [isZoomed, setIsZoomed] = useState(false);
+
+  return (
+    <div
+      className={`flex flex-col md:flex-row w-full h-full ${viewMode === "page" ? "mt-4" : "p-6 "}`}
+    >
+      <div
+        className={`w-full flex flex-col items-center bg-background group border-b md:border-b-0 
+    ${viewMode === "modal" ? "justify-center" : "justify-start py-4 md:py-10"}`}
+      >
+        {/* Product Images */}
+        <div
+          className={`relative w-full overflow-hidden ${viewMode === "modal" ? " max-w-[290px] md:max-w-[350px]  aspect-[3/4]" : "max-w-[300px] md:max-w-[400px] aspect-[3/4]"}`}
+          onClick={() => viewMode === "page" && isClicked(true)} //Allowing the click state for only page mode
+        >
+          <AnimatePresence mode="wait">
+            <motion.img
+              key={currSlide}
+              src={modalImage[currSlide]}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="w-full h-full object-cover "
+              onError={() => setError(true)}
+            />
+          </AnimatePresence>
+
+          {/* Arrow Navigation inside the image */}
+          {modalImage.length > 1 && (
+            <>
+              <button
+                onClick={prevSlide}
+                className="absolute left-2 top-1/2 -translate-y-1/2 z-5   text-muted rounded-none opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-400 active:scale-105"
+              >
+                <ChevronLeft
+                  size={32}
+                  className="hover:text-background active:text-main transition-colors duration-300"
+                />
+              </button>
+
+              <button
+                onClick={nextSlide}
+                className="absolute right-2 top-1/2 -translate-y-1/2 z-5  text-muted rounded-none opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-400 active:scale-105"
+              >
+                <ChevronRight
+                  size={32}
+                  className="hover:text-background active:text-main transition-colors duration-300"
+                />
+              </button>
+            </>
+          )}
+        </div>
+
+        {/* Dots Carousel Navigation */}
+        {viewMode === "modal" && modalImage.length > 1 && (
+          <div className="mt-8 flex gap-1.5 mb-4">
+            {modalImage.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrSlide(index)}
+                className={`h-2 rounded-full transition-all duration-300 ${
+                  currSlide === index ? "w-4 bg-primary" : "w-2 bg-muted"
+                }`}
+              />
+            ))}
+          </div>
+        )}
+
+        {/* Displaying Image Navigation at the bottom of the Carousel in Product Page */}
+        {viewMode === "page" && modalImage.length > 1 && (
+          <div className="mt-8 flex flex-wrap gap-2">
+            {modalImage.map((image, index) => {
+              const isActive = currSlide === index;
+              return (
+                <button
+                  key={index}
+                  onClick={() => setCurrSlide(index)}
+                  className={`relative w-14 h-16 overflow-hidden transition-all duration-300
+            ${isActive ? "ring-1 ring-offset-1 ring-main" : ""}`}
+                >
+                  <img
+                    src={image}
+                    alt={`Product thumbnail ${index + 1}`}
+                    className="w-full h-full object-cover"
+                    onError={() => setError(true)}
+                  />
+                </button>
+              );
+            })}
+          </div>
+        )}
+      </div>
+
+      {/* RIGHT SIDE */}
+      <div
+        className={`w-full md:max-w-xl flex flex-col ${viewMode === "modal" ? "p-4" : "p-6 md:p-10"} md:overflow-y-auto`}
+      >
+        <div className="space-y-8 flex-1">
+          {/* Title & Price */}
+          <div className="space-y-2">
+            <h1 className="text-main/80 uppercase  md:text-modal-title leading-tight">
+              {props.title}
+            </h1>
+            <span className="text-muted uppercase text-base tracking-widest block">
+              Rs. {props.price}
+            </span>
+          </div>
+
+          {/* Conditionally rendering the description , product care and colors in Product Page */}
+          {viewMode === "page" && (
+            <div className="flex flex-col space-y-6 border-t">
+              <Accordion type="single" collapsible>
+                <AccordionItem value={props.description}>
+                  <AccordionTrigger className="text-muted text-nav uppercase tracking-widest font-medium">
+                    Description
+                  </AccordionTrigger>
+                  <AccordionContent className="">
+                    <ul className="flex flex-col gap-1">
+                      {descriptionPoints.map((item) => (
+                        <li
+                          key={item}
+                          className="flex text-muted text-base items-center gap-1 "
+                        >
+                          <Dot />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value={props.productCare}>
+                  <AccordionTrigger className="text-muted text-nav uppercase tracking-widest font-medium">
+                    Product Care
+                  </AccordionTrigger>
+                  <AccordionContent>
+                    <ul className="flex flex-col gap-1">
+                      {productCarePoints.map((item) => (
+                        <li
+                          key={item}
+                          className="flex text-muted text-base items-center gap-1"
+                        >
+                          <Dot />
+                          {item}
+                        </li>
+                      ))}
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
+              </Accordion>
+              <div className="space-y-4">
+                <div className="text-main text-menu uppercase font-medium">
+                  Colors:{" "}
+                  <span className="text-muted ml-1">{productColor}</span>
+                </div>
+
+                <div className="flex flex-wrap gap-3">
+                  {props.colors?.map((color) => {
+                    const isActive = productColor === color.name;
+
+                    return (
+                      <button
+                        key={color.name}
+                        type="button"
+                        onClick={() => setProductColor(color.name)}
+                        style={{ backgroundColor: color.hex }}
+                        className={`w-8 h-8 rounded-full transition-all duration-300 relative shadow-md
+            ${
+              isActive
+                ? "ring-1 ring-offset-2 ring-main " // Selected: Ring + Scale
+                : "ring-1 ring-offset-2 ring-muted/50 hover:ring-main" // Unselected: Subtle border
+            }`}
+                      />
+                    );
+                  })}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Size Selection */}
+          <div className="space-y-4">
+            <div className="text-main text-menu uppercase font-medium">
+              Size: <span className="text-muted ml-1">{productSize}</span>
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              {props.sizes.map((size) => {
+                // Check if this specific button is the selected one
+                const isActive = productSize === size;
+                return (
+                  <button
+                    key={size}
+                    type="button" // Prevents accidental form submission
+                    onClick={() => setProductSize(size)}
+                    className={`w-10 h-10 border text-nav uppercase transition-all duration-300 flex items-center justify-center
+            ${
+              isActive
+                ? "bg-main text-white border-main shadow-sm"
+                : "border-border text-muted hover:text-white hover:bg-main "
+            }`}
+                  >
+                    {size}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Quantity */}
+          <div className="space-y-4 ">
+            <div className="text-main text-menu uppercase tracking-widest font-medium">
+              Quantity:
+            </div>
+            <div className="flex items-center border border-border w-fit">
+              <button
+                onClick={decrement}
+                className="w-10 h-10 flex items-center justify-center text-muted hover:text-white transition-all duration-300 hover:bg-main border-r border-border"
+              >
+                <Minus size={16} />
+              </button>
+              <div className="text-muted w-12 flex items-center justify-center text-sm tabular-nums">
+                {num}
+              </div>
+              <button
+                onClick={increment}
+                className="w-10 h-10 flex items-center justify-center transition-all duration-300 text-muted hover:text-white hover:bg-main border-l border-border"
+              >
+                <Plus size={16} />
+              </button>
+            </div>
+          </div>
+
+          {/* Action Buttons */}
+          <div className={` space-y-3 `}>
+            <PrimaryButton
+              isDisabled={props.availability === "Sold Out"}
+              name={
+                props.availability === "Sold Out"
+                  ? props.availability
+                  : "Add to cart"
+              }
+            />
+            <PaymentButton
+              isDisabled={props.availability === "Sold Out"}
+              name="Pay with E-sewa"
+            />
+          </div>
+
+          {/* Optional Text  */}
+          {viewMode === "modal" && (
+            <div className="space-y-2 text-center">
+              <Link to={`/products/${props.slug}`}>
+                <span className="text-muted transition-all duration-400 hover:text-main text-xs uppercase underline  ">
+                  View Details
+                </span>
+              </Link>
+            </div>
+          )}
+        </div>
+      </div>
+
+      {/* Zooming of the Image when clicked */}
+      {viewMode === "page" && (
+        <AnimatePresence>
+          {clicked && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="hidden md:flex fixed inset-0 z-[100] flex items-center justify-center bg-background backdrop-blur-md cursor-zoom-out"
+            >
+              <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-4 z-[120]">
+                {/* Previous Button */}
+                {modalImage.length > 1 && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      prevSlide();
+                    }}
+                    className="group p-2 rounded-full text-primary bg-white transition-colors duration-300 hover:scale-105"
+                  >
+                    <ChevronLeft
+                      size={24}
+                      className="group-hover:-translate-x-2 transition-translate duration-300"
+                    />
+                  </button>
+                )}
+
+                {/* Close Button */}
+                <button
+                  className="flex items-center justify-center text-main hover:rotate-90 rounded-full bg-background w-14 h-14  transition-transform duration-300"
+                  onClick={() => isClicked(false)}
+                >
+                  <Plus size={32} className="rotate-45" />
+                </button>
+
+                {/* Next Button */}
+                {modalImage.length > 1 && (
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      nextSlide();
+                    }} // Fixed to nextSlide
+                    className="group p-2 rounded-full text-primary bg-white transition-colors duration-300 hover:scale-105"
+                  >
+                    <ChevronRight
+                      size={24}
+                      className="group-hover:translate-x-2 transition-translate duration-300"
+                    />
+                  </button>
+                )}
+              </div>
+
+              {/* Fullscreen Image / Zoomed Image */}
+              <motion.img
+                key={currSlide}
+                src={modalImage[currSlide]}
+                initial={{ scale: 0.9, opacity: 0 }}
+                // Handling the zooming functionality
+                animate={{
+                  opacity:1,
+                  x: isZoomed ? undefined : 0,
+                  y : isZoomed ? undefined : 0,
+                  scale: isZoomed ? 1.9 : 1,
+                  cursor: isZoomed ? "zoom-out" : "zoom-in",
+                }}
+                drag={isZoomed}
+                dragConstraints={{
+                  left: -100,
+                  right: 300,
+                  top: -400,
+                  bottom: 400,
+                }}
+                dragElastic={0.1}
+                dragTransition={{ bounceStiffness: 600, bounceDamping: 20}}
+                exit={{ scale: 1, opacity: 0 }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsZoomed(!isZoomed);
+                }}
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                className="max-w-[90vw] max-h-[99vh] object-contain "
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      )}
+    </div>
+  );
+};

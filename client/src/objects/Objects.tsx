@@ -58,6 +58,7 @@ export const PRODUCTS_LIST = [
   {
     id: "sc-01",
     title: "Heavyweight Boxy Hoodie",
+    slug: "heavyweight-boxy-hoodie",
     category: "Core Collection",
     price: 145,
     primaryImage: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=800&auto=format&fit=crop",
@@ -78,12 +79,19 @@ export const PRODUCTS_LIST = [
   {
     id: "sc-02",
     title: "Premium Oversized Tee",
+    slug: "premium-oversized-tee",
     category: "Essentials",
     price: 65,
     primaryImage: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800&auto=format&fit=crop",
     images: [
       "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800",
-      "https://images.unsplash.com/photo-1562157873-818bc0726f68?q=80&w=800"
+      "https://images.unsplash.com/photo-1562157873-818bc0726f68?q=80&w=800",
+      "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=800",
+      "https://images.unsplash.com/photo-1509948943821-395709971944?q=80&w=800",
+      "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?q=80&w=800",
+      "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=800",
+      "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=800",
+      "https://images.unsplash.com/photo-1516762689617-e1cffcef479d?q=80&w=800"
     ],
     description: "A refined basic crafted from 280GSM organic cotton. Tight-knit neck ribbing and a clean, straight hem for a structured drape.",
     productCare: "Wash inside out. Tumble dry low. Iron on low heat if needed.",
@@ -97,6 +105,7 @@ export const PRODUCTS_LIST = [
   {
     id: "sc-03",
     title: "Tapered Cargo Trouser",
+    slug: "tapered-cargo-trouser",
     category: "Bottoms",
     price: 180,
     primaryImage: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?q=80&w=800&auto=format&fit=crop",
@@ -116,6 +125,7 @@ export const PRODUCTS_LIST = [
   {
     id: "sc-04",
     title: "Quarter-Zip Pullover",
+    slug: "quarter-zip-pullover",
     category: "Knitwear",
     price: 125,
     primaryImage: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=800&auto=format&fit=crop",
@@ -135,6 +145,7 @@ export const PRODUCTS_LIST = [
   {
     id: "sc-05",
     title: "Graphite Work Jacket",
+    slug: "graphite-work-jacket",
     category: "Outerwear",
     price: 210,
     primaryImage: "https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=800&auto=format&fit=crop",
@@ -154,6 +165,7 @@ export const PRODUCTS_LIST = [
   {
     id: "sc-06",
     title: "Relaxed French Terry Jogger",
+    slug: "relaxed-french-terry-jogger",
     category: "Bottoms",
     price: 115,
     primaryImage: "https://images.unsplash.com/photo-1552664199-fd31f7431a55?q=80&w=800&auto=format&fit=crop",
@@ -174,6 +186,7 @@ export const PRODUCTS_LIST = [
   {
     id: "sc-08",
     title: "Technical Puffer Vest",
+    slug: "technical-puffer-vest",
     category: "Outerwear",
     price: 195,
     primaryImage: "https://images.unsplash.com/photo-1604644401890-0bd678c83788?q=80&w=800&auto=format&fit=crop",
@@ -193,6 +206,7 @@ export const PRODUCTS_LIST = [
   {
     id: "sc-09",
     title: "Structured Beanie",
+    slug: "structured-beanie",
     category: "Accessories",
     price: 45,
     primaryImage: "https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?q=80&w=800&auto=format&fit=crop",
@@ -212,6 +226,7 @@ export const PRODUCTS_LIST = [
   {
     id: "sc-10",
     title: "Nylon Utility Short",
+    slug: "nylon-utility-short",
     category: "Bottoms",
     price: 90,
     primaryImage: "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?q=80&w=800&auto=format&fit=crop",
@@ -231,6 +246,7 @@ export const PRODUCTS_LIST = [
   {
     id: "sc-16",
     title: "Heritage Varsity Jacket",
+    slug: "heritage-varsity-jacket",
     category: "Outerwear",
     price: 285,
     primaryImage: "https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=800",
@@ -251,6 +267,7 @@ export const PRODUCTS_LIST = [
   {
     id: "sc-18",
     title: "Double-Layered Mesh Shorts",
+    slug: "double-layered-mesh-shorts",
     category: "Bottoms",
     price: 75,
     primaryImage: "https://images.unsplash.com/photo-1515434126000-961d90ff09db?q=80&w=800",
@@ -271,6 +288,7 @@ export const PRODUCTS_LIST = [
   {
     id: "sc-19",
     title: "Symmetry Graphic Tee",
+    slug: "symmetry-graphic-tee",
     category: "Essentials",
     price: 55,
     primaryImage: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=800",
@@ -288,7 +306,6 @@ export const PRODUCTS_LIST = [
     sizes: ["S", "M", "L", "XL", "XXL"],
     availability: "Limited Release"
   }
-
 ];
 
 export const FOOTER_LINKS = [
