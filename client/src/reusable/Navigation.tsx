@@ -90,8 +90,6 @@ const CartSheet = () => {
   );
 };
 
-
-
 // Mobile menu sheet
 const MobileMenuSheet = () => {
   return (
@@ -273,7 +271,7 @@ const DownSearch = ({ title }: { title: string }) => {
 
       <DropdownMenuContent
         sideOffset={20}
-        className="w-screen rounded-none border-x-0 border-b border-t-0 bg-card py-8 mt-3"
+        className="w-screen rounded-none border-x-0 border-b border-t-0 bg-card py-8 mt-1"
       >
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -285,7 +283,7 @@ const DownSearch = ({ title }: { title: string }) => {
             <Search className="text-muted shrink-0" size={20} />
             <Input
               autoFocus
-              className="text-h3 uppercase placeholder:text-muted/50 border-none bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 w-full p-0 h-auto"
+              className=" text-h3 uppercase placeholder:text-muted/50 border-none bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 w-full p-0 h-auto"
               placeholder="Search here"
             />
           </div>

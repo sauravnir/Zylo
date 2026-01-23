@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { motion } from "motion/react";
 import { ChevronDown } from "lucide-react";
 
+
+// LinkDown Button Component
 interface ScrollButtonProps {
   id: string;
   offset?: number;
@@ -53,12 +55,12 @@ export const LinkDown = ({ id, offset = 0 }: ScrollButtonProps) => {
   );
 };
 
+
+// Primary Button Component
 interface PrimaryButtonProps {
     name: string , 
     isDisabled : boolean , 
-    
 }
-
 export const PrimaryButton = ({name , isDisabled}:PrimaryButtonProps) => {
     return (
         <Button
@@ -74,21 +76,21 @@ export const PrimaryButton = ({name , isDisabled}:PrimaryButtonProps) => {
         animate="rest"
         className=" flex items-center justify-center "
       >
-        <span className="relative z-10 text-background text-button uppercase  transition-colors duration-300 group-hover:text-primary group-active:text-muted">{name}</span>
+        <span className="relative z-10 text-background text-button uppercase transition-colors duration-300 group-hover:text-primary group-active:text-muted">{name}</span>
         <motion.div
           variants={{
             rest: { x: "-100%" },
             hover: { x: "0%" },
           }}
           transition={{ duration: 0.6, ease: "circOut" }}
-          className="absolute inset-0 bg-background z-0 flex items-center justify-center text-primary"
+          className="absolute inset-0 bg-card z-0 flex items-center justify-center text-primary"
         />
       </motion.button>
         </Button>
     )
 }
 
-
+// Payment Button Component
 interface PaymentButtonProps {
     name:string , 
     isDisabled : boolean, 
@@ -106,3 +108,4 @@ export const PaymentButton = ({name , isDisabled}:PaymentButtonProps) => {
         </Button>
     )
 }
+

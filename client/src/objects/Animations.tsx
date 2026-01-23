@@ -5,7 +5,7 @@ export const parentVariants: Variants = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.3, // delay between items
+      staggerChildren: 0.2, // delay between items
       delayChildren: 0.3, // delay before first item
     },
   },

@@ -7,10 +7,10 @@ export default function Hero() {
   return (
     <div className="relative h-[80vh] md:h-[750px] w-full overflow-hidden bg-background">
   <motion.div
-    initial={{ opacity: 0, y: 10, filter: "blur(10px)" }}
-    whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-    viewport={{ once: true }}
-    transition={{ duration: 0.7, delay: 0.3, ease: "linear" }}
+    // initial={{ opacity: 0, y: 10, filter: "blur(10px)" }}
+    // whileInView={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+    // viewport={{ once: true }}
+    // transition={{ duration: 0.5, delay: 4, ease: "linear" }}
     className="absolute inset-0"
   >
     <video 
@@ -24,8 +24,8 @@ export default function Hero() {
     />
     <div className="absolute inset-0 bg-black/60" />
   </motion.div>
-
-  <motion.div
+{/* Hero Zylo Logo */}
+  {/* <motion.div
     initial={{ opacity: 0, scale: 0.9 }}
     animate={{ opacity: 1, scale: 1 }}
     transition={{ duration: 0.7, delay: 0.8 }}
@@ -36,7 +36,7 @@ export default function Hero() {
       alt="LogoWhite"
       className="w-48 md:w-72 h-auto object-contain"
     />
-  </motion.div>
+  </motion.div> */}
 
 </div>
   );

@@ -290,3 +290,35 @@ export const PRODUCTS_LIST = [
   }
 
 ];
+
+export const FOOTER_LINKS = [
+  {
+    title: "Help",
+    links: [
+      { name: "Shipping", href: "/" },
+      { name: "Returns", href: "/" },
+      { name: "FAQs", href: "/" },
+      { name: "Terms and Condition", href: "/" },
+      { name: "Privacy Policy", href: "/" },
+    ],
+  },
+  {
+    title: "More",
+    links: [
+      { name: "Early Access", href: "/" },
+      { name: "Contact Us", href: "/" },
+      { name: "Blog", href: "/" },
+      { name: "New", href: "/" },
+      { name: "Best Seller", href: "/" },
+      { name: "Shop All", href: "/" },
+    ],
+  },
+  {
+    title: "Socials",
+    links: [
+      { name: "Instagram", href: "https://www.instagram.com/zylo.studios/" },
+      { name: "Facebook", href: "/" },
+      { name: "YouTube", href: "/" },
+    ],
+  },
+];

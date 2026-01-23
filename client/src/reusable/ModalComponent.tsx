@@ -3,8 +3,6 @@ import {
   AlertDialog,
   AlertDialogContent,
   AlertDialogCancel,
-  AlertDialogHeader,
-  AlertDialogDescription,
 } from "@/components/ui/alert-dialog";
 import { Link } from "react-router-dom";
 
@@ -177,7 +175,7 @@ export default function ProductModal({
               </div>
 
               {/* Optional Text  */}
-              <div className="space-y-3">
+              <div className="space-y-3 text-center">
                 <Link to="/">
                   <span className="text-muted transition-all duration-400 hover:text-main text-xs uppercase underline  ">
                     View Details

@@ -65,7 +65,7 @@ module.exports = {
   				'clamp(1rem, 1.2vw, 1.125rem)',
   				{
   					letterSpacing: '0em',
-  					lineHeight: '1.7'
+  					lineHeight: '1.1'
   				}
   			],
   			tiny: [

@@ -4,6 +4,7 @@ import { motion } from "motion/react";
 import ProductCard from "@/reusable/CardComponent";
 import { PRODUCTS_LIST } from "@/objects/Objects";
 import { parentVariants } from "@/objects/Animations";
+import { CollectionHero } from "./CollectionSection";
 
 export function HomeMain() {
   return (
@@ -14,7 +15,7 @@ export function HomeMain() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, delay: 1.3 }}
         >
-          <LinkDown id="card" />
+          <LinkDown id="homecard" />
         </motion.div>
       </div>
 
@@ -22,7 +23,7 @@ export function HomeMain() {
         <h1 className="font-body text-main text-h2 uppercase">NEW</h1>
       </div>
 
-      <motion.div variants={parentVariants} initial="hidden" whileInView={"visible"} viewport={{once:true}} id="card" className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-y-10 gap-x-10 mt-40">
+      <motion.div variants={parentVariants} initial="hidden" whileInView={"visible"} viewport={{once:true}} id="homecard" className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-y-4 gap-x-4 md:gap-y-10 md:gap-x-10 mt-40">
         {PRODUCTS_LIST.map((items) => (
           <motion.div
             key={items.id}
@@ -31,7 +32,8 @@ export function HomeMain() {
               visible: { opacity: 1, y: 0 },
             }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-          >
+          > 
+          {/* Rendering the product card - NEW CARD */}
             <ProductCard
               key={items.id}
               {...items}
@@ -39,6 +41,9 @@ export function HomeMain() {
           </motion.div>
         ))}
       </motion.div>
+
+        
+
     </div>
   );
 }
