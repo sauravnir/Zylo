@@ -12,10 +12,10 @@ export function Footer (){
     <div className="relative overflow-hidden bg-muted/15 z-40 border">
         <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 w-full py-6 md:py-14 px-2 md:px-10">
             {/* CTA Section  */}
-            <div className="flex flex-col space-y-6 px-4">
+            <div className="flex flex-col space-y-6 p-2">
                 <h1 className="text-main text-menu font-normal uppercase ">Newsletter</h1>
                 <p className="text-muted text-menu ">Sign up to our newsletter for early access to releases and more.</p>
-                <div className="pr-6 space-y-6">
+                <div className=" space-y-6">
                 <Input  
               className="text-menu placeholder:text-muted border border-muted/50 bg-transparent focus:bg-background focus:border-main rounded-none focus-visible:ring-0 focus-visible:ring-offset-0 w-full p-3 px-4"
               placeholder="E-mail"

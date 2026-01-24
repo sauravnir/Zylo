@@ -17,6 +17,8 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 
+import { Cursor } from "./Cursor";
+
 // Scattering the two defined props and all the details from the ProductCardProps Component.
 interface ProductModalProps extends ProductCardProps {
   isOpenModal: boolean;
@@ -49,7 +51,8 @@ export function ProductModal({
 // Destructuring all the objects inside ProductCardProps
 interface ProductDetailProps {
   viewMode: "modal" | "page";
-  props: ProductCardProps;
+  props: ProductCardProps; 
+
 }
 
 // Details Component of the Products
@@ -94,19 +97,43 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
   // Handling the the zoom function
   const [isZoomed, setIsZoomed] = useState(false);
 
+  // Handling the custom cursor
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const [isHovering, setIsHovering] = useState(false);
+  console.log(mousePos);
   return (
     <div
-      className={`flex flex-col md:flex-row w-full h-full ${viewMode === "page" ? "mt-4" : "p-6 "}`}
+      className={`flex flex-col md:flex-row w-full h-full ${viewMode === "page" ? "mt-4" : "p-6"}`}
     >
       <div
         className={`w-full flex flex-col items-center bg-background group border-b md:border-b-0 
     ${viewMode === "modal" ? "justify-center" : "justify-start py-4 md:py-10"}`}
       >
-        {/* Product Images */}
         <div
-          className={`relative w-full overflow-hidden ${viewMode === "modal" ? " max-w-[290px] md:max-w-[350px]  aspect-[3/4]" : "max-w-[300px] md:max-w-[400px] aspect-[3/4]"}`}
-          onClick={() => viewMode === "page" && isClicked(true)} //Allowing the click state for only page mode
+          className={`relative w-full overflow-hidden ${
+            viewMode === "modal"
+              ? "max-w-[290px] md:max-w-[350px] aspect-[3/4]"
+              : "max-w-[360px] md:max-w-[400px] aspect-[3/4] cursor-none"
+          }`}
+          // Zoom image in the page
+          onClick={() => viewMode === "page" && isClicked(true)}
+          // Hide default cursor on Modal
+          onMouseMove={(e) => {
+            if (viewMode === "page") {
+              setMousePos({ x: e.clientX, y: e.clientY });
+            }
+          }}
+          onMouseEnter={() => viewMode === "page" && setIsHovering(true)}
+          onMouseLeave={() => setIsHovering(false)}
         >
+          {/* Custom Cursor Overlaying the Div */}
+          <AnimatePresence >
+            {isHovering && viewMode === "page" && (
+              <Cursor x={mousePos.x} y={mousePos.y} />
+            )}
+          </AnimatePresence>
+
+          {/* Images */}
           <AnimatePresence mode="wait">
             <motion.img
               key={currSlide}
@@ -115,17 +142,20 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
-              className="w-full h-full object-cover "
+              className="w-full h-full object-cover"
               onError={() => setError(true)}
             />
           </AnimatePresence>
 
-          {/* Arrow Navigation inside the image */}
-          {modalImage.length > 1 && (
+          {/* 3. MODAL NAVIGATION */}
+          {viewMode === "modal" && modalImage.length > 1 && (
             <>
               <button
-                onClick={prevSlide}
-                className="absolute left-2 top-1/2 -translate-y-1/2 z-5   text-muted rounded-none opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-400 active:scale-105"
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent the click from bubbling to the parent div
+                  prevSlide();
+                }}
+                className="absolute left-2 top-1/2 -translate-y-1/2 z-10 text-muted rounded-none opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-400 active:scale-105"
               >
                 <ChevronLeft
                   size={32}
@@ -134,8 +164,11 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
               </button>
 
               <button
-                onClick={nextSlide}
-                className="absolute right-2 top-1/2 -translate-y-1/2 z-5  text-muted rounded-none opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-400 active:scale-105"
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent the click from bubbling to the parent div
+                  nextSlide();
+                }}
+                className="absolute right-2 top-1/2 -translate-y-1/2 z-10 text-muted rounded-none opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-400 active:scale-105"
               >
                 <ChevronRight
                   size={32}
@@ -147,8 +180,8 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
         </div>
 
         {/* Dots Carousel Navigation */}
-        {viewMode === "modal" && modalImage.length > 1 && (
-          <div className="mt-8 flex gap-1.5 mb-4">
+        {modalImage.length > 1 && (
+          <div className={`${viewMode === "page" && "block md:hidden"} mt-8 flex gap-1.5 mb-4`}>
             {modalImage.map((_, index) => (
               <button
                 key={index}
@@ -163,7 +196,7 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
 
         {/* Displaying Image Navigation at the bottom of the Carousel in Product Page */}
         {viewMode === "page" && modalImage.length > 1 && (
-          <div className="mt-8 flex flex-wrap gap-2">
+          <div className="hidden md:flex mt-4 flex flex-wrap gap-2">
             {modalImage.map((image, index) => {
               const isActive = currSlide === index;
               return (
@@ -184,19 +217,20 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
             })}
           </div>
         )}
+ 
       </div>
 
       {/* RIGHT SIDE */}
       <div
-        className={`w-full md:max-w-xl flex flex-col ${viewMode === "modal" ? "p-4" : "p-6 md:p-10"} md:overflow-y-auto`}
+        className={`w-full md:max-w-xl flex flex-col ${viewMode === "modal" ? "p-4" : "pt-8 md:p-10"} md:overflow-y-auto`}
       >
         <div className="space-y-8 flex-1">
           {/* Title & Price */}
-          <div className="space-y-2">
-            <h1 className="text-main/80 uppercase  md:text-modal-title leading-tight">
+          <div className="space-y-4">
+            <h1 className="text-main uppercase text-modal-title tracking-widest">
               {props.title}
             </h1>
-            <span className="text-muted uppercase text-base tracking-widest block">
+            <span className="text-main/70 uppercase text-paragraph tracking-narrow block">
               Rs. {props.price}
             </span>
           </div>
@@ -342,8 +376,9 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
           </div>
 
           {/* Optional Text  */}
-          {viewMode === "modal" && (
-            <div className="space-y-2 text-center">
+          <div className="flex flex-col md:flex-row justify-center space-y-2 p-0 ">
+               {viewMode === "modal" && (
+            <div className="text-center">
               <Link to={`/products/${props.slug}`}>
                 <span className="text-muted transition-all duration-400 hover:text-main text-xs uppercase underline  ">
                   View Details
@@ -351,6 +386,11 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
               </Link>
             </div>
           )}
+
+          {/* Optional Close Button */}
+          
+          </div>
+         
         </div>
       </div>
 
@@ -362,7 +402,7 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="hidden md:flex fixed inset-0 z-[100] flex items-center justify-center bg-background backdrop-blur-md cursor-zoom-out"
+              className="fixed inset-0 z-[100] flex items-center justify-center bg-background backdrop-blur-md cursor-zoom-out"
             >
               <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex items-center gap-4 z-[120]">
                 {/* Previous Button */}
@@ -413,9 +453,9 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
                 initial={{ scale: 0.9, opacity: 0 }}
                 // Handling the zooming functionality
                 animate={{
-                  opacity:1,
+                  opacity: 1,
                   x: isZoomed ? undefined : 0,
-                  y : isZoomed ? undefined : 0,
+                  y: isZoomed ? undefined : 0,
                   scale: isZoomed ? 1.9 : 1,
                   cursor: isZoomed ? "zoom-out" : "zoom-in",
                 }}
@@ -427,7 +467,7 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
                   bottom: 400,
                 }}
                 dragElastic={0.1}
-                dragTransition={{ bounceStiffness: 600, bounceDamping: 20}}
+                dragTransition={{ bounceStiffness: 600, bounceDamping: 20 }}
                 exit={{ scale: 1, opacity: 0 }}
                 onClick={(e) => {
                   e.stopPropagation();
