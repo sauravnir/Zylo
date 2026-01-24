@@ -20,7 +20,6 @@ export function HomeMain() {
       <div className="flex flex-col text-center">
         <h1 className="font-body text-main text-h2 uppercase">NEW</h1>
       </div>
-
       <motion.div  initial="hidden" whileInView={"visible"} viewport={{once:true}} id="homecard" className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-y-2 gap-x-4 md:gap-y-10 md:gap-x-10 mt-20 md:mt-40">
         {PRODUCTS_LIST.map((items) => (
           <motion.div
@@ -39,9 +38,6 @@ export function HomeMain() {
           </motion.div>
         ))}
       </motion.div>
-
-        
-
     </div>
   );
 }

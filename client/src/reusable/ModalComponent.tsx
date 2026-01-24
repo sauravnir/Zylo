@@ -16,8 +16,15 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
+// Importing Custom cursor
 import { Cursor } from "./Cursor";
+
+// Importing Redux Toolkits essentials 
+
+import { addItem } from "@/store/slices/cartSlice";
+import { useDispatch } from "react-redux";
+
+
 
 // Scattering the two defined props and all the details from the ProductCardProps Component.
 interface ProductModalProps extends ProductCardProps {
@@ -57,6 +64,7 @@ interface ProductDetailProps {
   props: ProductCardProps; 
 
 }
+
 
 // Details Component of the Products
 export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
@@ -103,7 +111,16 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
   // Handling the custom cursor
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
-  console.log(mousePos);
+  
+
+  // initializing the useDispatch() function
+  const dispatch = useDispatch();
+  // Handling the clicking of the button
+  // Adding items to the store using useDispatch
+  const addCartItems = () =>{
+    dispatch(addItem({product : props , size : productSize} ))
+  }
+
   return (
     <div
       className={`flex flex-col md:flex-row w-full h-full ${viewMode === "page" ? "mt-4" : "p-6"}`}
@@ -362,6 +379,7 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
             </div>
           </div>
 
+{/* Implementing Redux Function to add the product value to the redux store */}
           {/* Action Buttons */}
           <div className={` space-y-3 `}>
             <PrimaryButton
@@ -371,6 +389,7 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
                   ? props.availability
                   : "Add to cart"
               }
+              onClick={addCartItems}
             />
             <PaymentButton
               isDisabled={props.availability === "Sold Out"}

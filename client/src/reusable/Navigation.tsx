@@ -32,63 +32,7 @@ import { menuItems, cta } from "@/objects/Objects";
 
 import { parentVariants , itemVariants } from "@/objects/Animations";
 
-// Cart Sheet
-const CartSheet = () => {
-  return (
-    <Sheet>
-      <SheetTrigger asChild>
-        <Badge
-          badgeContent={0}
-          showZero
-          // Customizing the badge 
-          sx={{
-            "& .MuiBadge-badge": {
-              backgroundColor: "#f0ecec",
-              color: "#575757",
-              fontSize: "12px",
-              minWidth: "20px",
-              height: "20px",
-             
-            },
-          }}
-          className="p-2 cursor-pointer transition-all duration-300 hover:opacity-70"
-        >
-          {/* Mobile Icon */}
-          <ShoppingCart size={24} className="text-muted sm:hidden" />
-          {/* Desktop Text */}
-          <span className="hidden sm:block text-muted uppercase text-menu tracking-widest">
-            {cta[3].title}
-          </span>
-
-        </Badge>
-      </SheetTrigger>
-      <SheetContent className="py-8 bg-card" side="right">
-        <SheetHeader>
-          <SheetTitle className="flex items-center justify-between">
-            <span className="text-base text-muted uppercase font-medium">
-              Cart
-            </span>
-
-            <SheetClose className="flex items-center">
-              <button>
-                <X size={20} className="text-muted hover:text-main" />
-              </button>
-            </SheetClose>
-          </SheetTitle>
-        </SheetHeader>
-        <Separator className="w-full mt-6" />
-
-        <SheetDescription className="flex justify-center items-center h-full">
-          <div className="">
-            <span className="font-body text-muted text-menu uppercase">
-              Your cart is empty
-            </span>
-          </div>
-        </SheetDescription>
-      </SheetContent>
-    </Sheet>
-  );
-};
+import { CartSheet } from "./Cart";
 
 // Mobile menu sheet
 const MobileMenuSheet = () => {

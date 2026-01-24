@@ -27,7 +27,7 @@ export const LinkDown = ({ id, offset = 0 }: ScrollButtonProps) => {
   return (
     <Button
       variant="outline"
-      className="relative overflow-hidden rounded-full w-14 h-14 p-0 group border-muted "
+      className="relative  overflow-hidden rounded-full w-14 h-14 p-0 group border-muted "
       asChild
       onClick={scrollToSection}
     >
@@ -35,11 +35,11 @@ export const LinkDown = ({ id, offset = 0 }: ScrollButtonProps) => {
         initial="rest"
         whileHover="hover"
         animate="rest"
-        className=" flex items-center justify-center shadow-xl"
+        className=" flex items-center justify-center shadow-xl border-none "
       >
         <ChevronDown
           strokeWidth={1.5}
-          className="relative z-10 text-muted transition-colors duration-300 group-hover:text-white group-active:text-muted"
+          className="relative z-10 text-muted border-none transition-colors duration-300 group-hover:text-white group-active:text-muted"
         />
         <motion.div
           variants={{
@@ -48,7 +48,7 @@ export const LinkDown = ({ id, offset = 0 }: ScrollButtonProps) => {
             click:{y:"0%"}
           }}
           transition={{ duration: 0.5, ease: "circOut" }}
-          className="absolute inset-0 bg-primary z-0 flex items-center justify-center"
+          className="absolute inset-0 border-none bg-primary z-0 flex items-center justify-center"
         />
       </motion.button>
     </Button>
@@ -60,8 +60,9 @@ export const LinkDown = ({ id, offset = 0 }: ScrollButtonProps) => {
 interface PrimaryButtonProps {
     name: string , 
     isDisabled : boolean , 
+    onClick : ()=>void ;
 }
-export const PrimaryButton = ({name , isDisabled}:PrimaryButtonProps) => {
+export const PrimaryButton = ({name , isDisabled , onClick}:PrimaryButtonProps) => {
     return (
         <Button
             variant={"default"}
@@ -69,6 +70,7 @@ export const PrimaryButton = ({name , isDisabled}:PrimaryButtonProps) => {
             asChild
             size={"lg"}
             disabled ={isDisabled}
+            onClick={onClick}
         >
              <motion.button
         initial="rest"
