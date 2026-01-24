@@ -32,15 +32,18 @@ export function ProductModal({
 }: ProductModalProps) {
   return (
     <AlertDialog open={isOpenModal} onOpenChange={isSetOpenModal}>
-      <AlertDialogContent className="max-w-4xl p-0 border-none rounded-none md:h-[85vh] max-h-[95vh] md:max-h-[700px] overflow-y-auto md:overflow-hidden ">
+      <AlertDialogContent className="max-w-4xl p-0 border-none rounded-none md:h-[85vh] max-h-[85vh] md:max-h-[700px] overflow-y-auto md:overflow-hidden ">
         {/* Absolute Close Button */}
-        <div className="absolute right-2 top-2 md:right-4 md:top-4 z-50 group">
-          <AlertDialogCancel className="h-8 w-8 rounded-none border-none bg-card/80 backdrop-blur-sm p-0 text-muted hover:bg-transparent shadow-none group-hover:text-main">
-            <X size={20} />
+        <div className="absolute right-2 top-2 md:right-4 md:top-4 z-50 group ">
+          <AlertDialogCancel className="h-8 w-8 rounded-none border-none bg-card/80 backdrop-blur-sm p-0 text-muted hover:bg-transparent shadow-none group-hover:text-main ">
+            <X size={24} />
           </AlertDialogCancel>
         </div>
         {/* Rendering the product detail component inside the modal with custom viewMode property */}
+        <div className="py-4 md:p-0 w-full h-full">
+
         <ProductDetail props={props} viewMode={"modal"} />
+        </div>
       </AlertDialogContent>
     </AlertDialog>
   );
@@ -155,11 +158,11 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
                   e.stopPropagation(); // Prevent the click from bubbling to the parent div
                   prevSlide();
                 }}
-                className="absolute left-2 top-1/2 -translate-y-1/2 z-10 text-muted rounded-none opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-400 active:scale-105"
+                className="absolute left-2 top-1/2 -translate-y-1/2 z-10 text-primary bg-white w-6 h-6 flex items-center justify-center rounded-full opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-400 active:scale-105"
               >
                 <ChevronLeft
-                  size={32}
-                  className="hover:text-background active:text-main transition-colors duration-300"
+                  size={14}
+                  className="hover:text-muted active:text-main hover:-translate-x-2 transition-all duration-300"
                 />
               </button>
 
@@ -168,11 +171,11 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
                   e.stopPropagation(); // Prevent the click from bubbling to the parent div
                   nextSlide();
                 }}
-                className="absolute right-2 top-1/2 -translate-y-1/2 z-10 text-muted rounded-none opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-400 active:scale-105"
+                className="absolute right-2 top-1/2 -translate-y-1/2 z-10 text-primary bg-white w-6 h-6 flex items-center justify-center rounded-full opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-400 active:scale-105"
               >
                 <ChevronRight
-                  size={32}
-                  className="hover:text-background active:text-main transition-colors duration-300"
+                  size={14}
+                  className="hover:text-muted active:text-main hover:translate-x-2 transition-all duration-300"
                 />
               </button>
             </>
