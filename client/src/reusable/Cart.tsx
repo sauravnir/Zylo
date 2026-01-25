@@ -92,7 +92,7 @@ export const CartSheet = () => {
           className="p-2 cursor-pointer transition-all duration-300 hover:opacity-70"
         >
           {/* Mobile Icon */}
-          <ShoppingCart size={16} className="text-muted sm:hidden" />
+          <ShoppingCart size={24} className="text-muted sm:hidden" />
 
           {/* Desktop Text */}
           <span className="hidden sm:block text-muted uppercase text-menu tracking-widest leading-none">
@@ -203,7 +203,7 @@ export const CartSheet = () => {
                       animate={{ height: "auto", opacity: 1 }}
                       exit={{ height: 0, opacity: 0 }}
                       transition={{ duration: 0.3, ease: "easeInOut" }}
-                      className="overflow-hidden flex flex-col gap-3 pb-4 border-b "
+                      className="overflow-hidden flex flex-col gap-3 pb-4 "
                     >
                       <textarea
                         autoFocus

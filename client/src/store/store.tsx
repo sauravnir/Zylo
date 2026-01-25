@@ -1,6 +1,6 @@
 import {configureStore} from "@reduxjs/toolkit"
 import cartReducer from "./slices/cartSlice" 
-import {loadLocalCart , storeLocalCart} from "./slices/cartStorage"
+import {loadLocalCart , storeLocalCart} from "./storage/cartStorage"
 
 // Pre-storing the localStorage data inside the store / Persisted State storage
 
