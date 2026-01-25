@@ -21,7 +21,7 @@ export function Footer (){
               placeholder="E-mail"
               />
 
-              <PrimaryButton isDisabled={false} name="Subscribe" />
+              <PrimaryButton onClick={()=>console.log("")} isDisabled={false} name="Subscribe" />
             </div>
             </div>
 
@@ -49,11 +49,10 @@ export function Footer (){
                     </ul>
                 </div>
             ))}
-
-            {/* Bottom Section */}
-            <div className="flex flex-row items-center md:items-start px-4 mt-14">
-                <span className="flex gap-2 text-menu items-center text-muted uppercase "><Copyright size={12}/>{new Date().getFullYear()} - zylo</span>
-            </div>
         </div>
+            {/* Bottom Section */}
+          <div className="flex flex-row items-center md:items-start px-12 mt-2 pb-4 ">
+                <span className="flex gap-2 text-menu items-center text-muted uppercase "><Copyright size={12}/>{new Date().getFullYear()} - zylo </span>
+            </div>
     </div>)
 }

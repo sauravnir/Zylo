@@ -52,6 +52,16 @@ export const CartSheet = () => {
     }
   }, [noteCart]);
 
+
+  // Setting timeout after removing an item for
+//  const [removed , setRemoved] = useState(false);
+//   const handleRemoveItem = async () => {
+//     setRemoved(true);
+//     await new Promise((resolve)=>setTimeout(resolve , 500))
+//     dispatch(removeItem(slug:))
+
+//   }
+  
  // Handling the Hydration Error. The server tries to render a blank cart but the client is finding items in LocalStorage which causes a data mismatch.
   const [isMounted , setIsMounted] = useState(false);
   useEffect(()=>{
@@ -190,7 +200,7 @@ export const CartSheet = () => {
                   className="flex w-32"
                   onClick={() => setNoteCart(!noteCart)}
                 >
-                  <span className="font-medium text-product-title tracking-normal text-main/75 hover:text-main/50 transition-colors duration-300">
+                  <span className="mb-4 font-medium text-product-title tracking-normal text-main/75 hover:text-main/50 transition-colors duration-300">
                     {noteCart ? "Close note" : "Add order note"}
                   </span>
                 </button>

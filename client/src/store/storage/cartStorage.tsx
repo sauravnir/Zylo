@@ -12,7 +12,6 @@ export const loadLocalCart = () => {
     }
 };
 
-
 // Storing the cart data to localStorage
 export const storeLocalCart = (state : any) => {
     try {
