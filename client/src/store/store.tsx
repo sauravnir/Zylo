@@ -1,11 +1,30 @@
 import {configureStore} from "@reduxjs/toolkit"
-import cartReducer from "./slices/cartSlice"
+import cartReducer from "./slices/cartSlice" 
+import {loadLocalCart , storeLocalCart} from "./slices/cartStorage"
+
+// Pre-storing the localStorage data inside the store / Persisted State storage
+
+const preCartData = loadLocalCart();
+
 // Creating a global store
 export const store  = configureStore({
     reducer : {
         // The counter comes from the counterSlice comp 
         cart : cartReducer,
-     }
+     },
+    //  Hydrating the data inside the Cart Slice
+     preloadedState : {
+        cart : preCartData
+     },
+});
+
+// Saving the changes to the localStorage whenever the cart changes 
+store.subscribe(()=>{
+    storeLocalCart({
+        items: store.getState().cart.items, 
+        totalItems : store.getState().cart.totalItems,
+        orderNote : store.getState().cart.orderNote
+    })
 })
 
 // Creating default types from the store

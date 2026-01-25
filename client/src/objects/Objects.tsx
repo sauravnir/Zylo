@@ -50,7 +50,7 @@ export const cta = [
   },
   { title: "Search", link: "/" },
   { title: "Login", link: "/" },
-  { title: "Cart", link: "" },
+  { title: "Cart", link: "#" },
 ];
 
 // Product Items Objects 
@@ -61,7 +61,6 @@ export const PRODUCTS_LIST = [
     slug: "heavyweight-boxy-hoodie",
     category: "Core Collection",
     price: 145,
-    quantity: 1, 
     primaryImage: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=800&auto=format&fit=crop",
     images: [
       "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=800",
@@ -83,7 +82,6 @@ export const PRODUCTS_LIST = [
     slug: "premium-oversized-tee",
     category: "Essentials",
     price: 65,
-    quantity: 1, // Added
     primaryImage: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800&auto=format&fit=crop",
     images: [
       "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800",
@@ -110,7 +108,6 @@ export const PRODUCTS_LIST = [
     slug: "tapered-cargo-trouser",
     category: "Bottoms",
     price: 180,
-    quantity: 1, // Added
     primaryImage: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?q=80&w=800&auto=format&fit=crop",
     images: [
       "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?q=80&w=800",
@@ -131,7 +128,6 @@ export const PRODUCTS_LIST = [
     slug: "quarter-zip-pullover",
     category: "Knitwear",
     price: 125,
-    quantity: 1, // Added
     primaryImage: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=800&auto=format&fit=crop",
     images: [
       "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=800",
@@ -152,7 +148,6 @@ export const PRODUCTS_LIST = [
     slug: "graphite-work-jacket",
     category: "Outerwear",
     price: 210,
-    quantity: 1, // Added
     primaryImage: "https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=800&auto=format&fit=crop",
     images: [
       "https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=800",
@@ -173,7 +168,6 @@ export const PRODUCTS_LIST = [
     slug: "relaxed-french-terry-jogger",
     category: "Bottoms",
     price: 115,
-    quantity: 1, // Added
     primaryImage: "https://images.unsplash.com/photo-1552664199-fd31f7431a55?q=80&w=800&auto=format&fit=crop",
     images: [
       "https://images.unsplash.com/photo-1552664199-fd31f7431a55?q=80&w=800",
@@ -195,7 +189,6 @@ export const PRODUCTS_LIST = [
     slug: "technical-puffer-vest",
     category: "Outerwear",
     price: 195,
-    quantity: 1, // Added
     primaryImage: "https://images.unsplash.com/photo-1604644401890-0bd678c83788?q=80&w=800&auto=format&fit=crop",
     images: [
       "https://images.unsplash.com/photo-1604644401890-0bd678c83788?q=80&w=800",
@@ -216,7 +209,6 @@ export const PRODUCTS_LIST = [
     slug: "structured-beanie",
     category: "Accessories",
     price: 45,
-    quantity: 1, // Added
     primaryImage: "https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?q=80&w=800&auto=format&fit=crop",
     images: [
       "https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?q=80&w=800"
@@ -237,7 +229,6 @@ export const PRODUCTS_LIST = [
     slug: "nylon-utility-short",
     category: "Bottoms",
     price: 90,
-    quantity: 1, // Added
     primaryImage: "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?q=80&w=800&auto=format&fit=crop",
     images: [
       "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?q=80&w=800",
@@ -258,7 +249,6 @@ export const PRODUCTS_LIST = [
     slug: "heritage-varsity-jacket",
     category: "Outerwear",
     price: 285,
-    quantity: 1, // Added
     primaryImage: "https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=800",
     images: [
       "https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=800",
@@ -280,7 +270,6 @@ export const PRODUCTS_LIST = [
     slug: "double-layered-mesh-shorts",
     category: "Bottoms",
     price: 75,
-    quantity: 1, // Added
     primaryImage: "https://images.unsplash.com/photo-1515434126000-961d90ff09db?q=80&w=800",
     images: [
       "https://images.unsplash.com/photo-1515434126000-961d90ff09db?q=80&w=800",
@@ -302,7 +291,6 @@ export const PRODUCTS_LIST = [
     slug: "symmetry-graphic-tee",
     category: "Essentials",
     price: 55,
-    quantity: 1, // Added
     primaryImage: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=800",
     images: [
       "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=800",

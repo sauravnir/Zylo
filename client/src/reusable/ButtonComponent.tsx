@@ -2,8 +2,9 @@ import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { motion } from "motion/react";
 import { ChevronDown } from "lucide-react";
-
-
+import { useSelector } from "react-redux";
+import type { RootState } from "@/store/store";
+import { CircularProgress } from "@mui/material";
 // LinkDown Button Component
 interface ScrollButtonProps {
   id: string;
@@ -63,22 +64,30 @@ interface PrimaryButtonProps {
     onClick : ()=>void ;
 }
 export const PrimaryButton = ({name , isDisabled , onClick}:PrimaryButtonProps) => {
+
+  // Handling the loading bar inside the button 
+  const uploadingItems = useSelector((state : RootState)=>state.cart.isUploading)
     return (
         <Button
-            variant={"default"}
             className="relative overflow-hidden rounded-none p-0 group border border-primary w-full"
             asChild
             size={"lg"}
-            disabled ={isDisabled}
+            disabled ={uploadingItems || isDisabled}
             onClick={onClick}
         >
              <motion.button
         initial="rest"
         whileHover="hover"
         animate="rest"
-        className=" flex items-center justify-center "
+        className=" flex items-center justify-center gap-2"
       >
-        <span className="relative z-10 text-background text-button uppercase transition-colors duration-300 group-hover:text-primary group-active:text-muted">{name}</span>
+        
+        <span className="relative z-10 text-background text-button uppercase transition-colors duration-300 group-hover:text-primary group-active:text-muted">
+          {uploadingItems ? (<>
+            <CircularProgress size={16} thickness={4} sx={{color: "white"}}/>
+          </>) : name} 
+          </span>
+
         <motion.div
           variants={{
             rest: { x: "-100%" },

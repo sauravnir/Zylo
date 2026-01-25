@@ -21,10 +21,8 @@ import { Cursor } from "./Cursor";
 
 // Importing Redux Toolkits essentials 
 
-import { addItem } from "@/store/slices/cartSlice";
+import { addItem, setCartOpen ,setIsUploading } from "@/store/slices/cartSlice";
 import { useDispatch } from "react-redux";
-
-
 
 // Scattering the two defined props and all the details from the ProductCardProps Component.
 interface ProductModalProps extends ProductCardProps {
@@ -62,9 +60,7 @@ export function ProductModal({
 interface ProductDetailProps {
   viewMode: "modal" | "page";
   props: ProductCardProps; 
-
 }
-
 
 // Details Component of the Products
 export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
@@ -103,7 +99,7 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
     props.colors ? props.colors[0].name : "",
   );
 
-  // Handling the image click method
+  // Handling the IMAGE ZOOMING Func
   const [clicked, isClicked] = useState(false);
   // Handling the the zoom function
   const [isZoomed, setIsZoomed] = useState(false);
@@ -112,15 +108,21 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
   
-
   // initializing the useDispatch() function
   const dispatch = useDispatch();
-  // Handling the clicking of the button
-  // Adding items to the store using useDispatch
-  const addCartItems = () =>{
-    dispatch(addItem({product : props , size : productSize} ))
-  }
 
+  // Handling the clicking of the button asynchronously
+  // Adding items to the store using useDispatch
+  const addCartItems = async() =>{
+    dispatch(setIsUploading(true));
+    // Making the adding to cart async buy adding a fake delay 
+    await new Promise((resolve) => setTimeout(resolve , 800))
+    // Dispatching the product after the timer 
+    dispatch(addItem({product : props , size : productSize , itemQuantity : num})); 
+    dispatch(setIsUploading(false));
+    // Slide the cart open
+    dispatch(setCartOpen(true));
+  }
   return (
     <div
       className={`flex flex-col md:flex-row w-full h-full ${viewMode === "page" ? "mt-4" : "p-6"}`}
@@ -129,6 +131,7 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
         className={`w-full flex flex-col items-center bg-background group border-b md:border-b-0 
     ${viewMode === "modal" ? "justify-center" : "justify-start py-4 md:py-10"}`}
       >
+        {/* Image Section */}
         <div
           className={`relative w-full overflow-hidden ${
             viewMode === "modal"
@@ -175,11 +178,11 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
                   e.stopPropagation(); // Prevent the click from bubbling to the parent div
                   prevSlide();
                 }}
-                className="absolute left-2 top-1/2 -translate-y-1/2 z-10 text-primary bg-white w-6 h-6 flex items-center justify-center rounded-full opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-400 active:scale-105"
+                className="group absolute left-2 top-1/2 -translate-y-1/2 z-10 text-primary bg-white w-6 h-6 flex items-center justify-center rounded-full opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-400 active:scale-105"
               >
                 <ChevronLeft
                   size={14}
-                  className="hover:text-muted active:text-main hover:-translate-x-2 transition-all duration-300"
+                  className="hover:text-muted active:text-main active:-translate-x-2 transition-all duration-300"
                 />
               </button>
 
@@ -188,11 +191,11 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
                   e.stopPropagation(); // Prevent the click from bubbling to the parent div
                   nextSlide();
                 }}
-                className="absolute right-2 top-1/2 -translate-y-1/2 z-10 text-primary bg-white w-6 h-6 flex items-center justify-center rounded-full opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-400 active:scale-105"
+                className="group absolute right-2 top-1/2 -translate-y-1/2 z-10 text-primary bg-white w-6 h-6 flex items-center justify-center rounded-full opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-400 active:scale-105"
               >
                 <ChevronRight
                   size={14}
-                  className="hover:text-muted active:text-main hover:translate-x-2 transition-all duration-300"
+                  className="hover:text-muted active:text-main active:translate-x-2 transition-all duration-300"
                 />
               </button>
             </>
@@ -242,7 +245,7 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
 
       {/* RIGHT SIDE */}
       <div
-        className={`w-full md:max-w-xl flex flex-col ${viewMode === "modal" ? "p-4" : "pt-8 md:p-10"} md:overflow-y-auto`}
+        className={`w-full md:max-w-xl flex flex-col ${viewMode === "modal" ? "p-4" : "pt-8 md:p-8"} md:overflow-y-auto`}
       >
         <div className="space-y-8 flex-1">
           {/* Title & Price */}
@@ -390,6 +393,7 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
                   : "Add to cart"
               }
               onClick={addCartItems}
+              
             />
             <PaymentButton
               isDisabled={props.availability === "Sold Out"}

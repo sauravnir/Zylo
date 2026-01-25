@@ -22,7 +22,7 @@ export interface ProductCardProps {
   sizes: string[];
   availability: string;
   slug:string;
-  quantity:number,
+ 
 }
 // Product Card Display Component 
 export function ProductCard(props: ProductCardProps) {

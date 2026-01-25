@@ -6,10 +6,7 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
   SheetFooter,
-  SheetHeader,
-  SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 
@@ -22,16 +19,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Separator } from "@/components/ui/separator";
-import { Badge } from "@mui/material";
+
 import { Input } from "@/components/ui/input";
 
-import { Menu, Search, ShoppingCart, User, X, ChevronDown } from "lucide-react";
+import { Menu, Search, User, X, ChevronDown } from "lucide-react";
 import { motion } from "motion/react";
-
 import { menuItems, cta } from "@/objects/Objects";
-
-import { parentVariants , itemVariants } from "@/objects/Animations";
-
+import { parentVariants, itemVariants } from "@/objects/Animations";
 import { CartSheet } from "./Cart";
 
 // Mobile menu sheet
@@ -245,6 +239,7 @@ const DownSearch = ({ title }: { title: string }) => {
 };
 
 export default function NavigationBar() {
+  
   return (
     <div className="fixed w-full z-50">
       <div className="grid grid-cols-3 items-center h-20 bg-background border px-4 md:px-14">
@@ -274,27 +269,33 @@ export default function NavigationBar() {
 
         {/* CTA Items */}
         <div className="hidden md:flex justify-end items-center font-body text-menu text-muted gap-8">
-          {cta.map((item) => (
-            <Link
-              key={item.title}
-              to={item.link}
-              className="uppercase hover:text-main transition-colors duration-400 ease-in-out"
-            >
-              {/* Nested Looping to conditionally render CTA buttons */}
-              {item.title === "Cart" ? (
-                <div className="h-full ">
-                  <CartSheet />
-                </div>
-              ) : item.children ? (
-                <DownMenuCTA key={item.title} item={item} />
-              ) : item.title === "Search" ? (
-                <DownSearch key={item.title} title={item.title} />
-              ) : (
-                item.title
-              )}
-            </Link>
-          ))}
-        </div>
+  {cta.map((item) => {
+    // 1. Handle "Cart" - No wrapper needed if CartSheet handles its own style
+    if (item.title === "Cart") {
+      return <CartSheet key="cart-sheet" />;
+    }
+
+    // 2. Handle Search
+    if (item.title === "Search") {
+      return <DownSearch key="search-cta" title={item.title} />;
+    }
+
+    // 3. Handle Dropdowns
+    if (item.children) {
+      return <DownMenuCTA key={item.title} item={item} />;
+    }
+
+    // 4. Handle Plain Text Links (The only ones that need the span hover)
+    return (
+      <span
+        key={item.title}
+        className="uppercase cursor-pointer hover:text-main transition-colors duration-400 ease-in-out"
+      >
+        {item.title}
+      </span>
+    );
+  })}
+</div>
 
         {/* Mobile Navigation */}
         <div className="md:hidden lg:hidden col-span-3 grid grid-cols-3 items-center w-full">
@@ -318,6 +319,9 @@ export default function NavigationBar() {
           </div>
         </div>
       </div>
+
+ 
+  
     </div>
   );
 }
