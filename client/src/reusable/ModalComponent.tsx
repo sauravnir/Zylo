@@ -19,9 +19,9 @@ import {
 // Importing Custom cursor
 import { Cursor } from "./Cursor";
 import { Price } from "./Price";
-// Importing Redux Toolkits essentials 
+// Importing Redux Toolkits essentials
 
-import { addItem, setCartOpen ,setIsUploading } from "@/store/slices/cartSlice";
+import { addItem, setCartOpen, setIsUploading } from "@/store/slices/cartSlice";
 import { useDispatch } from "react-redux";
 
 // Scattering the two defined props and all the details from the ProductCardProps Component.
@@ -46,8 +46,7 @@ export function ProductModal({
         </div>
         {/* Rendering the product detail component inside the modal with custom viewMode property */}
         <div className="py-4 md:p-0 w-full h-full">
-
-        <ProductDetail props={props} viewMode={"modal"} />
+          <ProductDetail props={props} viewMode={"modal"} />
         </div>
       </AlertDialogContent>
     </AlertDialog>
@@ -59,7 +58,7 @@ export function ProductModal({
 // Destructuring all the objects inside ProductCardProps
 interface ProductDetailProps {
   viewMode: "modal" | "page";
-  props: ProductCardProps; 
+  props: ProductCardProps;
 }
 
 // Details Component of the Products
@@ -107,22 +106,22 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
   // Handling the custom cursor
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const [isHovering, setIsHovering] = useState(false);
-  
+
   // initializing the useDispatch() function
   const dispatch = useDispatch();
 
   // Handling the clicking of the button asynchronously
   // Adding items to the store using useDispatch
-  const addCartItems = async() =>{
+  const addCartItems = async () => {
     dispatch(setIsUploading(true));
-    // Making the adding to cart async buy adding a fake delay 
-    await new Promise((resolve) => setTimeout(resolve , 800))
-    // Dispatching the product after the timer 
-    dispatch(addItem({product : props , size : productSize , itemQuantity : num})); 
+    // Making the adding to cart async buy adding a fake delay
+    await new Promise((resolve) => setTimeout(resolve, 800));
+    // Dispatching the product after the timer
+    dispatch(addItem({ product: props, size: productSize, itemQuantity: num }));
     dispatch(setIsUploading(false));
     // Slide the cart open
     dispatch(setCartOpen(true));
-  }
+  };
   return (
     <div
       className={`flex flex-col md:flex-row w-full h-full ${viewMode === "page" ? "mt-4" : "p-6"}`}
@@ -150,7 +149,7 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
           onMouseLeave={() => setIsHovering(false)}
         >
           {/* Custom Cursor Overlaying the Div */}
-          <AnimatePresence >
+          <AnimatePresence>
             {isHovering && viewMode === "page" && (
               <Cursor x={mousePos.x} y={mousePos.y} />
             )}
@@ -204,7 +203,9 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
 
         {/* Dots Carousel Navigation */}
         {modalImage.length > 1 && (
-          <div className={`${viewMode === "page" && "block md:hidden"} mt-8 flex gap-1.5 mb-4`}>
+          <div
+            className={`${viewMode === "page" && "block md:hidden"} mt-8 flex gap-1.5 mb-4`}
+          >
             {modalImage.map((_, index) => (
               <button
                 key={index}
@@ -240,7 +241,6 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
             })}
           </div>
         )}
- 
       </div>
 
       {/* RIGHT SIDE */}
@@ -249,11 +249,13 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
       >
         <div className="space-y-8 flex-1">
           {/* Title & Price */}
-          <div className="space-y-4">
-            <h1 className="text-main uppercase text-modal-title tracking-widest">
-              {props.title}
+          <div className="flex flex-col gap-1.5">
+            <h1 className="text-main uppercase text-modal-title tracking-[0.15em] leading-tight">
+              {props.title} 
             </h1>
-            <Price amount ={props.price} />
+            <div className="text-base tracking-[0.1em] text-muted font-medium transition-colors ">
+              <Price amount={props.price} /> x {num}
+            </div>
           </div>
 
           {/* Conditionally rendering the description , product care and colors in Product Page */}
@@ -380,7 +382,7 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
             </div>
           </div>
 
-{/* Implementing Redux Function to add the product value to the redux store */}
+          {/* Implementing Redux Function to add the product value to the redux store */}
           {/* Action Buttons */}
           <div className={` space-y-3 `}>
             <PrimaryButton
@@ -391,7 +393,6 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
                   : "Add to cart"
               }
               onClick={addCartItems}
-              
             />
             <PaymentButton
               isDisabled={props.availability === "Sold Out"}
@@ -401,20 +402,18 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
 
           {/* Optional Text  */}
           <div className="flex flex-col md:flex-row justify-center space-y-2 p-0 ">
-               {viewMode === "modal" && (
-            <div className="text-center">
-              <Link to={`/products/${props.slug}`}>
-                <span className="text-muted transition-all duration-400 hover:text-main text-xs uppercase underline  ">
-                  View Details
-                </span>
-              </Link>
-            </div>
-          )}
+            {viewMode === "modal" && (
+              <div className="text-center">
+                <Link to={`/products/${props.slug}`}>
+                  <span className="text-muted transition-all duration-400 hover:text-main text-xs uppercase underline  ">
+                    View Details
+                  </span>
+                </Link>
+              </div>
+            )}
 
-          {/* Optional Close Button */}
-          
+            {/* Optional Close Button */}
           </div>
-         
         </div>
       </div>
 

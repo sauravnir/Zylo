@@ -19,35 +19,52 @@ export const menuItems = [
 // Navigation Call-To-Actions Items
 export const cta = [
   {
-    title: "Currencies",
-    current: "Nepal",
-    code: "NPR",
-    symbol: "₨",
-    link: "/",
-    children: [
+  title: "Currencies",
+  current: "Nepal",
+  code: "NPR",
+  symbol: "₨",
+  link: "/",
+  children: [
+    // South Asia
+    { title: "Nepal", code: "NPR", symbol: "₨" },
+    { title: "India", code: "INR", symbol: "₹" },
+    { title: "Pakistan", code: "PKR", symbol: "₨" },
+    { title: "Sri Lanka", code: "LKR", symbol: "₨" },
 
-  { title: "Nepal", code: "NPR", symbol: "₨" },
-  { title: "India", code: "INR", symbol: "₹" },
-  
-  // North America
-  { title: "United States", code: "USD", symbol: "$" },
-  { title: "Canada", code: "CAD", symbol: "$" },
+    // North America
+    { title: "United States", code: "USD", symbol: "$" },
+    { title: "Canada", code: "CAD", symbol: "$" },
+    { title: "Mexico", code: "MXN", symbol: "$" },
 
-  // Europe
-  { title: "United Kingdom", code: "GBP", symbol: "£" },
-  { title: "Europe", code: "EUR", symbol: "€" },
-  { title: "Switzerland", code: "CHF", symbol: "CHf" },
+    // Europe & UK
+    { title: "United Kingdom", code: "GBP", symbol: "£" },
+    { title: "Europe", code: "EUR", symbol: "€" },
+    { title: "Switzerland", code: "CHF", symbol: "CHf" },
+    { title: "Sweden", code: "SEK", symbol: "kr" },
+    { title: "Norway", code: "NOK", symbol: "kr" },
+    { title: "Denmark", code: "DKK", symbol: "kr" },
 
-  // Asia Pacific
-  { title: "Japan", code: "JPY", symbol: "¥" },
-  { title: "Australia", code: "AUD", symbol: "$" },
-  { title: "South Korea", code: "KRW", symbol: "₩" },
-  { title: "Singapore", code: "SGD", symbol: "$" },
+    // Asia Pacific
+    { title: "Japan", code: "JPY", symbol: "¥" },
+    { title: "Australia", code: "AUD", symbol: "$" },
+    { title: "New Zealand", code: "NZD", symbol: "$" },
+    { title: "South Korea", code: "KRW", symbol: "₩" },
+    { title: "Singapore", code: "SGD", symbol: "$" },
+    { title: "Hong Kong", code: "HKD", symbol: "$" },
+    { title: "Thailand", code: "THB", symbol: "฿" },
+    { title: "Malaysia", code: "MYR", symbol: "RM" },
 
-  // Middle East
-  { title: "United Arab Emirates", code: "AED", symbol: "د.إ" },
-],
-  },
+    // Middle East & Africa
+    { title: "United Arab Emirates", code: "AED", symbol: "د.إ" },
+    { title: "Saudi Arabia", code: "SAR", symbol: "﷼" },
+    { title: "Qatar", code: "QAR", symbol: "﷼" },
+    { title: "South Africa", code: "ZAR", symbol: "R" },
+
+    // South America
+    { title: "Brazil", code: "BRL", symbol: "R$" },
+    { title: "Argentina", code: "ARS", symbol: "$" },
+  ],
+},
   { title: "Search", link: "/" },
   { title: "Login", link: "/" },
   { title: "Cart", link: "#" },

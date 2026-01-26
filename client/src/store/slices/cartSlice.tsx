@@ -20,22 +20,12 @@ export interface CartState {
 }
 // Setting the initial state null for an empty cart
 const initialState: CartState = {
-  items : [],
+  items: [],
   totalItems : 0, 
   cartOpen : false,
-  isUploading : false , 
+  isUploading : false, 
   orderNote : "",
 };
-
-//createSelector is a redux library that lets us acess that data inside the redux store 
-const selectCartItems = (state:RootState) => state.cart.items;
-// Calculating the total checkout amount and exporting it 
-// The values are only calculated if the input is changed usingt createSelector
-export const totalCheckoutAmount = createSelector(
-  [selectCartItems],  // initial value 
-  // Adding the price * quantity to the total
-  (items) => items.reduce((total , item )=> total + (item.price * item.itemCartQuantity), 0) //logic implementation
-) 
 
 export const cartSlice = createSlice({
   name: "cart",
@@ -68,23 +58,45 @@ export const cartSlice = createSlice({
         const {slug , size} = action.payload;
         // Checking if the items exists in the store or not
         const existingItem = state.items.find((item)=>item.slug === slug && item.productSize === size);
-        if (existingItem){
-            // Reducing the item by 1 
-          state.totalItems -=1 ;
-          // If the items is more than 1 then removing the item  by 1  
-            if (existingItem.itemCartQuantity > 1) {
-                existingItem.itemCartQuantity -=1 
-            } else {
-              // If no items exists then removeing the whole cart
-                state.items = state.items.filter((item) =>!(item.slug === slug && item.productSize === size))
-              }
-        }
+        if (existingItem) {
+    if (existingItem.itemCartQuantity > 1) {
+      // Just reducing the number by 1
+      existingItem.itemCartQuantity -= 1;
+      state.totalItems -= 1; // Subtract 1 from global count
+    } else {
+    //  Clearing the item quantity
+      state.totalItems -= existingItem.itemCartQuantity; 
+      state.items = state.items.filter(
+        (item) => !(item.slug === slug && item.productSize === size)
+      );
+    }
+  }
         // Removing the OrderNote if the cart is empty and setting the totalItems value to 0 for safety 
         if(state.items.length === 0){
           state.orderNote = "";
           state.totalItems = 0;
         }
-
+    },
+    // Clearing the overall Cart 
+    clearCart : (state) => {
+     state.items = [];
+     state.totalItems = 0;
+    },
+    // Calculating the Plus and Minus quantity inside the cart 
+    updateQuantity : (state , action :  PayloadAction<{slug: string , size: string , type:'add'|'sub'}>)=>{
+      const {slug ,size, type} = action.payload;
+      // Checking if the item exists 
+      const existingItem = state.items.find((item)=> item.slug === slug && item.productSize === size);
+      // Adding and Subtracting the productQuantity
+      if(existingItem){
+        if(type === 'add'){
+          existingItem.itemCartQuantity += 1 ;
+          state.totalItems +=1;
+        }else if (type==="sub" && existingItem.itemCartQuantity > 1){
+          existingItem.itemCartQuantity -= 1;
+          state.totalItems -=1;
+        }
+      } 
     },
     // Handling the global cart open function
     setCartOpen : (state , action :PayloadAction<boolean>)=>{
@@ -102,8 +114,19 @@ export const cartSlice = createSlice({
   },
 });
 
+//createSelector is a redux library that lets us acess that data inside the redux store 
+const selectCartItems = (state:RootState) => state.cart.items;
+// Calculating the total checkout amount and exporting it 
+// The values are only calculated if the input is changed usingt createSelector
+export const totalCheckoutAmount = createSelector(
+  [selectCartItems],  // initial value 
+  // Adding the price * quantity to the total
+  (items) => items.reduce((total , item )=> total + (item.price * item.itemCartQuantity), 0) //logic implementation
+) 
+
+
 // Creating Action Creators for each reducer actions
 // Think this as the method for the reducers 
-export const {addItem , removeItem , setCartOpen , setIsUploading , addNote} = cartSlice.actions
+export const {addItem , removeItem , clearCart ,updateQuantity , setCartOpen , setIsUploading , addNote} = cartSlice.actions
 // Exporting the main reducer object from the slice
 export default cartSlice.reducer

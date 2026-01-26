@@ -22,12 +22,16 @@ import {
   setCartOpen,
   totalCheckoutAmount,
   addNote,
+  updateQuantity,
+  setIsUploading,
 } from "@/store/slices/cartSlice";
 
 import { motion, AnimatePresence } from "motion/react";
 
 import { Price } from "./Price";
+import { Link, useNavigate } from "react-router-dom";
 
+// Overall Cart Sheet Drawer
 export const CartSheet = () => {
   const dispatch = useDispatch();
   const storeValue = useSelector((state: RootState) => state.cart.items);
@@ -56,25 +60,19 @@ export const CartSheet = () => {
   }, [noteCart]);
 
   // Converting the checkout amount as per the currency selected
-
   const convertedCheckout = (checkoutAmount * rate).toLocaleString(undefined, {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
 
-  // Handling the async loading of the remove button
-  const [removed, setRemoved] = useState(false);
-  const handleRemoveItem = async ({
-    slug,
-    size,
-  }: {
-    slug: string;
-    size: string;
-  }) => {
-    setRemoved(true);
-    await new Promise((resolve) => setTimeout(resolve, 500));
-    dispatch(removeItem({ slug, size }));
-    setRemoved(false);
+  // Handle the Checkout Clicking button. Set loading time and then navigate to the checkout page.
+  const navigate = useNavigate();
+  const handleCheckout = async () => {
+    dispatch(setIsUploading(true));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+    dispatch(setIsUploading(false));
+    dispatch(setCartOpen(false));
+    navigate("/checkout");
   };
 
   // Handling the Hydration Error. The server tries to render a blank cart but the client is finding items in LocalStorage which causes a data mismatch.
@@ -82,7 +80,6 @@ export const CartSheet = () => {
   useEffect(() => {
     setIsMounted(true);
   }, []);
-
   if (!isMounted) return null;
 
   return (
@@ -144,78 +141,13 @@ export const CartSheet = () => {
           {/* Cart Content */}
           <div className="flex-1 overflow-y-auto pr-2 gap-6 px-8 py-4 flex flex-col">
             {storeValue.length > 0 ? (
-              storeValue.map((item) => (
-                <div
-                  key={`${item.slug}-${item.productSize}`}
-                  className="flex flex-row gap-6 border-b border-gray-100 pb-6"
-                >
-                  <div className="relative h-36 w-24 flex-shrink-0 overflow-hidden bg-[#f9f9f9]">
-                    <img
-                      src={item.primaryImage}
-                      alt={item.title}
-                      className="h-full w-full object-cover"
-                    />
-                  </div>
-
-                  <div className="flex flex-1 flex-col justify-between py-1 pr-8 md:pr-8">
-                    <div className="flex justify-between ">
-                      <div className="w=full flex flex-col gap-1 ">
-                        <h3 className="text-main text-product-title uppercase font-medium">
-                          {item.title}{" "}
-                          <span className="text-muted font-bold lowercase">
-                            {" "}
-                            x {item.itemCartQuantity}
-                          </span>
-                        </h3>
-                        <div className="mt-2 text-base tracking-widest font-medium text-muted ">
-                          <Price amount={item.price} />
-                        </div>
-                        <span className="text-tiny font-medium text-muted">
-                          Size: {item.productSize}
-                        </span>
-                      </div>
-                    </div>
-
-                    <div className="flex justify-start md:justify-end md:mt-2">
-                      <button
-                        onClick={() =>
-                          handleRemoveItem({
-                            slug: item.slug,
-                            size: item.productSize,
-                          })
-                        }
-                        disabled={removed}
-                        className={`
-      flex items-center gap-2 
-      text-tiny tracking-wide underline underline-offset-4 transition-all duration-200
-      ${
-        removed
-          ? "text-muted/50 cursor-not-allowed"
-          : "text-muted hover:text-main cursor-pointer"
-      }
-    `}
-                      >
-                        {removed && (
-                          <span className="animate-in fade-in zoom-in duration-300">
-                            <CircularProgress
-                              size={14}
-                              thickness={5}
-                              sx={{ color: "inherit" }} 
-                            />
-                          </span>
-                        )}
-                        <span>{removed ? "Removing..." : "Remove"}</span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              ))
+              storeValue.map((item) => <CartItem item={item} isReadOnly={false}/>)
             ) : (
               <div className="flex h-full flex-col items-center justify-center px-4">
-                <div className="w-16 h-16 bg-main/30 rounded-full flex items-center justify-center mb-4">
-                  <ShoppingCart size={32} className="text-card" />
+                <div className="w-16 h-16 bg-neutral-100 rounded-full flex items-center justify-center mb-4">
+                  <ShoppingCart size={32} className="text-main/40" />
                 </div>
-                <h3 className="text-main text-menu uppercase">
+                <h3 className="text-main text-menu uppercase mb-6">
                   Your cart is empty
                 </h3>
               </div>
@@ -266,7 +198,7 @@ export const CartSheet = () => {
                   onClick={() => setNoteCart(!noteCart)}
                 >
                   <span className="mb-4 font-medium text-product-title tracking-normal text-main/75 hover:text-main/50 transition-colors duration-300">
-                    {noteCart ? "Close note" : "Add order note"}
+                    {noteCart ? "Close order note" : "Add order note"}
                   </span>
                 </button>
 
@@ -279,14 +211,16 @@ export const CartSheet = () => {
                     {symbol} {convertedCheckout}
                   </span>
                 </div>
+                {/* Linking To Checkout Page */}
 
                 <PrimaryButton
                   isDisabled={false}
                   name={`Checkout — ${symbol} ${convertedCheckout}`}
-                  onClick={() => console.log("Proceeding to checkout...")}
+                  onClick={handleCheckout}
+                  type="button"
                 />
 
-                <span className="text-main/45 text-xs text-center leading-tight tracking-normal">
+                <span className="text-main/45 text-xs text-center leading-tight tracking-normal underline">
                   Taxes and shipping calculated at checkout
                 </span>
               </div>
@@ -295,5 +229,128 @@ export const CartSheet = () => {
         </SheetDescription>
       </SheetContent>
     </Sheet>
+  );
+};
+
+// Individual cart Items
+export const CartItem = ({ item , isReadOnly }: { item: any ,isReadOnly : boolean }) => {
+  const dispatch = useDispatch();
+
+  const [incDelay, setIncDelay] = useState(false);
+  const [decDelay, setDecDelay] = useState(false);
+
+  // Handling the async loading of the remove button
+  const [removed, setRemoved] = useState(false);
+  const handleRemoveItem = async ({
+    slug,
+    size,
+  }: {
+    slug: string;
+    size: string;
+  }) => {
+    setRemoved(true);
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    dispatch(removeItem({ slug, size }));
+    setRemoved(false);
+  };
+
+  // Size increment function
+  const handleIncrement = async () => {
+    setIncDelay(true);
+    await new Promise((resolve) => setTimeout(resolve, 800));
+    dispatch(
+      updateQuantity({ slug: item.slug, size: item.productSize, type: "add" }),
+    );
+    setIncDelay(false);
+  };
+// Size decrement function
+  const handleDecrement = async () => {
+    setDecDelay(true);
+    await new Promise((resolve) => setTimeout(resolve, 800));
+    dispatch(
+      updateQuantity({ slug: item.slug, size: item.productSize, type: "sub" }),
+    );
+    setDecDelay(false);
+  };
+  return (
+    <div
+      key={`${item.slug}-${item.productSize}`}
+      className="flex flex-row gap-6 border-b border-b py-8 first:pt-0 last:border-0"
+    >
+      <div className="relative h-36 w-24 flex-shrink-0 overflow-hidden bg-[#f9f9f9]">
+        <img
+          src={item.primaryImage}
+          alt={item.title}
+          className="h-full w-full object-cover"
+        />
+      </div>
+
+      <div className="flex flex-1 flex-col justify-between py-1">
+        <div className="flex flex-col gap-1.5">
+          {/* Title & Quantity Display */}
+          <h3 className="text-main text-product-title tracking-wide uppercase font-medium">
+            {item.title} {isReadOnly && <span className="font-bold">x {item.itemCartQuantity}</span>} 
+          </h3>
+
+          {/* Price */}
+          <div className="text-sm tracking-wide font-medium text-neutral-700 mt-1">
+    <Price amount={item.price} />
+  </div>
+
+          {/* Size */}
+          <div className="flex items-center gap-2">
+    <span className="text-[10px] uppercase tracking-widest text-neutral-400 font-medium">
+      Size: <span className="text-neutral-600">{item.productSize}</span>
+    </span>
+  </div>
+        </div>
+
+{/* Conditinally rendering these items  */}
+        {isReadOnly === false && <div className="flex items-center gap-6 mt-4">
+          {/* Quantity Selector */}
+          <div className="flex items-center border border-border w-fit">
+            <button
+              onClick={handleDecrement}
+              disabled={item.itemCartQuantity < 1 || decDelay}
+              className="w-8 h-8 flex items-center justify-center text-muted hover:text-white transition-all hover:bg-main border-r border-border"
+            >
+              <Minus size={14} />
+            </button>
+            <div className="text-muted w-10 flex items-center justify-center text-sm tabular-nums font-medium">
+              {item.itemCartQuantity}
+            </div>
+            <button
+              onClick={handleIncrement}
+              disabled={incDelay}
+              className="w-8 h-8 flex items-center justify-center text-muted hover:text-white transition-all hover:bg-main border-l border-border"
+            >
+              <Plus size={14} />
+            </button>
+          </div>
+
+          <button
+            onClick={() =>
+              handleRemoveItem({ slug: item.slug, size: item.productSize })
+            }
+            disabled={removed}
+            className={`flex items-center gap-2 text-tiny tracking-wide underline underline-offset-4 transition-all ${
+              removed
+                ? "text-muted/50 cursor-not-allowed"
+                : "text-muted hover:text-main"
+            }`}
+          >
+            {removed && (
+              <CircularProgress
+                size={12}
+                thickness={5}
+                sx={{ color: "inherit" }}
+              />
+            )}
+            <span>{removed ? "Removing..." : "Remove"}</span>
+          </button>
+        </div>}
+        
+      </div>
+    </div>
   );
 };

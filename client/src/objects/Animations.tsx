@@ -1,4 +1,4 @@
-// Creating Menu Entrance Animation Objects
+// Creating List / Card entrace animations 
 import type { Variants } from "motion/react";
 export const parentVariants: Variants = {
   // For Parent Container

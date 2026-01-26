@@ -22,7 +22,6 @@ export interface ProductCardProps {
   sizes: string[];
   availability: string;
   slug:string;
- 
 }
 // Product Card Display Component 
 export function ProductCard(props: ProductCardProps) {
@@ -35,7 +34,7 @@ const [isOpenModal , setIsOpenModal] = useState(false);
 
   return (
     <motion.div
-        // variants={itemVariants}
+        variants={itemVariants}
         className="w-full"
     >
       <motion.div

@@ -1,5 +1,5 @@
 import React , {useEffect} from "react";
-import NavigationBar from "@/reusable/Navigation";
+import {NavigationBar} from "@/reusable/Navigation";
 import { Footer } from "@/reusable/Footer";
 import { ProductMain } from "@/layout/Product/ProductMain";
 import { PRODUCTS_LIST } from "@/objects/Objects";

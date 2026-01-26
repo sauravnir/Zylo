@@ -24,7 +24,7 @@ export function CollectionSectionMain() {
       </div>
 
       <motion.div
-        // variants={parentVariants}
+        variants={parentVariants}
         initial="hidden"
         whileInView={"visible"}
         viewport={{ once: true }}

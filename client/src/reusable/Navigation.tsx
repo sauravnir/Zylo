@@ -22,13 +22,13 @@ import { Separator } from "@/components/ui/separator";
 
 import { Input } from "@/components/ui/input";
 
-import { Menu, Search, User, X, ChevronDown } from "lucide-react";
+import { Menu, Search, User, X, ChevronDown, ShoppingCart } from "lucide-react";
 import { motion } from "motion/react";
 import { menuItems, cta } from "@/objects/Objects";
 import { parentVariants, itemVariants } from "@/objects/Animations";
 import { CartSheet } from "./Cart";
 
-import { useDispatch , useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCurrency } from "@/store/slices/currencySlice";
 import type { RootState } from "@/store/store";
 
@@ -97,26 +97,30 @@ const MobileMenuSheet = () => {
   );
 };
 
-// Currency selection component 
+// Currency selection component
 const DownMenuCTA = ({ item }: { item: any }) => {
   const [open, isOpen] = useState(false);
 
-  // Handling the currency from the redux store. 
-  const {activeCurrency , symbol } = useSelector((state:RootState)=>state.currency)
-  const dispatch = useDispatch()
-  const handleCurrencySelection = (child : any) => {
-    dispatch(setCurrency({
-      title:child.title ,
-      code : child.code , 
-      symbol: child.symbol}
-    ));
-    isOpen(false)
-  }
+  // Handling the currency from the redux store.
+  const { activeCurrency, symbol } = useSelector(
+    (state: RootState) => state.currency,
+  );
+  const dispatch = useDispatch();
+  const handleCurrencySelection = (child: any) => {
+    dispatch(
+      setCurrency({
+        title: child.title,
+        code: child.code,
+        symbol: child.symbol,
+      }),
+    );
+    isOpen(false);
+  };
   return (
     //OnOpenChange Returns Boolean and flips the truthy value
     <DropdownMenu open={open} onOpenChange={isOpen}>
       <DropdownMenuTrigger asChild>
-        <button  className="flex gap-1 items-center text-menu uppercase text-muted hover:text-main uppercase">
+        <button className="flex gap-1 items-center text-menu uppercase text-muted hover:text-main uppercase">
           <span>{activeCurrency}</span>
           <span>({symbol})</span>
           <motion.span
@@ -144,12 +148,11 @@ const DownMenuCTA = ({ item }: { item: any }) => {
             <motion.div variants={itemVariants}>
               <DropdownMenuItem
                 key={child.code}
-                onClick={()=>handleCurrencySelection(child)}
+                onClick={() => handleCurrencySelection(child)}
                 className="flex text-muted hover:text-main items-center gap-1 mt-1 cursor-pointer"
               >
                 <span className="text-menu font-body">{child.title}</span>
                 <span className="text-menu uppercase">
-                  
                   ({child.code} {child.symbol})
                 </span>
               </DropdownMenuItem>
@@ -255,7 +258,7 @@ const DownSearch = ({ title }: { title: string }) => {
   );
 };
 
-export default function NavigationBar() {
+export function NavigationBar() {
   return (
     <div className="fixed w-full z-50">
       <div className="grid grid-cols-3 items-center h-20 bg-background border px-4 md:px-14">
@@ -301,7 +304,7 @@ export default function NavigationBar() {
               return <DownMenuCTA key={item.title} item={item} />;
             }
 
-            // 4. Handle Plain Text Links 
+            // 4. Handle Plain Text Links
             return (
               <span
                 key={item.title}
@@ -333,6 +336,32 @@ export default function NavigationBar() {
               <CartSheet />
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export function CheckoutNav() {
+  return (
+    <div className="fixed w-full z-50 sticky top-0">
+      <div className="grid grid-cols-3 items-center h-24 bg-background border px-4 md:px-14">
+        {/* Left empty side */}
+        <div className="flex justify-center"/>
+       
+{/* Center Logo */}
+        <div className="flex justify-center">
+          <Link to="/" className="transition-opacity hover:opacity-80">
+            <img  src={Logo} alt="Zylo" className="h-24 w-auto"/>
+          </Link>
+        </div>
+{/* Shopping cart */}
+        <div className="flex justify-end md:justify-center lg:justify-center items-center">
+          <Link to='/cart'>
+          <div className="w-14 h-14 bg-neutral-100 hover:bg-neutral-300 rounded-full flex items-center justify-center ">
+            <ShoppingCart size={20} className="text-main/70" />
+          </div>
+          </Link>
         </div>
       </div>
     </div>
