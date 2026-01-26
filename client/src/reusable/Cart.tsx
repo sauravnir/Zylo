@@ -7,12 +7,12 @@ import {
   SheetHeader,
   SheetTitle,
   SheetTrigger,
-
 } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@mui/material";
 import { ShoppingCart, X, Minus, Plus, Trash2 } from "lucide-react";
 import { PrimaryButton } from "./ButtonComponent";
+import { CircularProgress } from "@mui/material";
 // Importing the redux components
 
 import type { RootState } from "@/store/store";
@@ -26,6 +26,8 @@ import {
 
 import { motion, AnimatePresence } from "motion/react";
 
+import { Price } from "./Price";
+
 export const CartSheet = () => {
   const dispatch = useDispatch();
   const storeValue = useSelector((state: RootState) => state.cart.items);
@@ -33,6 +35,7 @@ export const CartSheet = () => {
   const isCartOpen = useSelector((state: RootState) => state.cart.cartOpen);
   const checkoutAmount = useSelector(totalCheckoutAmount);
   const globalNote = useSelector((state: RootState) => state.cart.orderNote);
+  const { rate, symbol } = useSelector((state: RootState) => state.currency);
   // Handling the cart Open Logic
   const handleCartOpen = (open: boolean) => {
     dispatch(setCartOpen(open));
@@ -52,23 +55,35 @@ export const CartSheet = () => {
     }
   }, [noteCart]);
 
+  // Converting the checkout amount as per the currency selected
 
-  // Setting timeout after removing an item for
-//  const [removed , setRemoved] = useState(false);
-//   const handleRemoveItem = async () => {
-//     setRemoved(true);
-//     await new Promise((resolve)=>setTimeout(resolve , 500))
-//     dispatch(removeItem(slug:))
+  const convertedCheckout = (checkoutAmount * rate).toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 
-//   }
-  
- // Handling the Hydration Error. The server tries to render a blank cart but the client is finding items in LocalStorage which causes a data mismatch.
-  const [isMounted , setIsMounted] = useState(false);
-  useEffect(()=>{
+  // Handling the async loading of the remove button
+  const [removed, setRemoved] = useState(false);
+  const handleRemoveItem = async ({
+    slug,
+    size,
+  }: {
+    slug: string;
+    size: string;
+  }) => {
+    setRemoved(true);
+    await new Promise((resolve) => setTimeout(resolve, 500));
+    dispatch(removeItem({ slug, size }));
+    setRemoved(false);
+  };
+
+  // Handling the Hydration Error. The server tries to render a blank cart but the client is finding items in LocalStorage which causes a data mismatch.
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => {
     setIsMounted(true);
-  },[])
+  }, []);
 
-  if(!isMounted) return null; 
+  if (!isMounted) return null;
 
   return (
     <Sheet open={isCartOpen} onOpenChange={handleCartOpen}>
@@ -146,30 +161,50 @@ export const CartSheet = () => {
                     <div className="flex justify-between ">
                       <div className="w=full flex flex-col gap-1 ">
                         <h3 className="text-main text-product-title uppercase font-medium">
-                          {item.title}  <span className="text-muted font-bold lowercase"> x {item.itemCartQuantity}</span> 
-                        </h3>
-                        <p className="font-medium text-base text-muted md:mt-2 ">
-                          Rs. {item.price}
-                        </p>
-                          <span className="text-tiny font-medium text-muted mt-2">
-                            Size:  {item.productSize}
+                          {item.title}{" "}
+                          <span className="text-muted font-bold lowercase">
+                            {" "}
+                            x {item.itemCartQuantity}
                           </span>
+                        </h3>
+                        <div className="mt-2 text-base tracking-widest font-medium text-muted ">
+                          <Price amount={item.price} />
+                        </div>
+                        <span className="text-tiny font-medium text-muted">
+                          Size: {item.productSize}
+                        </span>
                       </div>
                     </div>
 
                     <div className="flex justify-start md:justify-end md:mt-2">
                       <button
                         onClick={() =>
-                          dispatch(
-                            removeItem({
-                              slug: item.slug,
-                              size: item.productSize,
-                            }),
-                          )
+                          handleRemoveItem({
+                            slug: item.slug,
+                            size: item.productSize,
+                          })
                         }
-                        className="text-muted text-tiny tracking-wide hover:text-main transition-colors underline underline-offset-4"
+                        disabled={removed}
+                        className={`
+      flex items-center gap-2 
+      text-tiny tracking-wide underline underline-offset-4 transition-all duration-200
+      ${
+        removed
+          ? "text-muted/50 cursor-not-allowed"
+          : "text-muted hover:text-main cursor-pointer"
+      }
+    `}
                       >
-                        Remove 
+                        {removed && (
+                          <span className="animate-in fade-in zoom-in duration-300">
+                            <CircularProgress
+                              size={14}
+                              thickness={5}
+                              sx={{ color: "inherit" }} 
+                            />
+                          </span>
+                        )}
+                        <span>{removed ? "Removing..." : "Remove"}</span>
                       </button>
                     </div>
                   </div>
@@ -196,6 +231,36 @@ export const CartSheet = () => {
               className="mt-auto pt-6 pb-8 px-8  border-t relative"
             >
               <div className="flex flex-col gap-4">
+                <AnimatePresence>
+                  {noteCart && (
+                    <motion.div
+                      layout
+                      initial={{ height: 0, opacity: 0, marginBottom: 0 }}
+                      animate={{
+                        height: "auto",
+                        opacity: 1,
+                        marginBottom: 16,
+                      }}
+                      exit={{ height: 0, opacity: 0, marginBottom: 0 }}
+                      transition={{
+                        height: {
+                          duration: 0.4,
+                          ease: [0.04, 0.62, 0.23, 0.98],
+                        },
+                        opacity: { duration: 0.25, delay: 0.1 },
+                      }}
+                      className="overflow-hidden flex flex-col gap-3"
+                    >
+                      <textarea
+                        autoFocus
+                        value={localNote}
+                        onChange={(e) => setLocalNote(e.target.value)}
+                        placeholder="How can we help you?"
+                        className="w-full bg-card p-3 text-muted text-sm outline-none resize-none border border-muted/30 rounded-sm h-24 focus:border-main transition-colors duration-300"
+                      />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
                 <button
                   className="flex w-32"
                   onClick={() => setNoteCart(!noteCart)}
@@ -205,41 +270,19 @@ export const CartSheet = () => {
                   </span>
                 </button>
 
-                {/* 2. The Sliding Text Area */}
-                <AnimatePresence>
-                  {noteCart && (
-                    <motion.div
-                      initial={{ height: 0, opacity: 0 }}
-                      animate={{ height: "auto", opacity: 1 }}
-                      exit={{ height: 0, opacity: 0 }}
-                      transition={{ duration: 0.3, ease: "easeInOut" }}
-                      className="overflow-hidden flex flex-col gap-3 pb-4 "
-                    >
-                      <textarea
-                        autoFocus
-                        value={localNote}
-                        onChange={(e) => setLocalNote(e.target.value)}
-                        placeholder="How can we help you?"
-                        className="w-full bg-card p-3 text-muted text-sm outline-none resize-none border border-muted rounded-sm h-24 transition-all "
-                      />
-                    
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-
                 {/* Subtotal Row */}
                 <div className="flex justify-between items-center border-black/5 ">
                   <span className="font-medium text-main/45 text-product-title uppercase">
                     Subtotal
                   </span>
-                  <span className="font-medium text-main/45 text-product-title uppercase">
-                    ${checkoutAmount.toFixed(2)}
+                  <span className="font-medium text-main/45 text-product-title">
+                    {symbol} {convertedCheckout}
                   </span>
                 </div>
 
                 <PrimaryButton
                   isDisabled={false}
-                  name={`Checkout — $${checkoutAmount.toFixed(2)}`}
+                  name={`Checkout — ${symbol} ${convertedCheckout}`}
                   onClick={() => console.log("Proceeding to checkout...")}
                 />
 

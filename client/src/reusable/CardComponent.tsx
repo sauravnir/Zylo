@@ -6,7 +6,7 @@ import { Plus } from "lucide-react";
 import { itemVariants } from "@/objects/Animations";
 import {ProductModal} from "./ModalComponent";
 import { Link } from "react-router-dom";
-
+import { Price } from "./Price";
 
 // Type casting all the object data and passing as a prop
 export interface ProductCardProps {
@@ -106,7 +106,7 @@ const [isOpenModal , setIsOpenModal] = useState(false);
             {props.title}
           </h1>
           <span className="text-muted uppercase text-product-title ">
-            Rs.{props.price}
+            <Price amount={props.price} />
           </span>
         </div>
       </motion.div>

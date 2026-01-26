@@ -28,6 +28,10 @@ import { menuItems, cta } from "@/objects/Objects";
 import { parentVariants, itemVariants } from "@/objects/Animations";
 import { CartSheet } from "./Cart";
 
+import { useDispatch , useSelector } from "react-redux";
+import { setCurrency } from "@/store/slices/currencySlice";
+import type { RootState } from "@/store/store";
+
 // Mobile menu sheet
 const MobileMenuSheet = () => {
   return (
@@ -93,16 +97,28 @@ const MobileMenuSheet = () => {
   );
 };
 
-// Dropdown menu component
+// Currency selection component 
 const DownMenuCTA = ({ item }: { item: any }) => {
   const [open, isOpen] = useState(false);
+
+  // Handling the currency from the redux store. 
+  const {activeCurrency , symbol } = useSelector((state:RootState)=>state.currency)
+  const dispatch = useDispatch()
+  const handleCurrencySelection = (child : any) => {
+    dispatch(setCurrency({
+      title:child.title ,
+      code : child.code , 
+      symbol: child.symbol}
+    ));
+    isOpen(false)
+  }
   return (
     //OnOpenChange Returns Boolean and flips the truthy value
     <DropdownMenu open={open} onOpenChange={isOpen}>
       <DropdownMenuTrigger asChild>
-        <button className="flex gap-1 items-center text-menu uppercase text-muted hover:text-main uppercase">
-          <span>{item.code}</span>
-          <span>({item.symbol})</span>
+        <button  className="flex gap-1 items-center text-menu uppercase text-muted hover:text-main uppercase">
+          <span>{activeCurrency}</span>
+          <span>({symbol})</span>
           <motion.span
             animate={{ rotate: open ? 180 : 0 }}
             transition={{ duration: 0.3, ease: "easeInOut" }}
@@ -127,13 +143,14 @@ const DownMenuCTA = ({ item }: { item: any }) => {
           {item.children.map((child: any) => (
             <motion.div variants={itemVariants}>
               <DropdownMenuItem
-                key={child.title}
+                key={child.code}
+                onClick={()=>handleCurrencySelection(child)}
                 className="flex text-muted hover:text-main items-center gap-1 mt-1 cursor-pointer"
               >
                 <span className="text-menu font-body">{child.title}</span>
                 <span className="text-menu uppercase">
-                  {" "}
-                  ({child.code} {child.symbol}){" "}
+                  
+                  ({child.code} {child.symbol})
                 </span>
               </DropdownMenuItem>
             </motion.div>
@@ -144,7 +161,7 @@ const DownMenuCTA = ({ item }: { item: any }) => {
   );
 };
 
-// Dropdown menu for items
+// Dropdown menu for MENU ITEM / S
 const DownMenu = ({ item }: { item: any }) => {
   const [open, isOpen] = useState(false);
   return (
@@ -239,7 +256,6 @@ const DownSearch = ({ title }: { title: string }) => {
 };
 
 export default function NavigationBar() {
-  
   return (
     <div className="fixed w-full z-50">
       <div className="grid grid-cols-3 items-center h-20 bg-background border px-4 md:px-14">
@@ -269,33 +285,33 @@ export default function NavigationBar() {
 
         {/* CTA Items */}
         <div className="hidden md:flex justify-end items-center font-body text-menu text-muted gap-8">
-  {cta.map((item) => {
-    // 1. Handle "Cart" - No wrapper needed if CartSheet handles its own style
-    if (item.title === "Cart") {
-      return <CartSheet key="cart-sheet" />;
-    }
+          {cta.map((item) => {
+            // 1. Handle "Cart"
+            if (item.title === "Cart") {
+              return <CartSheet key="cart-sheet" />;
+            }
 
-    // 2. Handle Search
-    if (item.title === "Search") {
-      return <DownSearch key="search-cta" title={item.title} />;
-    }
+            // 2. Handle Search
+            if (item.title === "Search") {
+              return <DownSearch key="search-cta" title={item.title} />;
+            }
 
-    // 3. Handle Dropdowns
-    if (item.children) {
-      return <DownMenuCTA key={item.title} item={item} />;
-    }
+            // 3. Currency Selction Dropdowm
+            if (item.children) {
+              return <DownMenuCTA key={item.title} item={item} />;
+            }
 
-    // 4. Handle Plain Text Links (The only ones that need the span hover)
-    return (
-      <span
-        key={item.title}
-        className="uppercase cursor-pointer hover:text-main transition-colors duration-400 ease-in-out"
-      >
-        {item.title}
-      </span>
-    );
-  })}
-</div>
+            // 4. Handle Plain Text Links 
+            return (
+              <span
+                key={item.title}
+                className="uppercase cursor-pointer hover:text-main transition-colors duration-400 ease-in-out"
+              >
+                {item.title}
+              </span>
+            );
+          })}
+        </div>
 
         {/* Mobile Navigation */}
         <div className="md:hidden lg:hidden col-span-3 grid grid-cols-3 items-center w-full">
@@ -319,9 +335,6 @@ export default function NavigationBar() {
           </div>
         </div>
       </div>
-
- 
-  
     </div>
   );
 }

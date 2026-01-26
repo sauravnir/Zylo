@@ -30,9 +30,11 @@ const initialState: CartState = {
 //createSelector is a redux library that lets us acess that data inside the redux store 
 const selectCartItems = (state:RootState) => state.cart.items;
 // Calculating the total checkout amount and exporting it 
+// The values are only calculated if the input is changed usingt createSelector
 export const totalCheckoutAmount = createSelector(
   [selectCartItems],  // initial value 
-  (items) => items.reduce((acc , item )=> acc + (item.price * item.itemCartQuantity), 0) //logic implementation
+  // Adding the price * quantity to the total
+  (items) => items.reduce((total , item )=> total + (item.price * item.itemCartQuantity), 0) //logic implementation
 ) 
 
 export const cartSlice = createSlice({
@@ -41,22 +43,20 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     // Loading the array asynchr.. and adding to the slice
-    addItem: (state, action: PayloadAction<{product : ProductCardProps ; size : string , itemQuantity : number }>) => {
+    addItem: (state, action: PayloadAction<{product : ProductCardProps ; size : string , itemQuantity : number}>) => {
     //   Destructing the payloads from the user
       const {product , size , itemQuantity} = action.payload;
         // Checking if the item is already present in the cart
       const existingItem = state.items.find((item)=>item.slug === product.slug && item.productSize === size)
         // if the items exists then increasing the product quantity else creating a new row of product an appending the props 
       if (existingItem){
-        existingItem.itemCartQuantity += itemQuantity; 
-        
+        existingItem.itemCartQuantity += itemQuantity;
       } else { 
         state.items.push({
         ...product , 
-        itemCartQuantity:itemQuantity ,
+        itemCartQuantity:itemQuantity,
         productSize : size
         })
-        
       }
     // Increasing the global items number 
     state.totalItems += itemQuantity; 
@@ -90,13 +90,14 @@ export const cartSlice = createSlice({
     setCartOpen : (state , action :PayloadAction<boolean>)=>{
       state.cartOpen = action.payload;
     },
+    // Handling cart population 
     setIsUploading : (state , action : PayloadAction<boolean>)=>{
       state.isUploading = action.payload ; 
     },
     // Storing the user note 
     addNote : (state , action : PayloadAction<{note :string}>) => {
-      const {note} = action.payload
-      state.orderNote = note 
+      const {note} = action.payload;
+      state.orderNote = note;
     }
   },
 });

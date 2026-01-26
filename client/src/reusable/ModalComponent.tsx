@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/accordion";
 // Importing Custom cursor
 import { Cursor } from "./Cursor";
-
+import { Price } from "./Price";
 // Importing Redux Toolkits essentials 
 
 import { addItem, setCartOpen ,setIsUploading } from "@/store/slices/cartSlice";
@@ -253,9 +253,7 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
             <h1 className="text-main uppercase text-modal-title tracking-widest">
               {props.title}
             </h1>
-            <span className="text-main/70 uppercase text-paragraph tracking-narrow block">
-              Rs. {props.price}
-            </span>
+            <Price amount ={props.price} />
           </div>
 
           {/* Conditionally rendering the description , product care and colors in Product Page */}

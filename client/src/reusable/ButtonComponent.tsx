@@ -63,6 +63,8 @@ interface PrimaryButtonProps {
     isDisabled : boolean , 
     onClick : ()=>void ;
 }
+
+// ADD To Cart Buton
 export const PrimaryButton = ({name , isDisabled , onClick}:PrimaryButtonProps) => {
 
   // Handling the loading bar inside the button 

@@ -3,7 +3,10 @@ import { HashRouter, Routes, Route, useLocation } from "react-router-dom";
 import './index.css'
 import HomePage from './pages/Home';
 import { ProductPage } from './pages/Products';
-import { CustomLoader } from './reusable/CustomLoader';
+import { CustomLoader } from './reusable/CustomLoader'
+import {type AppDispatch } from './store/store';
+import { useDispatch } from 'react-redux';
+import { fetchLiveRates } from './store/slices/currencySlice';
 // Scrolling the page on top while new page navigate
 const ScrolltoTop = () =>{
   const location = useLocation();
@@ -16,9 +19,8 @@ const ScrolltoTop = () =>{
   return null;
 }
 
-// 
-
 function App() {
+  
 
   // Handling the Custom loader. Applying only display once logic
   const [showLoader, setShowLoader] = useState(() => {
@@ -28,12 +30,17 @@ function App() {
     return false;
   });
 
-  
   const handleLoaderFinish = () => {
     sessionStorage.setItem("zylo-loaded", "true");
     setShowLoader(false);
   };
 
+  // Setting up dispatch function from the store
+  const dispatch = useDispatch<AppDispatch>();
+  // Fetching the currencies when page load 
+  useEffect(()=>{
+    dispatch(fetchLiveRates());
+  },[dispatch])
   return (
     <>
      {showLoader && <CustomLoader onFinish={handleLoaderFinish} />}
