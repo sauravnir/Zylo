@@ -328,7 +328,7 @@ export function OrderConfirmation() {
             </AccordionItem>
           </Accordion>
         </div>
-        <div className="flex flex-col md:flex-row lg:flex-row md:justify-center mt-6">
+        <div className="flex flex-col items-center md:flex-row lg:flex-row md:justify-center mt-6">
           
             <Button
             disabled
