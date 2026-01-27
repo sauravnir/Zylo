@@ -27,6 +27,7 @@ export default function CheckoutPage() {
       <CheckoutNav />
       <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-8 py-12 md:py-8 border-l border-r ">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 ">
+          {/* Checkout Form  */}
           <div className="order-2 lg:order-1 lg:col-span-7 space-y-10 p-4 border-r ">
             <CheckoutForm />
           </div>

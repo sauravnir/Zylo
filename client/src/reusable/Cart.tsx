@@ -25,7 +25,7 @@ import {
   updateQuantity,
   setIsUploading,
 } from "@/store/slices/cartSlice";
-
+import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 
 import { Price } from "./Price";
@@ -33,13 +33,16 @@ import { Link, useNavigate } from "react-router-dom";
 
 // Overall Cart Sheet Drawer
 export const CartSheet = () => {
+  // Getting the cart url
+  const location = useLocation();
+  const isOnCartPage = location.pathname === "/cart"
   const dispatch = useDispatch();
   const storeValue = useSelector((state: RootState) => state.cart.items);
   const totalItems = useSelector((state: RootState) => state.cart.totalItems);
   const isCartOpen = useSelector((state: RootState) => state.cart.cartOpen);
   const checkoutAmount = useSelector(totalCheckoutAmount);
   const globalNote = useSelector((state: RootState) => state.cart.orderNote);
-  const { rate, symbol } = useSelector((state: RootState) => state.currency);
+  const {activeCurrency, rate, symbol } = useSelector((state: RootState) => state.currency);
   // Handling the cart Open Logic
   const handleCartOpen = (open: boolean) => {
     dispatch(setCartOpen(open));
@@ -83,7 +86,7 @@ export const CartSheet = () => {
   if (!isMounted) return null;
 
   return (
-    <Sheet open={isCartOpen} onOpenChange={handleCartOpen}>
+    <Sheet open={!isOnCartPage && isCartOpen} onOpenChange={handleCartOpen}>
       <SheetTrigger asChild>
         <Badge
           badgeContent={totalItems}
@@ -215,7 +218,7 @@ export const CartSheet = () => {
 
                 <PrimaryButton
                   isDisabled={false}
-                  name={`Checkout — ${symbol} ${convertedCheckout}`}
+                  name={`Checkout —  ${symbol} ${convertedCheckout} (${activeCurrency})`}
                   onClick={handleCheckout}
                   type="button"
                 />

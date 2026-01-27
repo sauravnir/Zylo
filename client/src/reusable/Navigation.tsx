@@ -144,20 +144,27 @@ const DownMenuCTA = ({ item }: { item: any }) => {
             {item.title}
           </DropdownMenuLabel>
 
-          {item.children.map((child: any) => (
-            <motion.div variants={itemVariants}>
+          {item.children.map((child: any) => {
+            const isActive = activeCurrency === child.code;
+            return (
+              <motion.div variants={itemVariants}>
               <DropdownMenuItem
                 key={child.code}
                 onClick={() => handleCurrencySelection(child)}
-                className="flex text-muted hover:text-main items-center gap-1 mt-1 cursor-pointer"
+                className={`flex text-muted hover:text-main items-center gap-1 mt-1 cursor-pointer active:text-main
+                   ${isActive ? "text-main font-medium" :""}
+                  `}
               >
+                {isActive && <div className="h-1 w-1 rounded-full bg-main mr-1"/>}
                 <span className="text-menu font-body">{child.title}</span>
                 <span className="text-menu uppercase">
                   ({child.code} {child.symbol})
                 </span>
+                
               </DropdownMenuItem>
             </motion.div>
-          ))}
+            )
+          })}
         </motion.div>
       </DropdownMenuContent>
     </DropdownMenu>
@@ -347,20 +354,20 @@ export function CheckoutNav() {
     <div className="fixed w-full z-50 sticky top-0">
       <div className="grid grid-cols-3 items-center h-24 bg-background border px-4 md:px-14">
         {/* Left empty side */}
-        <div className="flex justify-center"/>
-       
-{/* Center Logo */}
+        <div className="flex justify-center" />
+
+        {/* Center Logo */}
         <div className="flex justify-center">
           <Link to="/" className="transition-opacity hover:opacity-80">
-            <img  src={Logo} alt="Zylo" className="h-24 w-auto"/>
+            <img src={Logo} alt="Zylo" className="h-24 w-auto" />
           </Link>
         </div>
-{/* Shopping cart */}
+        {/* Shopping cart */}
         <div className="flex justify-end md:justify-center lg:justify-center items-center">
-          <Link to='/cart'>
-          <div className="w-14 h-14 bg-neutral-100 hover:bg-neutral-300 rounded-full flex items-center justify-center ">
-            <ShoppingCart size={20} className="text-main/70" />
-          </div>
+          <Link to="/cart">
+            <div className="w-14 h-14 bg-neutral-100 hover:bg-neutral-300 rounded-full flex items-center justify-center ">
+              <ShoppingCart size={20} className="text-main/70" />
+            </div>
           </Link>
         </div>
       </div>

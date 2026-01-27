@@ -90,7 +90,7 @@ const handleCheckout = async () => {
 
             {/* Right Side  */}
             <aside className="lg:col-span-5 bg-muted/10 p-8 sticky top-32">
-              <h2 className="text-menu uppercase tracking-widest text-main mb-8">
+              <h2 className="text-menu uppercase tracking-widest text-main mb-8 font-bold">
                 Order Summary
               </h2>
 

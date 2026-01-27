@@ -2,7 +2,6 @@ import {configureStore} from "@reduxjs/toolkit"
 import cartReducer from "./slices/cartSlice" 
 import currencyReducer from "./slices/currencySlice"
 import {loadLocalCart , storeLocalCart} from "./storage/cartStorage"
-
 // Pre-storing the localStorage data inside the store / Persisted State storage
 const preCartData = loadLocalCart();
 // Creating a global store
@@ -26,6 +25,7 @@ store.subscribe(()=>{
         orderNote : store.getState().cart.orderNote
     })
 })
+
 
 // Creating default types from the store
 export type RootState = ReturnType<typeof store.getState>

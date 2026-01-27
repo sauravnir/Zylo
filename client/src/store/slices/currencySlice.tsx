@@ -1,6 +1,17 @@
 import { createSlice , createAsyncThunk ,type PayloadAction } from "@reduxjs/toolkit";
 import  { BASE_RATE , BASE_SYMBOL  , BASE_CODE , BASE_NAME , fetchCurrencyRates} from "../API/currencyAPI";
 
+// Creating the local storage key
+const LOCAL_CURRENCY = 'currency'
+
+// Loading the initial localStorage item and setting in the default state
+const getStorageCurrency = () => {
+    if(typeof window === "undefined") return null;
+    const savedCurrency = localStorage.getItem(LOCAL_CURRENCY);
+    return savedCurrency ? JSON.parse(savedCurrency): null ;
+}
+const storageCurrency = getStorageCurrency(); 
+
 // Typecasting based on the Currency Object in NAVBAR
 interface CurrencyItem{
     title: string,
@@ -15,22 +26,24 @@ interface CurrencyState {
     symbol : string , 
     rate : number , 
     allRates : Record <string , number> ,
-    status : "idle" | 'loading' | 'fulfilled' | 'failed'
+    status : "idle" | 'loading' | 'fulfilled' | 'failed',
+  
 }
 // Setting the initial state value
 const initialState : CurrencyState = {
-    currencyName : BASE_NAME,
-    activeCurrency : BASE_CODE,
-    symbol : BASE_SYMBOL ,
-    rate :BASE_RATE,
+    currencyName : storageCurrency?.title || BASE_NAME,
+    activeCurrency : storageCurrency?.code || BASE_CODE,
+    symbol : storageCurrency?.symbol || BASE_SYMBOL ,
+    rate :storageCurrency?.rate || BASE_RATE,
     allRates : {},
-    status:'idle',
+    status:'idle', 
 }
+
 
 // Creating an AsyncThunk method that handles the API. It uses createAsyncThunk logic
 //When creating a thunk , it automatically creates three states : Pending , Fulfilled and Rejected
 // We need to handle these states separately inside the extraReducers inside the slice
-export const fetchLiveRates = createAsyncThunk('currency/fetchLiveRates', async ()=>{
+export const fetchLiveRates = createAsyncThunk('fetchLiveRates', async ()=>{
     const liveRates = await fetchCurrencyRates();
     return liveRates ;
 })
@@ -46,15 +59,19 @@ export const currencySlice = createSlice({
             const upperCaseCode = code.toUpperCase()
             // Setting the activeCurrency
             state.activeCurrency = upperCaseCode; 
-            state.symbol = symbol ;
+            state.symbol = symbol;
             state.currencyName = title ; 
             // Checking if the selected currency is present in our api or not 
             if (state.allRates[upperCaseCode]){
-                state.rate = state.allRates[upperCaseCode];
+                state.rate = state.allRates[upperCaseCode]; 
             } else {
                 state.rate = upperCaseCode ===  BASE_CODE ? BASE_RATE : state.rate ;
             }
-        }   
+
+            // Saving the data to LocalStorage after the user selects
+            localStorage.setItem(LOCAL_CURRENCY, JSON.stringify(action.payload))
+            
+        } 
     },
     // Handling the pending , fulfilled and rejected states from the creatAsyncThunk
     extraReducers : (builder) => {
@@ -78,6 +95,5 @@ export const currencySlice = createSlice({
         })
     }
 })
-
-export const {setCurrency} = currencySlice.actions
+export const {setCurrency } = currencySlice.actions
 export default currencySlice.reducer

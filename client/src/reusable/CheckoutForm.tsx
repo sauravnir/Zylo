@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   checkoutSchema,
   type CheckoutFormValidation,
-} from "./schemas/checkoutForm-schema";
+} from "../schemas/checkoutForm-schema";
 import {
   Form,
   FormControl,
@@ -30,9 +30,7 @@ export function CheckoutForm() {
   const dispatch = useDispatch();
   const orderNote = useSelector((state: RootState) => state.cart.orderNote);
 
-
   // Creating a form validation state using zod and react-hook-form
-
   const form = useForm<CheckoutFormValidation>({
     resolver: zodResolver(checkoutSchema),
     defaultValues: {
@@ -49,10 +47,7 @@ export function CheckoutForm() {
     },
   });
 
-  //   Storing the form state automatically from react-hook-forms
-const {
-    formState:{isValid , isDirty}
-} = form;
+
   // form submit action logic
   const onFormSubmit = (data: CheckoutFormValidation) => {
     console.log("Data", data);
@@ -245,7 +240,7 @@ const {
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-nav uppercase tracking-widest">
-                  Zip{" "}
+                  Zip Code
                 </FormLabel>
                 <FormControl>
                   <Input placeholder="Zip Code" {...field} />
@@ -266,7 +261,7 @@ const {
 {/* Form Submit Button */}
           <PrimaryButton
             type="submit"
-            isDisabled={!isValid || !isDirty}
+            isDisabled={false}
             name="Place Order"
             onClick={() => {}}
           />
