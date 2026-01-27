@@ -279,7 +279,7 @@ export function OrderConfirmation() {
               </AccordionTrigger>
               <AccordionContent>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2  p-8">
-                  <div className="p-2 border-r border-muted ">
+                  <div className="p-2 md:border-r border-muted ">
                     <div className="flex flex-row items-center gap-2">
                       <Truck size={20} />
                       <h1 className="font-bold text-menu uppercase">
@@ -312,7 +312,7 @@ export function OrderConfirmation() {
                     </div>
                   </div>
 
-                  <div className="flex flex-col items-end p-2">
+                  <div className="flex flex-col md:items-end mt-4 md:mt-0 p-2">
                     <div className="flex flex-row items-center gap-2">
                       <Banknote size={20} />
                       <h1 className="font-bold text-menu uppercase">
