@@ -23,13 +23,14 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@/store/store";
-import { addNote } from "@/store/slices/cartSlice";
+import { addNote , clearCart ,setIsUploading } from "@/store/slices/cartSlice";
 import { PrimaryButton } from "./ButtonComponent";
-
-export function CheckoutForm() {
+import { useNavigate } from "react-router-dom";
+export function CheckoutForm({amount, symbol  , onStartSubmitting}:{amount:number , symbol:string , onStartSubmitting:()=>void}) {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const cartItems = useSelector((state:RootState)=> state.cart.items);
   const orderNote = useSelector((state: RootState) => state.cart.orderNote);
-
   // Creating a form validation state using zod and react-hook-form
   const form = useForm<CheckoutFormValidation>({
     resolver: zodResolver(checkoutSchema),
@@ -43,14 +44,30 @@ export function CheckoutForm() {
       city: "",
       address: "",
       zip: "",
-      payment_method: "cod",
+      payment_method: "Cash on delivery",
     },
   });
 
 
   // form submit action logic
-  const onFormSubmit = (data: CheckoutFormValidation) => {
-    console.log("Data", data);
+  const onFormSubmit = async (formData: CheckoutFormValidation) => {
+    // Calling the startSubmitting state from the Parent Component i.e CheckoutPage to remove the navigation to cart page error 
+    onStartSubmitting();
+    dispatch(setIsUploading(true));
+    // Creating the final order object and passing into the useLocation state
+    const confirmOrder = {
+      customerData : formData , 
+      items : cartItems,
+      orderSummary : {
+        amount ,
+        symbol,
+        orderNumber : `ZY-${Math.floor(Math.random() * 900)+1000}`
+      }
+    };
+    
+    await new Promise((resolve)=>setTimeout(resolve , 2000));
+    dispatch(setIsUploading(false));
+    navigate('/thank-you' , {state: {order:confirmOrder}});
   };
   return (
     <Form {...form}>
@@ -263,7 +280,7 @@ export function CheckoutForm() {
             type="submit"
             isDisabled={false}
             name="Place Order"
-            onClick={() => {}}
+            onClick={()=>onFormSubmit}
           />
         </div>
       </form>

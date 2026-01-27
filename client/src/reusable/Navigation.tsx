@@ -272,7 +272,7 @@ export function NavigationBar() {
         {/* Logo Component */}
         <div className="hidden md:flex justify-start">
           <Link to="/">
-            <img src={Logo} alt="Zylo" className="h-20 w-auto" />
+            <img src={Logo} alt="Zylo" className="h-20 w-auto hover:opacity-80" />
           </Link>
         </div>
 
@@ -332,7 +332,7 @@ export function NavigationBar() {
           {/* Center - Logo */}
           <div className="flex justify-center">
             <Link to="/">
-              <img src={Logo} alt="Zylo" className="h-20 w-auto" />
+              <img src={Logo} alt="Zylo" className="h-20 w-auto hover:opacity-80 " />
             </Link>
           </div>
 

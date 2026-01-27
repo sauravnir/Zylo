@@ -11,6 +11,8 @@ import { CustomLoader } from "./reusable/CustomLoader";
 import { type AppDispatch, type RootState } from "./store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchLiveRates } from "./store/slices/currencySlice";
+import { OrderConfirmation } from "./pages/orderSuccess";
+import { Toaster } from "sonner";
 
 // Scrolling the page on top while new page navigate
 const ScrolltoTop = () => {
@@ -25,7 +27,6 @@ const ScrolltoTop = () => {
 };
 
 function App() {
-  
   // Handling the Custom loader. Applying only display once logic
   const [showLoader, setShowLoader] = useState(() => {
     if (typeof window !== "undefined") {
@@ -48,13 +49,16 @@ function App() {
   return (
     <>
       {showLoader && <CustomLoader onFinish={handleLoaderFinish} />}
+      <Toaster richColors position="top-center"/>
       <HashRouter>
         <ScrolltoTop />
         <Routes>
+          {/* <Toaster /> */}
           <Route path="/" element={<HomePage />} />
           <Route path="/products/:slug" element={<ProductPage />} />
           <Route path="/cart" element={<CartPage />} />
-            <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
+          <Route path="/thank-you" element={<OrderConfirmation />} />
         </Routes>
       </HashRouter>
     </>

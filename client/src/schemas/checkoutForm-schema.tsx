@@ -11,7 +11,7 @@ export const checkoutSchema = z.object({
   city:z.string().min(1,"Please provide your city"),
   address : z.string().min(10, "Please provide detailed address"),
   zip : z.string().min(5,"Please provide a zip code").optional().or(z.literal("")),
-  payment_method : z.enum(["cod","e-sewa","khalti","fonepay"]).refine(
+  payment_method : z.enum(["Cash on delivery","e-sewa","khalti","fonepay"]).refine(
     (value) => value !== undefined && value !== null,
     { message: "Payment method is required" }
   ),
