@@ -1,30 +1,34 @@
-import { createSlice, type PayloadAction  , createSelector } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  type PayloadAction,
+  createSelector,
+} from "@reduxjs/toolkit";
 import type { ProductCardProps } from "@/reusable/CardComponent";
 import type { RootState } from "../store";
 
 // Type casting the payload
-export interface CartProps extends ProductCardProps{
+export interface CartProps extends ProductCardProps {
   // Quantity of each product
-  itemCartQuantity : number
+  itemCartQuantity: number;
   // Size of each product
-  productSize : string;
+  productSize: string;
 }
 export interface CartState {
-    items : CartProps[],
-    // total items in the cart
-    totalItems : number,
-    // State for cart open property
-    cartOpen : boolean,
-    isUploading : boolean , 
-    orderNote : string,
+  items: CartProps[];
+  // total items in the cart
+  totalItems: number;
+  // State for cart open property
+  cartOpen: boolean;
+  isUploading: boolean;
+  orderNote: string;
 }
 // Setting the initial state null for an empty cart
 const initialState: CartState = {
   items: [],
-  totalItems : 0, 
-  cartOpen : false,
-  isUploading : false, 
-  orderNote : "",
+  totalItems: 0,
+  cartOpen: false,
+  isUploading: false,
+  orderNote: "",
 };
 
 export const cartSlice = createSlice({
@@ -33,100 +37,129 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     // Loading the array asynchr.. and adding to the slice
-    addItem: (state, action: PayloadAction<{product : ProductCardProps ; size : string , itemQuantity : number}>) => {
-    //   Destructing the payloads from the user
-      const {product , size , itemQuantity} = action.payload;
-        // Checking if the item is already present in the cart
-      const existingItem = state.items.find((item)=>item.slug === product.slug && item.productSize === size)
-        // if the items exists then increasing the product quantity else creating a new row of product an appending the props 
-      if (existingItem){
-        existingItem.itemCartQuantity += itemQuantity;
-      } else { 
-        state.items.push({
-        ...product , 
-        itemCartQuantity:itemQuantity,
-        productSize : size
-        })
-      }
-    // Increasing the global items number 
-    state.totalItems += itemQuantity; 
-    // Setting the global cart open state
-    state.cartOpen = true ;
-    },
-    removeItem: (state , action : PayloadAction<{slug : string , size: string}>) => {
-      // Destructuring the payloads from the user 
-        const {slug , size} = action.payload;
-        // Checking if the items exists in the store or not
-        const existingItem = state.items.find((item)=>item.slug === slug && item.productSize === size);
-        if (existingItem) {
-    if (existingItem.itemCartQuantity > 1) {
-      // Just reducing the number by 1
-      existingItem.itemCartQuantity -= 1;
-      state.totalItems -= 1; // Subtract 1 from global count
-    } else {
-    //  Clearing the item quantity
-      state.totalItems -= existingItem.itemCartQuantity; 
-      state.items = state.items.filter(
-        (item) => !(item.slug === slug && item.productSize === size)
+    addItem: (
+      state,
+      action: PayloadAction<{
+        product: ProductCardProps;
+        size: string;
+        itemQuantity: number;
+      }>,
+    ) => {
+      //   Destructing the payloads from the user
+      const { product, size, itemQuantity } = action.payload;
+      // Checking if the item is already present in the cart
+      const existingItem = state.items.find(
+        (item) => item.slug === product.slug && item.productSize === size,
       );
-    }
-  }
-        // Removing the OrderNote if the cart is empty and setting the totalItems value to 0 for safety 
-        if(state.items.length === 0){
-          state.orderNote = "";
-          state.totalItems = 0;
-        }
+      // if the items exists then increasing the product quantity else creating a new row of product an appending the props
+      if (existingItem) {
+        existingItem.itemCartQuantity += itemQuantity;
+      } else {
+        state.items.push({
+          ...product,
+          itemCartQuantity: itemQuantity,
+          productSize: size,
+        });
+      }
+      // Increasing the global items number
+      state.totalItems += itemQuantity;
+      // Setting the global cart open state
+      state.cartOpen = true;
     },
-    // Clearing the overall Cart 
-    clearCart : (state) => {
-     state.items = [];
-     state.totalItems = 0;
+    removeItem: (
+      state,
+      action: PayloadAction<{ slug: string; size: string }>,
+    ) => {
+      // Destructuring the payloads from the user
+      const { slug, size } = action.payload;
+      // Checking if the items exists in the store or not
+      const existingItem = state.items.find(
+        (item) => item.slug === slug && item.productSize === size,
+      );
+      
+      if (existingItem) {
+        //  Clearing the item quantity
+        state.totalItems -= existingItem.itemCartQuantity;
+        state.items = state.items.filter(
+          (item) => !(item.slug === slug && item.productSize === size),
+        );
+      }
+      // Removing the OrderNote if the cart is empty and setting the totalItems value to 0 for safety
+      if (state.items.length === 0) {
+        state.orderNote = "";
+        state.totalItems = 0;
+      }
     },
-    // Calculating the Plus and Minus quantity inside the cart 
-    updateQuantity : (state , action :  PayloadAction<{slug: string , size: string , type:'add'|'sub'}>)=>{
-      const {slug ,size, type} = action.payload;
-      // Checking if the item exists 
-      const existingItem = state.items.find((item)=> item.slug === slug && item.productSize === size);
+    // Clearing the overall Cart
+    clearCart: (state) => {
+      state.items = [];
+      state.totalItems = 0;
+    },
+    // Calculating the Plus and Minus quantity inside the cart
+    updateQuantity: (
+      state,
+      action: PayloadAction<{
+        slug: string;
+        size: string;
+        type: "add" | "sub";
+      }>,
+    ) => {
+      const { slug, size, type } = action.payload;
+      // Checking if the item exists
+      const existingItem = state.items.find(
+        (item) => item.slug === slug && item.productSize === size,
+      );
       // Adding and Subtracting the productQuantity
-      if(existingItem){
-        if(type === 'add'){
-          existingItem.itemCartQuantity += 1 ;
-          state.totalItems +=1;
-        }else if (type==="sub" && existingItem.itemCartQuantity > 1){
+      if (existingItem) {
+        if (type === "add") {
+          existingItem.itemCartQuantity += 1;
+          state.totalItems += 1;
+        } else if (type === "sub" && existingItem.itemCartQuantity > 1) {
           existingItem.itemCartQuantity -= 1;
-          state.totalItems -=1;
+          state.totalItems -= 1;
         }
-      } 
+      }
     },
     // Handling the global cart open function
-    setCartOpen : (state , action :PayloadAction<boolean>)=>{
+    setCartOpen: (state, action: PayloadAction<boolean>) => {
       state.cartOpen = action.payload;
     },
-    // Handling cart population 
-    setIsUploading : (state , action : PayloadAction<boolean>)=>{
-      state.isUploading = action.payload ; 
+    // Handling cart population
+    setIsUploading: (state, action: PayloadAction<boolean>) => {
+      state.isUploading = action.payload;
     },
-    // Storing the user note 
-    addNote : (state , action : PayloadAction<{note :string}>) => {
-      const {note} = action.payload;
+    // Storing the user note
+    addNote: (state, action: PayloadAction<{ note: string }>) => {
+      const { note } = action.payload;
       state.orderNote = note;
-    }
+    },
   },
 });
 
-//createSelector is a redux library that lets us acess that data inside the redux store 
-const selectCartItems = (state:RootState) => state.cart.items;
-// Calculating the total checkout amount and exporting it 
+//createSelector is a redux library that lets us acess that data inside the redux store
+const selectCartItems = (state: RootState) => state.cart.items;
+// Calculating the total checkout amount and exporting it
 // The values are only calculated if the input is changed usingt createSelector
 export const totalCheckoutAmount = createSelector(
-  [selectCartItems],  // initial value 
+  [selectCartItems], // initial value
   // Adding the price * quantity to the total
-  (items) => items.reduce((total , item )=> total + (item.price * item.itemCartQuantity), 0) //logic implementation
-) 
-
+  (items) =>
+    items.reduce(
+      (total, item) => total + item.price * item.itemCartQuantity,
+      0,
+    ), //logic implementation
+);
 
 // Creating Action Creators for each reducer actions
-// Think this as the method for the reducers 
-export const {addItem , removeItem , clearCart ,updateQuantity , setCartOpen , setIsUploading , addNote} = cartSlice.actions
+// Think this as the method for the reducers
+export const {
+  addItem,
+  removeItem,
+  clearCart,
+  updateQuantity,
+  setCartOpen,
+  setIsUploading,
+  addNote,
+} = cartSlice.actions;
 // Exporting the main reducer object from the slice
-export default cartSlice.reducer
+export default cartSlice.reducer;

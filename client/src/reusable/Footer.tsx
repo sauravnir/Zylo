@@ -1,5 +1,3 @@
-import React from "react"
-
 import { PrimaryButton } from "./ButtonComponent"
 import { Input } from "@/components/ui/input"
 import { FOOTER_LINKS } from "@/objects/Objects"
@@ -9,7 +7,7 @@ import { Copyright } from "lucide-react"
 export function Footer (){
     return (
     
-    <div className="relative overflow-hidden bg-muted/15 z-40 border">
+    <div className="relative overflow-hidden bg-muted/15  border">
         <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 w-full py-6 md:py-14 px-2 md:px-10">
             {/* CTA Section  */}
             <div className="flex flex-col space-y-6 p-2">

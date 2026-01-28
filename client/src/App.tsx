@@ -11,12 +11,13 @@ import { useDispatch } from "react-redux";
 import { fetchLiveRates } from "./store/slices/currencySlice";
 import { OrderConfirmation } from "./pages/orderSuccess";
 import { Toaster } from "sonner";
-
+import { SearchPage } from "./pages/SearchPage";
+import { Collections } from "./pages/Collections";
 
 // Scrolling the page on top while new page navigate
 const ScrolltoTop = () => {
   const location = useLocation();
-
+ 
   useEffect(() => {
     const element = document.documentElement || document.body;
     element.scrollTop = 0;
@@ -58,6 +59,8 @@ function App() {
           <Route path="/cart" element={<CartPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/thank-you" element={<OrderConfirmation />} />
+          <Route path="/search" element={<SearchPage />}/>
+          <Route path="/collections/:category" element={<Collections />}/>
         </Routes>
       </HashRouter>
     </>

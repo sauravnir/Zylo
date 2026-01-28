@@ -14,18 +14,18 @@ export default function Hero() {
     className="absolute inset-0"
   >
     <video 
-      src={HeroVideo} 
+      // src={} 
       autoPlay 
       loop 
       muted 
       playsInline 
      
-      className="w-full h-full object-cover"
+      className="w-full h-full bg-primary object-cover"
     />
     <div className="absolute inset-0 bg-black/60" />
   </motion.div>
 {/* Hero Zylo Logo */}
-  {/* <motion.div
+  <motion.div
     initial={{ opacity: 0, scale: 0.9 }}
     animate={{ opacity: 1, scale: 1 }}
     transition={{ duration: 0.7, delay: 0.8 }}
@@ -36,7 +36,7 @@ export default function Hero() {
       alt="LogoWhite"
       className="w-48 md:w-72 h-auto object-contain"
     />
-  </motion.div> */}
+  </motion.div>
 
 </div>
   );

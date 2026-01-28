@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { motion } from "motion/react";
-import { ChevronDown } from "lucide-react";
+import { ChevronDown, LoaderCircle } from "lucide-react";
 import { useSelector } from "react-redux";
 import type { RootState } from "@/store/store";
 import { CircularProgress } from "@mui/material";
@@ -92,14 +92,12 @@ export const PrimaryButton = ({
       >
         <span className="relative z-10 text-background text-button uppercase transition-colors duration-300 group-hover:text-primary group-active:text-muted">
           {uploadingItems ? (
-            <span className="flex items-center justify-center w-full h-full min-w-[16px] min-h-[16px]">
-              <CircularProgress
-                size={16}
-                thickness={4}
-                sx={{
-                  color: "inherit",
-                  display: "block",
-                }}
+           
+            <span className="inline-flex items-center justify-center">
+              <LoaderCircle
+                className="animate-spin"
+                size={14}
+                strokeWidth={2.5}
               />
             </span>
           ) : (

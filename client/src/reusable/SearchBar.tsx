@@ -5,18 +5,34 @@ import {
   DropdownMenuContent,
 } from "@radix-ui/react-dropdown-menu";
 import { useProducts } from "@/context/ProductContext";
-import { Search, X } from "lucide-react";
+import { Search, X ,Dot } from "lucide-react";
 import { motion } from "motion/react";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProductCard from "./CardComponent";
 import { Link } from "react-router-dom";
 import { PrimaryButton } from "./ButtonComponent";
+import { useSearchParams , useNavigate } from "react-router-dom";
 
 // Search bar dropdown component
 export const DownSearch = ({ title }: { title: string }) => {
   const [open, setOpen] = useState(false);
   const { searchTerm, setSearchItem, filteredProducts } = useProducts();
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  
+  //  Sending the search items in the url to maintain state
+const handleSearch = (e : any) => {
+    setSearchItem(e.target.value);
+    // Setting the url to q: searchTerm i.e the search input
+    setSearchParams({q:searchTerm});
+}
+
+// Handle View ALl Products key enter
+const goToSearch = () => {
+    navigate(`/search?q=${encodeURIComponent(searchTerm)}`)
+}
+ 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
@@ -29,30 +45,36 @@ export const DownSearch = ({ title }: { title: string }) => {
       </DropdownMenuTrigger>
 
       <DropdownMenuContent
-        sideOffset={20}
-        className="w-screen rounded-none bg-card py-8 mt-1 "
+        sideOffset={22}
+        className="w-screen rounded-none bg-card py-6 mt-1 shadow-2xl "
       >
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, ease: "circOut" }}
-          className="flex flex-row items-center justify-between px-6 md:px-12"
+          className="flex flex-row items-center justify-between px-6 md:px-12 "
         >
           <div className="flex items-center gap-4 flex-1">
-            <Search className="text-muted shrink-0" size={20} />
+            <Search className="text-muted shrink-0" size={24} />
             <Input
               type="text"
               autoFocus
-              className="text-h3 uppercase placeholder:text-muted/50 border-none bg-transparent focus-visible:ring-0 focus-visible:ring-offset-0 w-full p-0 h-auto"
+              className="shadow-none text-base md:text-product-title uppercase placeholder:text-main/50 border-none bg-card focus-visible:ring-0 focus-visible:ring-offset-0 w-full  h-auto"
               placeholder="Search here"
               value={searchTerm}
-              onChange={(e) => setSearchItem(e.target.value)}
+              onChange={handleSearch}
+            //   Handling enter press functionality if user presses enter
+              onKeyDown={(e)=> {
+                if (e.key === 'Enter'){
+                    goToSearch()
+                }
+              }}
             />
           </div>
           {/* Close Button */}
           <button onClick={() => setOpen(false)} className="ml-8 shrink-0">
             <X
-              size={20}
+              size={24}
               className="text-muted hover:text-main transition-colors"
             />
           </button>
@@ -62,13 +84,13 @@ export const DownSearch = ({ title }: { title: string }) => {
         {searchTerm.length > 0 && (
           <div className="absolute top-full left-0 w-full bg-card z-50 shadow-2xl">
             {filteredProducts.length > 0 ? (
-              <div className="flex flex-col md:grid-cols-[0.5fr_2.5fr] min-h-[300px] px-6">
+              <div className="md:grid-cols-[0.5fr_2.5fr] min-h-[300px] px-6">
                 <div className="p-4">
                   <Tabs
                     defaultValue="products"
-                    className=" w-full md:max-h-[450px] lg:max-h-[450px] overflow-y-auto"
+                    className=" w-full overflow-y-auto"
                   >
-                    <TabsList className="mb-4 bg-transparent  gap-4 p-0 h-auto">
+                    <TabsList className="mb-4 bg-transparent gap-4 p-0 h-auto">
                       <TabsTrigger
                         value="products"
                         className="
@@ -99,31 +121,33 @@ export const DownSearch = ({ title }: { title: string }) => {
                     </TabsList>
 
                     {/* Product tabs */}
-                    <TabsContent value="products">
-                      <div className="grid grid-cols-5 gap-6 mt-4 ">
-                        {/* Only displaying a maximum of 4 cards in the search bar */}
-                        {filteredProducts.slice(0, 5).map((product) => (
+                    <TabsContent value="products" className="mt-2">
+                      <div className="flex flex-col h-[250px] md:h-[380px] overflow-x-hidden md:grid md:grid-cols-6 lg:grid-cols-6 gap-6 mt-4 ">
+                        {/* Only displaying a maximum of 5 cards in the search bar */}
+                        {filteredProducts.slice(0, 6).map((product) => (
                           // Re-using the Product card component to display the products
                           // using the conditional isSearchContent to conditionally render the add to cart popup button at the bottom-left
                           <motion.div
                             initial={{ opacity: 0, y: -5 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{
-                              duration: 0.3,
-                              delay: 0.3,
+                              duration: 0.2,
+                              delay: 0.1,
                               ease: "easeIn",
+                              
                             }}
+                            className="w-full border-b border-gray-50 pb-4 md:border-none md:pb-0"
                           >
                             <ProductCard {...product} isSearchContent={true} />
                           </motion.div>
                         ))}
                       </div>
-                      <div className="flex justify-center items-center border-t py-6">
+                      <div className="flex justify-center items-center border-t pt-2">
                         {/* View All Results Button */}
                         <div className="md:w-1/3">
                           <PrimaryButton
                             isDisabled={false}
-                            onClick={() => {}}
+                            onClick={goToSearch}
                             name="View all results"
                           />
                         </div>
@@ -132,26 +156,28 @@ export const DownSearch = ({ title }: { title: string }) => {
 
                     {/* Collection Tabs */}
                     <TabsContent value="collections">
-                      <div className="grid grid-cols-4 gap-5 mt-4">
+                      <div className="flex flex-col items-start ">
                         {filteredProducts.slice(0, 4).map((item) => (
                           <motion.div
                             initial={{ opacity: 0, y: -5 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{
-                              duration: 0.3,
-                              delay: 0.3,
+                              duration: 0.2,
+                              delay: 0.2,
                               ease: "easeIn",
                             }}
+
+                            className="mt-2"
                           >
                             <Link
                               to="#"
-                              className=" border-r border-muted px-2"
+                              className=" border-muted"
                             >
                               <span
                                 key={item.id}
-                                className="text-main hover:text-muted uppercase text-base  hover:underline"
+                                className="flex items-center text-main hover:text-muted uppercase text-base  hover:underline"
                               >
-                                {item.category}
+                                <Dot/> {item.category}
                               </span>
                             </Link>
                           </motion.div>
@@ -164,11 +190,8 @@ export const DownSearch = ({ title }: { title: string }) => {
             ) : ( 
               <div className="p-20 text-center flex flex-col items-center justify-center">
                 <h1 className="text-base uppercase tracking-widest text-main font-bold">
-                  No results could be found.
+                  No results found
                 </h1>
-                <h3 className="text-main text-menu uppercase mt-4">
-                  Please search other items.
-                </h3>
               </div>
             )}
           </div>

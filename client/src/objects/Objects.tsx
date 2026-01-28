@@ -66,7 +66,7 @@ export const cta = [
   ],
 },
   { title: "Search", link: "/" },
-  { title: "Login", link: "/" },
+  // { title: "Login", link: "/" },
   { title: "Cart", link: "#" },
 ];
 

@@ -8,6 +8,7 @@ import { ProductProvider } from "./context/ProductContext";
 import { PRODUCTS_LIST } from "./objects/Objects";
 
 createRoot(document.getElementById('root')!).render(
+  // Wrapping the app with Context Provider and Redux Provider
   <ProductProvider data={PRODUCTS_LIST}>
     <Provider store={store}>
     <App />

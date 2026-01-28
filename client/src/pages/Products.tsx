@@ -1,4 +1,4 @@
-import React , {useEffect} from "react";
+import {useEffect} from "react";
 import {NavigationBar} from "@/reusable/Navigation";
 import { Footer } from "@/reusable/Footer";
 import { ProductMain } from "@/layout/Product/ProductMain";
@@ -6,7 +6,6 @@ import { PRODUCTS_LIST } from "@/objects/Objects";
 import { useNavigate, useParams } from "react-router-dom";
 
 export function ProductPage (){
-
     const navigate = useNavigate();
     // Grabbing the slug / id from the url using useParams
     const {slug} = useParams();
