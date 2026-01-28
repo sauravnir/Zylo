@@ -58,7 +58,7 @@ export const ProductProvider = ({
     }
     // Availability Filter Logic
     if (filters.availability !== "all") {
-      result = result.filter((p) => p.availability === filters.availability);
+      result = result.filter((p) => {p.availability === filters.availability});
     }
 
     // Sorting Logic

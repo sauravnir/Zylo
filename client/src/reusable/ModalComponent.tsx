@@ -395,7 +395,7 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
               onClick={addCartItems}
             />
             <PaymentButton
-              isDisabled={props.availability === "Sold Out"}
+              isDisabled={true}
               name="Pay with E-sewa"
             />
           </div>
