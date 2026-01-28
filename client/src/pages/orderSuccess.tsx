@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { NavigationBar } from "@/reusable/Navigation";
-import React, { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { clearCart } from "@/store/slices/cartSlice";
@@ -35,7 +34,7 @@ export function OrderConfirmation() {
   const location = useLocation();
   const navigation = useNavigate();
   const dispatch = useDispatch();
-  //    Accessing the data passed from the checkout page
+  // Accessing the data passed from the checkout page
   const orderDetails = location.state?.order;
   //   Copy to clipboard functionality
   const copyText = async (text: string) => {
@@ -103,6 +102,7 @@ export function OrderConfirmation() {
     <div className="min-h-screen bg-muted/5">
       <NavigationBar />
       <main className="max-w-4xl mx-auto px-4 md:px-20 py-32 md:py-40">
+        {/* Header Section */}
         <div className="flex flex-col text-center space-y-2  pb-4">
           <h1 className="text-center text-h3 text-main font-medium uppercase tracking-wide pb-4">
             <span>Thank you,</span>{" "}
@@ -150,8 +150,9 @@ export function OrderConfirmation() {
 
         <div id="zylo-receipt-download" className="px-4 mt-8 border rounded overflow-hidden bg-card shadow-sm">
           <Accordion type="single" defaultValue="Order Details" collapsible>
+            {/* Order Details */}
             <AccordionItem value="Order Details">
-              <AccordionTrigger className="text-[16px] font-bold uppercase tracking-widest">
+              <AccordionTrigger className="text-[16px] font-bold uppercase tracking-widest ">
                 Order Details
               </AccordionTrigger>
               <AccordionContent>
@@ -328,8 +329,8 @@ export function OrderConfirmation() {
             </AccordionItem>
           </Accordion>
         </div>
+        {/* End CTA's */}
         <div className="flex flex-col items-center md:flex-row lg:flex-row md:justify-center mt-6">
-          
             <Button
             disabled
               variant="ghost"
@@ -337,7 +338,6 @@ export function OrderConfirmation() {
             >
               Download Receipt
             </Button>
-          
           <Link to="/">
             <Button
               variant="ghost"

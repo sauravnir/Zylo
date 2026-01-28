@@ -1,4 +1,4 @@
-import React from "react"
+
 import type { ProductCardProps } from "@/reusable/CardComponent"
 import { ProductDetail } from "@/reusable/ModalComponent"
 export function ProductMain({...props}:ProductCardProps){

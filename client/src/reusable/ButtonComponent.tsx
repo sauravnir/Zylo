@@ -77,7 +77,7 @@ export const PrimaryButton = ({
   );
   return (
     <Button
-      className="relative overflow-hidden rounded-none p-0 group border border-primary w-full"
+      className="relative overflow-hidden rounded-none group border border-primary w-full"
       asChild
       size={"lg"}
       disabled={uploadingItems || isDisabled}

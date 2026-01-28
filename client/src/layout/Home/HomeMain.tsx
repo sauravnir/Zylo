@@ -1,4 +1,3 @@
-import react from "react";
 import { LinkDown } from "@/reusable/ButtonComponent";
 import { motion } from "motion/react";
 import ProductCard from "@/reusable/CardComponent";

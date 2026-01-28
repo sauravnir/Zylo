@@ -11,7 +11,7 @@ export const store  = configureStore({
         cart : cartReducer,
         currency : currencyReducer
      },
-    //  Hydrating the data inside the Cart Slice
+    //  Hydrating the data inside the Cart Slice on page render
      preloadedState : {
         cart : preCartData
      },
@@ -25,7 +25,6 @@ store.subscribe(()=>{
         orderNote : store.getState().cart.orderNote
     })
 })
-
 
 // Creating default types from the store
 export type RootState = ReturnType<typeof store.getState>

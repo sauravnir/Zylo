@@ -31,6 +31,11 @@ import { motion, AnimatePresence } from "motion/react";
 import { Price } from "./Price";
 import { Link, useNavigate } from "react-router-dom";
 
+
+
+
+
+
 // Overall Cart Sheet Drawer
 export const CartSheet = () => {
   // Getting the cart url
@@ -165,7 +170,7 @@ export const CartSheet = () => {
               transition={{ duration: 0.4, delay: 0.2, ease: "backIn" }}
               className="mt-auto pt-6 pb-8 px-8  border-t relative"
             >
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-4 pb-2">
                 <AnimatePresence>
                   {noteCart && (
                     <motion.div
@@ -218,7 +223,7 @@ export const CartSheet = () => {
 
                 <PrimaryButton
                   isDisabled={false}
-                  name={`Checkout —  ${symbol} ${convertedCheckout} (${activeCurrency})`}
+                  name={`Checkout —  ${symbol} ${convertedCheckout}`}
                   onClick={handleCheckout}
                   type="button"
                 />
@@ -309,7 +314,7 @@ export const CartItem = ({ item , isReadOnly }: { item: any ,isReadOnly : boolea
         </div>
 
 {/* Conditinally rendering these items  */}
-        {isReadOnly === false && <div className="flex items-center gap-6 mt-4">
+        {isReadOnly === false && <div className="flex items-center gap-4 mt-4">
           {/* Quantity Selector */}
           <div className="flex items-center border border-border w-fit">
             <button
@@ -351,6 +356,7 @@ export const CartItem = ({ item , isReadOnly }: { item: any ,isReadOnly : boolea
             )}
             <span>{removed ? "Removing..." : "Remove"}</span>
           </button>
+          
         </div>}
         
       </div>

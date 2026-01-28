@@ -22,9 +22,10 @@ export interface ProductCardProps {
   sizes: string[];
   availability: string;
   slug:string;
+
 }
 // Product Card Display Component 
-export function ProductCard(props: ProductCardProps) {
+export function ProductCard({isSearchContent , ...props}:ProductCardProps & {isSearchContent?:boolean}) {
   // Handle Image Hover
   const hoverImage = props.images && props.images.length > 1 ? props.images[1] : props.primaryImage;
   const [currImage , setCurrImage] = useState(props.primaryImage);
@@ -46,7 +47,7 @@ const [isOpenModal , setIsOpenModal] = useState(false);
         <Card className="border-none bg-transparent shadow-none rounded-none overflow-hidden ">
           <CardContent className="p-0 relative aspect-[3/4]">
           {/* Routing to Products Page */}
-           <Link to={`/products/${props.slug}`}>
+           <Link to={!isSearchContent ? `/products/${props.slug}` : "#"}>
            {/* Desktop Image Section */}
            <img
               src={Error ? props.primaryImage : currImage}
@@ -64,7 +65,7 @@ const [isOpenModal , setIsOpenModal] = useState(false);
            </Link>
             
             {/* Desktop Add to Cart (Animated via Hover Variant) */}
-            {props.availability !== "Sold Out" && (
+            {props.availability !== "Sold Out" && !isSearchContent &&(
               <motion.div
                 variants={{
                   rest: { opacity: 0, y: 10 },

@@ -9,6 +9,7 @@ import { Pencil } from "lucide-react";
 import { CartItem } from "@/reusable/Cart";
 import { Price } from "@/reusable/Price";
 import { totalCheckoutAmount } from "@/store/slices/cartSlice";
+
 export default function CheckoutPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const totalItems = useSelector((state: RootState) => state.cart.totalItems);
@@ -16,7 +17,7 @@ export default function CheckoutPage() {
   const {symbol} = useSelector((state:RootState)=> state.currency)
   const checkoutAmount = useSelector(totalCheckoutAmount);
   const navigate = useNavigate();
-  //   If there is not cart items and if the isSubmitting state is not true then the user cannot navigate to the page
+  //   If there are no cart items and if the isSubmitting state is not true then the user cannot navigate to the page
   useEffect(() => {
     if (totalItems < 1 && !isSubmitting) {
       navigate("/cart");

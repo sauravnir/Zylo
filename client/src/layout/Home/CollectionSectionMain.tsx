@@ -1,4 +1,3 @@
-import React from "react";
 import { motion } from "motion/react";
 import { LinkDown } from "@/reusable/ButtonComponent";
 import { parentVariants } from "@/objects/Animations";

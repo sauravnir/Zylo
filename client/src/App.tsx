@@ -1,18 +1,17 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { HashRouter, Routes, Route, useLocation } from "react-router-dom";
 import "./index.css";
-
 import HomePage from "./pages/Home";
 import { ProductPage } from "./pages/Products";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
-
 import { CustomLoader } from "./reusable/CustomLoader";
-import { type AppDispatch, type RootState } from "./store/store";
-import { useDispatch, useSelector } from "react-redux";
+import { type AppDispatch } from "./store/store";
+import { useDispatch } from "react-redux";
 import { fetchLiveRates } from "./store/slices/currencySlice";
 import { OrderConfirmation } from "./pages/orderSuccess";
 import { Toaster } from "sonner";
+
 
 // Scrolling the page on top while new page navigate
 const ScrolltoTop = () => {

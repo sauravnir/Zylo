@@ -30,7 +30,7 @@ if (!priceMounted || status === "idle" || status==="loading") {
   }
   return (
     <span>
-     {symbol} {convertedAmt} ({activeCurrency})
+     {symbol} {convertedAmt} 
     </span>
   );
 };

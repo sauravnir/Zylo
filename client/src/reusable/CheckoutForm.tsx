@@ -23,9 +23,11 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { useDispatch, useSelector } from "react-redux";
 import type { RootState } from "@/store/store";
-import { addNote , clearCart ,setIsUploading } from "@/store/slices/cartSlice";
+import { addNote ,setIsUploading } from "@/store/slices/cartSlice";
 import { PrimaryButton } from "./ButtonComponent";
 import { useNavigate } from "react-router-dom";
+
+
 export function CheckoutForm({amount, symbol  , onStartSubmitting}:{amount:number , symbol:string , onStartSubmitting:()=>void}) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -61,7 +63,7 @@ export function CheckoutForm({amount, symbol  , onStartSubmitting}:{amount:numbe
       orderSummary : {
         amount ,
         symbol,
-        orderNumber : `ZY-${Math.floor(Math.random() * 900)+1000}`
+        orderNumber: `ZY-${Math.floor(Math.random() * 900)+1000}`
       }
     };
     

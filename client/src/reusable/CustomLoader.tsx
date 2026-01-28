@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { motion } from "motion/react";
+import { useState, useEffect } from "react";
 
 interface CustomLoaderProp{
   onFinish : ()=> void;

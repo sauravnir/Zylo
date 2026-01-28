@@ -41,7 +41,7 @@ const initialState : CurrencyState = {
 
 
 // Creating an AsyncThunk method that handles the API. It uses createAsyncThunk logic
-//When creating a thunk , it automatically creates three states : Pending , Fulfilled and Rejected
+//When creating a thunk, it automatically creates three states : Pending , Fulfilled and Rejected
 // We need to handle these states separately inside the extraReducers inside the slice
 export const fetchLiveRates = createAsyncThunk('fetchLiveRates', async ()=>{
     const liveRates = await fetchCurrencyRates();
