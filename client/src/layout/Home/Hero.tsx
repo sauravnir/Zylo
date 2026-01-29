@@ -14,7 +14,7 @@ export default function Hero() {
     className="absolute inset-0"
   >
     <video 
-      // src={} 
+      src={HeroVideo} 
       autoPlay 
       loop 
       muted 
