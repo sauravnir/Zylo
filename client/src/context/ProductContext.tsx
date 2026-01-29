@@ -16,6 +16,7 @@ interface ProductContextType {
   filteredProducts: ProductCardProps[];
   filters : Filters;
   setFilters : React.Dispatch<React.SetStateAction<Filters>>
+  resetFilters : () => void ; 
 }
 
 // Creating a product context object
@@ -53,13 +54,18 @@ export const ProductProvider = ({
         (product) =>
           product.title.toLowerCase().includes(lowerCaseItem) ||
           product.category.toLowerCase().includes(lowerCaseItem) ||
-          product.availability.toLowerCase().includes(lowerCaseItem)
+          product.availability.toLowerCase().includes(lowerCaseItem) ||
+          product.colors?.some((color)=>color.name.toLowerCase().includes(lowerCaseItem))
       );
     }
     // Availability Filter Logic
     if (filters.availability !== "all") {
-      result = result.filter((p) => {p.availability === filters.availability});
-    }
+  result = result.filter(p => {
+    if (filters.availability === "In Stock") return p.availability === "In Stock" || p.availability == "Limited Release";
+    if (filters.availability === "Sold Out") return p.availability === "Sold Out";
+    return true;
+  });
+}
 
     // Sorting Logic
     if (filters.sort === "price-low") {
@@ -72,11 +78,23 @@ export const ProductProvider = ({
         result.sort((a,b)=>b.title.localeCompare(a.title))
     };
 
+    
+
     return result;
   }, [searchTerm, data , filters]);
 
+  // Resetting all the filters
+const resetFilters = () => {
+    setFilters({
+      ...filters,
+      availability : "all",
+      sort : "default",
+      gridCols : 4
+    })
+  }
+
   return (
-    <ProductContext.Provider value={{globalProducts : data , searchTerm , setSearchItem , filteredProducts , filters , setFilters}}>
+    <ProductContext.Provider value={{globalProducts : data , searchTerm , setSearchItem , filteredProducts , filters , setFilters , resetFilters }}>
         {children}
     </ProductContext.Provider>
   );

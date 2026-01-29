@@ -15,16 +15,18 @@ export const SearchPage = () => {
   const queryFromUrl = searchParams.get("q") || "";
 
   // Getting the searching function from global context
-  const { filteredProducts, setSearchItem, searchTerm, filters } =
+  const { filteredProducts, setSearchItem, searchTerm, filters, resetFilters } =
     useProducts();
   const [localSearch, setLocalSearch] = useState("");
-  // Handling the blank page search
+  // Handling the blank page search button click
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       setSearchItem(localSearch);
       setSearchParams({ q: localSearch });
     }
   };
+
+  // Handling the fileters when user hasnt typed anything yet / ghost state
 
   // Loading the search items on page load
   useEffect(() => {
@@ -37,11 +39,11 @@ export const SearchPage = () => {
     <div className="min-h-screen flex flex-col ">
       <NavigationBar />
 
-      {/* We use flex-grow so this middle section takes up all available space */}
       <main className="flex-grow flex flex-col">
-        {filteredProducts.length > 0 ? (
-          <div className="w-full px-4 md:px-20 py-40 ">
-            <div className="flex flex-col  items-center  justify-center space-y-2 ">
+        {/*  This stays regardless of filter results */}
+        {searchTerm !== "" && (
+          <div className="w-full px-4 md:px-20 pt-40 pb-10">
+            <div className="flex flex-col items-center justify-center space-y-2">
               <h1 className="text-h3 text-main uppercase text-center">
                 search
               </h1>
@@ -54,46 +56,18 @@ export const SearchPage = () => {
               </p>
             </div>
 
-            {/* Filters Section */}
-            <div className="flex w-full py-4 pt-10">
+            <div className="max-w-7xl mx-auto flex py-4 pt-10">
               <ItemFilters />
             </div>
-
-            <motion.div
-              variants={parentVariants}
-              initial="hidden"
-              animate="visible"
-              className="max-w-7xl mx-auto py-20 px-4"
-            >
-              <motion.div
-                variants={itemVariants}
-                className={`grid grid-cols-2 lg:grid-cols-${filters.gridCols} gap-y-10 gap-x-10 `}
-              >
-                {filteredProducts.map((allProd) => (
-                  <ProductCard
-                    key={allProd.id}
-                    {...allProd}
-                    isSearchContent={false}
-                  />
-                ))}
-              </motion.div>
-            </motion.div>
           </div>
-        ) : (
-          //   If there are no items found then rendering this.
-          <div className="flex-grow flex flex-col items-center justify-center w-full max-w-2xl mx-auto px-6 py-72">
-            <div className="text-center w-full">
+        )}
+
+        <div className="flex-grow">
+          {searchTerm === "" ? (
+            <div className="flex flex-col items-center justify-center w-full max-w-2xl mx-auto px-6 py-72">
               <h1 className="text-paragraph text-main font-bold uppercase tracking-widest">
-                No results found.
+                Search our collection.
               </h1>
-              <p className="text-muted tracking-wide  text-base mt-4">
-                {searchTerm === "" &&  "Search our collection."}
-                {searchTerm !== "" && (
-                  <p className="text-main mt-2">
-                    We couldn't find anything for "{queryFromUrl}"
-                  </p>
-                )}
-              </p>
               <Input
                 type="text"
                 autoFocus
@@ -104,8 +78,45 @@ export const SearchPage = () => {
                 onKeyDown={handleEnter}
               />
             </div>
-          </div>
-        )}
+          ) : filteredProducts.length > 0 ? (
+            <motion.div
+              variants={parentVariants}
+              initial="hidden"
+              animate="visible"
+              className="max-w-7xl mx-auto pb-40 px-4"
+            >
+              <motion.div
+                variants={itemVariants}
+                className={`grid grid-cols-2 lg:grid-cols-${filters.gridCols} gap-y-10 gap-x-10`}
+              >
+                {filteredProducts.map((allProd) => (
+                  <ProductCard
+                    key={allProd.id}
+                    {...allProd}
+                    isSearchContent={false}
+                  />
+                ))}
+              </motion.div>
+            </motion.div>
+          ) : (
+            <div className="max-w-7xl mx-auto py-20 px-4 text-center">
+              <div className="py-20 border border-dashed border-muted/20 rounded-lg">
+                <h2 className="text-main uppercase font-bold tracking-widest">
+                  No items match your filters.
+                </h2>
+                <p className="text-muted text-sm mt-2">
+                  Try adjusting your availability or sorting options.
+                </p>
+                <button
+                  onClick={resetFilters}
+                  className="mt-6 text-[11px] uppercase font-bold border-b-2 border-main pb-1 hover:text-muted transition-all"
+                >
+                  Clear All Filters
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
       </main>
 
       <Footer />

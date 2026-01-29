@@ -6,7 +6,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Grid3X3, LayoutGrid, Rows4 } from "lucide-react";
+import { Grid3X3, LayoutGrid, Rows4, X } from "lucide-react";
 
 const gridIcons: Record<number, React.ReactNode> = {
   3: <LayoutGrid />,
@@ -15,13 +15,12 @@ const gridIcons: Record<number, React.ReactNode> = {
 };
 
 export const ItemFilters = () => {
-  const { filters, setFilters } = useProducts();
-
+  const { filters, setFilters , resetFilters } = useProducts();
   return (
-    <div className="w-full flex flex-row items-center justify-between  border-b pb-2">
+    <div className="w-full flex flex-row items-center justify-center gap-3 md:justify-between border-b pb-2">
       {/* 1. Availability Filter */}
-      <div className="flex flex-row items-center justify-center ">
-        <div className="flex gap-6">
+      <div className="flex flex-row items-center justify-center gap-10">
+        <div className="flex gap-2">
           {["all", "In Stock", "Sold Out"].map((status) => (
             <button
               key={status}
@@ -36,16 +35,13 @@ export const ItemFilters = () => {
             </button>
           ))}
         </div>
-      </div>
-
-      {/* Sorting Dropdown */}
-      <div className="flex flex-row items-center gap-8">
-        <div className="flex flex-col space-y-3 min-w-[150px]">
+        {/* Sorting Dropdown */}
+        <div className="flex flex-col min-w-[100px]">
           <Select
             value={filters.sort}
             onValueChange={(value) => setFilters({ ...filters, sort: value })}
           >
-            <SelectTrigger className="h-auto border-0 bg-transparent px-0 pb-1 rounded-none shadow-none text-tiny uppercase tracking-widest focus:ring-0 focus:border-main transition-colors">
+            <SelectTrigger className="h-auto border-0 bg-transparent text-muted px-0 rounded-none shadow-none text-tiny uppercase tracking-widest focus:ring-0 transition-colors">
               <SelectValue placeholder="Sort By" />
             </SelectTrigger>
 
@@ -83,6 +79,11 @@ export const ItemFilters = () => {
             </SelectContent>
           </Select>
         </div>
+      </div>
+
+      
+      <div className="flex flex-row items-center gap-10">
+        
           {/* Grid Cols Filter */}
         <div className="hidden md:flex flex-col space-y-3 items-end">
           <div className="flex rounded-sm border overflow-hidden">
@@ -92,14 +93,29 @@ export const ItemFilters = () => {
                 onClick={() => setFilters({ ...filters, gridCols: num })}
                 className={`px-2 py-1 transition-colors ${
                   filters.gridCols === num
-                    ? "text-main/70 bg-card"
-                    : "bg-transparent text-muted/70 hover:bg-muted/10"
+                    ? "text-main/70 bg-card border-r"
+                    : "bg-transparent text-muted/70 hover:bg-muted/10 border-r"
                 } `}
               >
                 <div className=" scale-90">{gridIcons[num]}</div>
               </button>
             ))}
           </div>
+        </div>
+        {/* Reset filters */}
+        <div className="flex flex-row">
+            <button
+            onClick={resetFilters}
+            className="hidden md:block text-tiny uppercase text-muted tracking-widest transition-all hover:text-main"
+            >
+              clear all
+            </button>
+            <button
+            onClick={resetFilters}
+            className="md:hidden text-tiny uppercase text-main tracking-widest transition-all"
+            >
+              <X size={18} strokeWidth={3}/>
+            </button>
         </div>
       </div>
     </div>
