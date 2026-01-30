@@ -105,7 +105,7 @@ export function CheckoutForm({
   };
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onFormSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onFormSubmit)} className="space-y-8" noValidate>
         <div className="space-y-6">
           <h2 className="text-base font-bold uppercase tracking-widest">
             Customer Details
@@ -166,13 +166,14 @@ export function CheckoutForm({
           <FormField
             control={form.control}
             name="phone"
+
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-nav uppercase tracking-widest">
                   Phone*
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="Phone" {...field} />
+                  <Input placeholder="Phone" {...field} type="tel" inputMode="numeric"/>
                 </FormControl>
                 <FormMessage className="text-red-600 font-medium text-[15px] tracking-wide" />
               </FormItem>
