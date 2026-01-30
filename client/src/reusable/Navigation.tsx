@@ -1,9 +1,7 @@
 import Logo from "../assets/logo/Logo.svg";
 import { Link } from "react-router-dom";
 import {  ShoppingCart } from "lucide-react";
-
 import { menuItems, cta } from "@/objects/Objects";
-
 import { CartSheet } from "./Cart";
 import { DownSearch } from "./SearchBar";
 import {DownCurrencyMenu} from "./Dropdowns"

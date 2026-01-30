@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { HashRouter, Routes, Route, useLocation } from "react-router-dom";
+import { HashRouter, Routes, Route, useLocation, BrowserRouter } from "react-router-dom";
 import "./index.css";
 import HomePage from "./pages/Home";
 import { ProductPage } from "./pages/Products";
@@ -12,8 +12,7 @@ import { fetchLiveRates } from "./store/slices/currencySlice";
 import { OrderConfirmation } from "./pages/orderSuccess";
 import { Toaster } from "sonner";
 import { SearchPage } from "./pages/SearchPage";
-import { Collections } from "./pages/Collections";
-
+import Collections from "./pages/Collections";
 // Scrolling the page on top while new page navigate
 const ScrolltoTop = () => {
   const location = useLocation();
@@ -50,10 +49,10 @@ function App() {
     <>
       {showLoader && <CustomLoader onFinish={handleLoaderFinish} />}
       <Toaster richColors position="top-center"/>
-      <HashRouter>
+      <BrowserRouter basename="/Zylo">
         <ScrolltoTop />
         <Routes>
-          {/* <Toaster /> */}
+         
           <Route path="/" element={<HomePage />} />
           <Route path="/products/:slug" element={<ProductPage />} />
           <Route path="/cart" element={<CartPage />} />
@@ -62,7 +61,7 @@ function App() {
           <Route path="/search" element={<SearchPage />}/>
           <Route path="/collections/:category" element={<Collections />}/>
         </Routes>
-      </HashRouter>
+      </BrowserRouter>
     </>
   );
 }

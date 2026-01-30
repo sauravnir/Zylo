@@ -9,6 +9,7 @@ export function ProductPage (){
     const navigate = useNavigate();
     // Grabbing the slug / id from the url using useParams
     const {slug} = useParams();
+   
     // Checking if the slug matched any records in my database
     const productStore = PRODUCTS_LIST.find((item)=>item.slug === slug);
     // Error handling if slug is not found

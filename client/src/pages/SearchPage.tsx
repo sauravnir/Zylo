@@ -15,7 +15,7 @@ export const SearchPage = () => {
   const queryFromUrl = searchParams.get("q") || "";
 
   // Getting the searching function from global context
-  const { filteredProducts, setSearchItem, searchTerm, filters, resetFilters } =
+  const { filteredProducts, setSearchItem, searchTerm, filters, resetFilters , setActiveCategory } =
     useProducts();
   const [localSearch, setLocalSearch] = useState("");
   // Handling the blank page search button click
@@ -30,13 +30,15 @@ export const SearchPage = () => {
 
   // Loading the search items on page load
   useEffect(() => {
+    setActiveCategory("all");
     if (queryFromUrl) {
       setSearchItem(queryFromUrl);
+      setLocalSearch(queryFromUrl);
     }
-  }, [queryFromUrl, setSearchItem]);
+  }, [queryFromUrl, setSearchItem , setActiveCategory]);
 
   return (
-    <div className="min-h-screen flex flex-col ">
+    <div className="min-h-screen ">
       <NavigationBar />
 
       <main className="flex-grow flex flex-col">
@@ -56,7 +58,7 @@ export const SearchPage = () => {
               </p>
             </div>
 
-            <div className="max-w-7xl mx-auto flex py-4 pt-10">
+            <div className="max-w-6xl mx-auto flex pt-12 ">
               <ItemFilters />
             </div>
           </div>
@@ -64,10 +66,13 @@ export const SearchPage = () => {
 
         <div className="flex-grow">
           {searchTerm === "" ? (
-            <div className="flex flex-col items-center justify-center w-full max-w-2xl mx-auto px-6 py-72">
-              <h1 className="text-paragraph text-main font-bold uppercase tracking-widest">
-                Search our collection.
+            <div className=" max-w-sm mx-auto pt-60 pb-40 px-4 text-center">
+             <h1 className="text-paragraph text-center text-main font-bold uppercase tracking-widest">
+                No items match your filters.
               </h1>
+                <p className="text-muted text-sm mt-2">
+                  Try searching for exising category items.
+                </p>
               <Input
                 type="text"
                 autoFocus
@@ -87,7 +92,7 @@ export const SearchPage = () => {
             >
               <motion.div
                 variants={itemVariants}
-                className={`grid grid-cols-2 lg:grid-cols-${filters.gridCols} gap-y-10 gap-x-10`}
+                className={`max-w-6xl mx-auto border-r border-l grid grid-cols-2 lg:grid-cols-${filters.gridCols} gap-y-10 gap-x-10`}
               >
                 {filteredProducts.map((allProd) => (
                   <ProductCard

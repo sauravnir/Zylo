@@ -1,17 +1,17 @@
 // Navigation Menu Items
 export const menuItems = [
-  { title: "New", link: "/" },
-  { title: "Basics", link: "/" },
+  { title: "New", link: "/collections/new" },
+  { title: "Basics", link: "/collections/basic" },
   {
     title: "Shop",
     link: "#",
     children: [
-      { title: "All Collections", link: "/" },
-      { title: "Tees & Tops", link: "/" },
-      { title: "Hoodies & Sweats", link: "/" },
-      { title: "Outerwear", link: "/" },
-      { title: "Bottoms", link: "/" },
-      { title: "Accessories", link: "/" },
+      { title: "All Collections", link: "/collections/shop-all" },
+      { title: "Tees & Tops", link: "/collections/tops" },
+      { title: "Hoodies & Sweats", link: "/collections/hoodies" },
+      { title: "Outerwear", link: "/collections/outerwear" },
+      { title: "Bottoms", link: "/collections/bottoms" },
+      { title: "Accessories", link: "/collections/accessories" },
     ],
   },
 ];

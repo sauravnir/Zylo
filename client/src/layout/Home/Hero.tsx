@@ -1,4 +1,4 @@
-import React from "react";
+
 import LogoWhite from "@//assets/logo/LogoWhite.svg";
 import HeroVideo from "@/assets/videos/HeroVideo.mp4";
 import { motion } from "motion/react";

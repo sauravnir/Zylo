@@ -17,7 +17,7 @@ const gridIcons: Record<number, React.ReactNode> = {
 export const ItemFilters = () => {
   const { filters, setFilters , resetFilters } = useProducts();
   return (
-    <div className="w-full flex flex-row items-center justify-center gap-3 md:justify-between border-b pb-2">
+    <div className="w-full flex flex-row items-center justify-center gap-3 md:justify-between border-b border-t pt-2 pb-2">
       {/* 1. Availability Filter */}
       <div className="flex flex-row items-center justify-center gap-10">
         <div className="flex gap-2">

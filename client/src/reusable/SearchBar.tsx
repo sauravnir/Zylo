@@ -1,38 +1,58 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
 } from "@radix-ui/react-dropdown-menu";
 import { useProducts } from "@/context/ProductContext";
-import { Search, X ,Dot } from "lucide-react";
+import { Search, X, Dot } from "lucide-react";
 import { motion } from "motion/react";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProductCard from "./CardComponent";
 import { Link } from "react-router-dom";
 import { PrimaryButton } from "./ButtonComponent";
-import { useSearchParams , useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 
 // Search bar dropdown component
 export const DownSearch = ({ title }: { title: string }) => {
   const [open, setOpen] = useState(false);
-  const { searchTerm, setSearchItem, filteredProducts } = useProducts();
+  const { searchTerm, setSearchItem, searchSuggestions ,setActiveCategory} = useProducts();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-  
-  //  Sending the search items in the url to maintain state
-const handleSearch = (e : any) => {
-    setSearchItem(e.target.value);
-    // Setting the url to q: searchTerm i.e the search input
-    setSearchParams({q:searchTerm});
-}
 
-// Handle View ALl Products key enter
-const goToSearch = () => {
-    navigate(`/search?q=${encodeURIComponent(searchTerm)}`)
-}
- 
+  //  Sending the search items in the url to maintain state
+  const handleSearch = (e: any) => {
+    const value = e.target.value;
+
+    setSearchItem(value);
+    // Setting the url to q: searchTerm i.e the search input
+    setSearchParams({ q: value }, { replace: true });
+  };
+
+  // Handle View ALl Products key enter
+  const goToSearch = () => {
+    if (searchTerm.trim()) {
+      // .trim removes extra white spaces
+      navigate(`/search?q=${encodeURIComponent(searchTerm.trim())}`);
+    }
+  };
+// Handling category items clicking
+
+const handleCategoryClick =(category:any) => {
+  setSearchItem("");
+  setActiveCategory(category.toLowerCase())
+  navigate(`/collections/${category.toLowerCase().replace(/\s+/g, '-')}`)
+  
+} 
+
+  useEffect(() => {
+    const query = searchParams.get("q");
+    if (query) {
+      setSearchItem(query);
+    }
+  }, [searchParams]);
+
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
@@ -63,10 +83,10 @@ const goToSearch = () => {
               placeholder="Search here"
               value={searchTerm}
               onChange={handleSearch}
-            //   Handling enter press functionality if user presses enter
-              onKeyDown={(e)=> {
-                if (e.key === 'Enter'){
-                    goToSearch()
+              //   Handling enter press functionality if user presses enter
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  goToSearch();
                 }
               }}
             />
@@ -83,7 +103,7 @@ const goToSearch = () => {
         {/* Search Component */}
         {searchTerm.length > 0 && (
           <div className="absolute top-full left-0 w-full bg-card z-50 shadow-2xl">
-            {filteredProducts.length > 0 ? (
+            {searchSuggestions.length > 0 ? (
               <div className="md:grid-cols-[0.5fr_2.5fr] min-h-[300px] px-6">
                 <div className="p-4">
                   <Tabs
@@ -124,9 +144,9 @@ const goToSearch = () => {
                     <TabsContent value="products" className="mt-2">
                       <div className="flex flex-col h-[250px] md:h-[380px] overflow-x-hidden md:grid md:grid-cols-6 lg:grid-cols-6 gap-6 mt-4 ">
                         {/* Only displaying a maximum of 5 cards in the search bar */}
-                        {filteredProducts.slice(0, 6).map((product) => (
+                        {searchSuggestions.slice(0, 6).map((product) => (
                           // Re-using the Product card component to display the products
-                          // using the conditional isSearchContent to conditionally render the add to cart popup button at the bottom-left
+                          // using the conditional isSearchContent to conditionally render the add to cart popup button at the bottom-right
                           <motion.div
                             initial={{ opacity: 0, y: -5 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -134,7 +154,6 @@ const goToSearch = () => {
                               duration: 0.2,
                               delay: 0.1,
                               ease: "easeIn",
-                              
                             }}
                             className="w-full border-b border-gray-50 pb-4 md:border-none md:pb-0"
                           >
@@ -157,37 +176,44 @@ const goToSearch = () => {
                     {/* Collection Tabs */}
                     <TabsContent value="collections">
                       <div className="flex flex-col items-start ">
-                        {filteredProducts.slice(0, 4).map((item) => (
-                          <motion.div
-                            initial={{ opacity: 0, y: -5 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{
-                              duration: 0.2,
-                              delay: 0.2,
-                              ease: "easeIn",
-                            }}
-
-                            className="mt-2"
-                          >
-                            <Link
-                              to="#"
-                              className=" border-muted"
+                        {searchSuggestions
+                          // Filtering out the duplicate items and only displaying 
+                          .filter(
+                            (item, index, self) =>
+                              index ===
+                              self.findIndex(
+                                (t) => t.category === item.category,
+                              ),
+                          ).map((item) => (
+                            <motion.div
+                              key={item.id} 
+                              initial={{ opacity: 0, y: -5 }}
+                              whileInView={{ opacity: 1, y: 0 }}
+                              transition={{
+                                duration: 0.2,
+                                delay: 0.2,
+                                ease: "easeIn",
+                              }}
+                              className="mt-2"
                             >
-                              <span
-                                key={item.id}
-                                className="flex items-center text-main hover:text-muted uppercase text-base  hover:underline"
-                              >
-                                <Dot/> {item.category}
-                              </span>
-                            </Link>
-                          </motion.div>
-                        ))}
+                             <button
+                            onClick={()=>handleCategoryClick(item.category)}
+                             >
+                                <span className="flex items-center text-main hover:text-muted uppercase text-base hover:underline">
+                                  <Dot /> {item.category}
+                                </span>
+                              
+                             </button>
+                             
+                              
+                            </motion.div>
+                          ))}
                       </div>
                     </TabsContent>
                   </Tabs>
                 </div>
               </div>
-            ) : ( 
+            ) : (
               <div className="p-20 text-center flex flex-col items-center justify-center">
                 <h1 className="text-base uppercase tracking-widest text-main font-bold">
                   No results found
