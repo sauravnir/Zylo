@@ -5,6 +5,7 @@ import {
 } from "@reduxjs/toolkit";
 import type { ProductCardProps } from "@/reusable/CardComponent";
 import type { RootState } from "../store";
+import { useSelector } from "react-redux";
 
 // Type casting the payload
 export interface CartProps extends ProductCardProps {
@@ -21,6 +22,8 @@ export interface CartState {
   cartOpen: boolean;
   isUploading: boolean;
   orderNote: string;
+  shippingCost : number,
+  shippingCity : string,
 }
 // Setting the initial state null for an empty cart
 const initialState: CartState = {
@@ -29,6 +32,8 @@ const initialState: CartState = {
   cartOpen: false,
   isUploading: false,
   orderNote: "",
+  shippingCost : 0,
+  shippingCity : ""
 };
 
 export const cartSlice = createSlice({
@@ -133,22 +138,39 @@ export const cartSlice = createSlice({
       const { note } = action.payload;
       state.orderNote = note;
     },
+    updateShipping : (state , action : PayloadAction<{city: string , cost : number}>)=>{
+        const {city , cost} = action.payload;
+        state.shippingCity = city 
+        state.shippingCost = cost
+    }
   },
 });
 
 //createSelector is a redux library that lets us acess that data inside the redux store
 const selectCartItems = (state: RootState) => state.cart.items;
+const selectShippingCost = (state:RootState)=>state.cart.shippingCost
 // Calculating the total checkout amount and exporting it
 // The values are only calculated if the input is changed usingt createSelector
 export const totalCheckoutAmount = createSelector(
-  [selectCartItems], // initial value
+  [selectCartItems , selectShippingCost], // initial value
   // Adding the price * quantity to the total
+  (items , shipping) => {
+    const total = items.reduce((total , items)=>total + items.price * items.itemCartQuantity,0)
+    return total + (shipping ?? 0);
+  }
+);
+
+export const subTotalAmount = createSelector(
+  [selectCartItems], 
   (items) =>
+
     items.reduce(
       (total, item) => total + item.price * item.itemCartQuantity,
       0,
-    ), //logic implementation
+    ), 
 );
+
+
 
 // Creating Action Creators for each reducer actions
 // Think this as the method for the reducers
@@ -160,6 +182,7 @@ export const {
   setCartOpen,
   setIsUploading,
   addNote,
+  updateShipping
 } = cartSlice.actions;
 // Exporting the main reducer object from the slice
 export default cartSlice.reducer;

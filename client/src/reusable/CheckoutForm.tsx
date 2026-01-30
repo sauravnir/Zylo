@@ -21,18 +21,35 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "@/store/hook";
 import type { RootState } from "@/store/store";
-import { addNote ,setIsUploading } from "@/store/slices/cartSlice";
+import {
+  addNote,
+  setIsUploading,
+  updateShipping,
+} from "@/store/slices/cartSlice";
 import { PrimaryButton } from "./ButtonComponent";
 import { useNavigate } from "react-router-dom";
+import { DELIVERY_LOCATIONS } from "@/objects/Objects";
 
-
-export function CheckoutForm({amount, symbol  , onStartSubmitting}:{amount:number , symbol:string , onStartSubmitting:()=>void}) {
-  const dispatch = useDispatch();
+export function CheckoutForm({
+  subTotal,
+  shippingAmount,
+  totalAmount,
+  symbol,
+  onStartSubmitting,
+}: {
+  subTotal: number;
+  shippingAmount: number;
+  totalAmount: number;
+  symbol: string;
+  onStartSubmitting: () => void;
+}) {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
-  const cartItems = useSelector((state:RootState)=> state.cart.items);
-  const orderNote = useSelector((state: RootState) => state.cart.orderNote);
+  const cartItems = useAppSelector((state: RootState) => state.cart.items);
+  const orderNote = useAppSelector((state: RootState) => state.cart.orderNote);
+
   // Creating a form validation state using zod and react-hook-form
   const form = useForm<CheckoutFormValidation>({
     resolver: zodResolver(checkoutSchema),
@@ -50,26 +67,41 @@ export function CheckoutForm({amount, symbol  , onStartSubmitting}:{amount:numbe
     },
   });
 
+  // Handling the delivery charge addition logic
+  const handleCitySelect = (cityName: string) => {
+    // finding the rate for the selected city
+    const currentCity = DELIVERY_LOCATIONS.find((loc) => loc.city === cityName);
+    if (currentCity) {
+      dispatch(
+        updateShipping({
+          city: currentCity.city,
+          cost: currentCity.rate,
+        }),
+      );
+    }
+  };
 
   // form submit action logic
   const onFormSubmit = async (formData: CheckoutFormValidation) => {
-    // Calling the startSubmitting state from the Parent Component i.e CheckoutPage to remove the navigation to cart page error 
+    // Calling the startSubmitting state from the Parent Component i.e CheckoutPage to remove the navigation to cart page error
     onStartSubmitting();
     dispatch(setIsUploading(true));
     // Creating the final order object and passing into the useLocation state
     const confirmOrder = {
-      customerData : formData , 
-      items : cartItems,
-      orderSummary : {
-        amount ,
+      customerData: formData,
+      items: cartItems,
+      orderSummary: {
+        subTotal,
+        shippingAmount,
+        totalAmount,
         symbol,
-        orderNumber: `ZY-${Math.floor(Math.random() * 900)+1000}`
-      }
+        orderNumber: `ZY-${Math.floor(Math.random() * 900) + 1000}`,
+      },
     };
-    
-    await new Promise((resolve)=>setTimeout(resolve , 2000));
+
+    await new Promise((resolve) => setTimeout(resolve, 2000));
     dispatch(setIsUploading(false));
-    navigate('/thank-you' , {state: {order:confirmOrder}});
+    navigate("/thank-you", { state: { order: confirmOrder } });
   };
   return (
     <Form {...form}>
@@ -90,7 +122,7 @@ export function CheckoutForm({amount, symbol  , onStartSubmitting}:{amount:numbe
                 <FormControl>
                   <Input placeholder="Email" {...field} />
                 </FormControl>
-                <FormMessage className="text-red-600 font-medium text-[15px] tracking-wide"/>
+                <FormMessage className="text-red-600 font-medium text-[15px] tracking-wide" />
               </FormItem>
             )}
           />
@@ -108,7 +140,7 @@ export function CheckoutForm({amount, symbol  , onStartSubmitting}:{amount:numbe
                   <FormControl>
                     <Input placeholder="First name" {...field} />
                   </FormControl>
-                  <FormMessage className="text-red-600 font-medium text-[15px] tracking-wide"/>
+                  <FormMessage className="text-red-600 font-medium text-[15px] tracking-wide" />
                 </FormItem>
               )}
             />
@@ -124,7 +156,7 @@ export function CheckoutForm({amount, symbol  , onStartSubmitting}:{amount:numbe
                   <FormControl>
                     <Input placeholder="Last name" {...field} />
                   </FormControl>
-                  <FormMessage className="text-red-600 font-medium text-[15px] tracking-wide"/>
+                  <FormMessage className="text-red-600 font-medium text-[15px] tracking-wide" />
                 </FormItem>
               )}
             />
@@ -142,7 +174,7 @@ export function CheckoutForm({amount, symbol  , onStartSubmitting}:{amount:numbe
                 <FormControl>
                   <Input placeholder="Phone" {...field} />
                 </FormControl>
-                <FormMessage className="text-red-600 font-medium text-[15px] tracking-wide"/>
+                <FormMessage className="text-red-600 font-medium text-[15px] tracking-wide" />
               </FormItem>
             )}
           />
@@ -176,7 +208,7 @@ export function CheckoutForm({amount, symbol  , onStartSubmitting}:{amount:numbe
                   </SelectContent>
                 </Select>
 
-                <FormMessage className="text-red-600 font-medium text-[15px] tracking-wide"/>
+                <FormMessage className="text-red-600 font-medium text-[15px] tracking-wide" />
               </FormItem>
             )}
           />
@@ -189,10 +221,34 @@ export function CheckoutForm({amount, symbol  , onStartSubmitting}:{amount:numbe
                 <FormLabel className="text-nav uppercase tracking-widest">
                   City *
                 </FormLabel>
-                <FormControl>
-                  <Input placeholder="City" {...field} />
-                </FormControl>
-                <FormMessage className="text-red-600 font-medium text-[15px] tracking-wide"/>
+                <Select
+                  onValueChange={(value) => {
+                    field.onChange(value);
+                    handleCitySelect(value);
+                  }}
+                  defaultValue={field.value}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Choose a city" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent className="max-h-[200px] overflow-y-hidden bg-card">
+                    {DELIVERY_LOCATIONS.map((loc) => (
+                      <SelectItem
+                        key={loc.city}
+                        value={loc.city}
+                        className="hover:bg-muted/5 cursor-pointer"
+                      >
+                        <div className="flex justify-between w-full gap-20">
+                          <span>{loc.city}</span>
+                        </div>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <FormMessage className="text-red-600 font-medium text-[15px] tracking-wide" />
               </FormItem>
             )}
           />
@@ -208,7 +264,7 @@ export function CheckoutForm({amount, symbol  , onStartSubmitting}:{amount:numbe
                 <FormControl>
                   <Input placeholder="Address" {...field} />
                 </FormControl>
-                <FormMessage className="text-red-600 font-medium text-[15px] tracking-wide"/>
+                <FormMessage className="text-red-600 font-medium text-[15px] tracking-wide" />
               </FormItem>
             )}
           />
@@ -222,7 +278,6 @@ export function CheckoutForm({amount, symbol  , onStartSubmitting}:{amount:numbe
                     Order Note
                   </FormLabel>
                   {/* The "Remove" Logic */}
-                  
                 </div>
                 <FormControl>
                   <Textarea
@@ -233,21 +288,22 @@ export function CheckoutForm({amount, symbol  , onStartSubmitting}:{amount:numbe
                     }}
                     placeholder="Add specific delivery instructions..."
                   />
-                  
                 </FormControl>
                 {field.value && (
-                    <button
-                      type="button"
-                      onClick={() => {
-                        field.onChange(""); //clears the fortm
-                        dispatch(addNote({ note: "" })); // Clears the redux stored note
-                      }}
-                      className="flex flex-row "
-                    >
-                      <span className="text-center text-tiny tracking-wide text-muted hover:text-main hover:underline">Remove Note</span>
-                    </button>
-                  )}
-                <FormMessage className="text-red-600 font-medium text-[15px] tracking-wide"/>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      field.onChange(""); //clears the fortm
+                      dispatch(addNote({ note: "" })); // Clears the redux stored note
+                    }}
+                    className="flex flex-row "
+                  >
+                    <span className="text-center text-tiny tracking-wide text-muted hover:text-main hover:underline">
+                      Remove Note
+                    </span>
+                  </button>
+                )}
+                <FormMessage className="text-red-600 font-medium text-[15px] tracking-wide" />
               </FormItem>
             )}
           />
@@ -264,7 +320,7 @@ export function CheckoutForm({amount, symbol  , onStartSubmitting}:{amount:numbe
                 <FormControl>
                   <Input placeholder="Zip Code" {...field} />
                 </FormControl>
-                <FormMessage className="text-red-600 font-medium text-[15px] tracking-wide"/>
+                <FormMessage className="text-red-600 font-medium text-[15px] tracking-wide" />
               </FormItem>
             )}
           />
@@ -277,12 +333,12 @@ export function CheckoutForm({amount, symbol  , onStartSubmitting}:{amount:numbe
             <span className="text-sm">Cash on delivery (COD) </span>
             <div className="h-4 w-4 rounded-full border-2 border-main bg-main shadow-[inset_0_0_0_2px_white]" />
           </div>
-{/* Form Submit Button */}
+          {/* Form Submit Button */}
           <PrimaryButton
             type="submit"
             isDisabled={false}
             name="Place Order"
-            onClick={()=>onFormSubmit}
+            onClick={() => onFormSubmit}
           />
         </div>
       </form>

@@ -95,7 +95,7 @@ export function NavigationBar() {
 // Checkout page navigation bar 
 export function CheckoutNav() {
   return (
-    <div className="fixed w-full z-50 sticky top-0">
+    <div className=" w-full z-50 sticky top-0">
       <div className="grid grid-cols-3 items-center h-24 bg-background border px-4 md:px-14">
         {/* Left empty side */}
         <div className="flex justify-center" />
@@ -107,13 +107,13 @@ export function CheckoutNav() {
           </Link>
         </div>
         {/* Shopping cart */}
-        <div className="flex justify-end md:justify-center lg:justify-center items-center">
+        {/* <div className="flex justify-end md:justify-center lg:justify-center items-center">
           <Link to="/cart">
             <div className="w-14 h-14 bg-neutral-100 hover:bg-neutral-300 rounded-full flex items-center justify-center ">
               <ShoppingCart size={20} className="text-main/70" />
             </div>
           </Link>
-        </div>
+        </div> */}
       </div>
     </div>
   );

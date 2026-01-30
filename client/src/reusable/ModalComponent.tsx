@@ -124,7 +124,7 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
   };
   return (
     <div
-      className={`flex flex-col md:flex-row w-full h-full ${viewMode === "page" ? "mt-4" : "p-6"}`}
+      className={`flex flex-col md:flex-row w-full h-full ${viewMode === "page" ? "border-b pb-10 mt-4" : "p-6"}`}
     >
       <div
         className={`w-full flex flex-col items-center bg-background group border-b md:border-b-0 
@@ -220,7 +220,7 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
 
         {/* Displaying Image Navigation at the bottom of the Carousel in Product Page */}
         {viewMode === "page" && modalImage.length > 1 && (
-          <div className="hidden md:flex mt-4 flex flex-wrap gap-2">
+          <div className="hidden md:flex mt-4 flex-wrap gap-2">
             {modalImage.map((image, index) => {
               const isActive = currSlide === index;
               return (

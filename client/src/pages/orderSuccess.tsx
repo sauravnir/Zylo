@@ -187,7 +187,7 @@ export function OrderConfirmation() {
                         {orderDetails.items.map((item: any) => (
                           <TableRow
                             key={item.id}
-                            className="hover:bg-null transition-colors border-b border-muted last:border-0"
+                            className="hover:bg-null transition-colors border-b border-muted last:border-0 "
                           >
                             <TableCell className="py-6">
                               <div className="flex items-center gap-6">
@@ -226,7 +226,7 @@ export function OrderConfirmation() {
                           </TableRow>
                         ))}
                       </TableBody>
-                      <div className="sticky bottom-0 z-10"></div>
+                      {/* Amount  */}
                       <TableFooter className="bg-transparent border-t-2 border-main">
                         {/* Subtotal Row */}
                         <TableRow className="hover:bg-transparent border-none">
@@ -238,7 +238,7 @@ export function OrderConfirmation() {
                           </TableCell>
                           <TableCell className="text-right py-2 font-medium text-main/45 text-product-title">
                             {orderDetails.orderSummary.symbol}{" "}
-                            {orderDetails.orderSummary.amount.toLocaleString()}
+                            {orderDetails.orderSummary.subTotal?.toLocaleString()}
                           </TableCell>
                         </TableRow>
 
@@ -251,7 +251,8 @@ export function OrderConfirmation() {
                             Shipping & Handling
                           </TableCell>
                           <TableCell className="text-right py-2 font-medium text-main/45 text-product-title">
-                            Free
+                            {orderDetails.orderSummary.symbol} {" "}
+                            {orderDetails.orderSummary.shippingAmount}
                           </TableCell>
                         </TableRow>
                         {/* Total Row */}
@@ -264,7 +265,7 @@ export function OrderConfirmation() {
                           </TableCell>
                           <TableCell className="text-right py-6 text-[18px] uppercase font-bold tracking-widest">
                             {orderDetails.orderSummary.symbol}{" "}
-                            {orderDetails.orderSummary.amount.toLocaleString()}
+                            {orderDetails.orderSummary.totalAmount.toLocaleString()}
                           </TableCell>
                         </TableRow>
                       </TableFooter>
@@ -283,11 +284,11 @@ export function OrderConfirmation() {
                   <div className="p-2 md:border-r border-muted ">
                     <div className="flex flex-row items-center gap-2">
                       <Truck size={20} />
-                      <h1 className="font-bold text-menu uppercase">
+                      <h1 className="font-bold text-base uppercase">
                         Shipping to:
                       </h1>
                     </div>
-                    <div className="flex flex-col text-menu  gap-2 text-start mt-4">
+                    <div className="flex flex-col text-base tracking-wider gap-2 text-start mt-4">
                       <h1 className="flex gap-2 ">
                         Name:
                         <span>
@@ -316,11 +317,11 @@ export function OrderConfirmation() {
                   <div className="flex flex-col md:items-end mt-4 md:mt-0 p-2">
                     <div className="flex flex-row items-center gap-2">
                       <Banknote size={20} />
-                      <h1 className="font-bold text-menu uppercase">
+                      <h1 className="font-bold text-base uppercase">
                         Payment Method:
                       </h1>
                     </div>
-                    <div className="mt-4 text-menu">
+                    <div className="mt-4 text-base tracking-wider">
                       <span>{orderDetails.customerData.payment_method}</span>
                     </div>
                   </div>

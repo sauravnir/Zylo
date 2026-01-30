@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "motion/react";
@@ -22,7 +22,7 @@ export interface ProductCardProps {
   sizes: string[];
   availability: string;
   slug:string;
-
+  collection?:string
 }
 // Product Card Display Component 
 export function ProductCard({isSearchContent , ...props}:ProductCardProps & {isSearchContent?:boolean}) {
@@ -49,7 +49,7 @@ const [isOpenModal , setIsOpenModal] = useState(false);
         }`}>
             <CardContent className={`p-0 relative ${isSearchContent ? "h-full md:aspect-[3/4]" : "aspect-[3/4]"}`}>
                 {/* Routing to Products Page */}
-                <Link to={!isSearchContent ? `/products/${props.slug}` : "#"}>
+                <Link to={`/products/${props.slug}`}>
                     {/* Desktop Image Section */}
                     <img
                         src={Error ? props.primaryImage : currImage}

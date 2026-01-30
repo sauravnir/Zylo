@@ -1,12 +1,12 @@
 // Navigation Menu Items
 export const menuItems = [
   { title: "New", link: "/collections/new" },
-  { title: "Basics", link: "/collections/basic" },
+  { title: "Basics", link: "/collections/basics" },
   {
     title: "Shop",
     link: "#",
     children: [
-      { title: "All Collections", link: "/collections/shop-all" },
+      { title: "Shop All", link: "/collections/shop-all" },
       { title: "Tees & Tops", link: "/collections/tops" },
       { title: "Hoodies & Sweats", link: "/collections/hoodies" },
       { title: "Outerwear", link: "/collections/outerwear" },
@@ -78,6 +78,7 @@ export const PRODUCTS_LIST = [
     title: "Minimalist Trench Coat",
     slug: "minimalist-trench-coat",
     category: "Outerwear",
+    collection:"basics",
     price: 320,
     primaryImage: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=800",
     images: [
@@ -114,6 +115,7 @@ export const PRODUCTS_LIST = [
     title: "Sherpa Lined Denim Jacket",
     slug: "sherpa-denim-jacket",
     category: "Outerwear",
+    collection : "",
     price: 210,
     primaryImage: "https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=800",
     images: [
@@ -132,6 +134,7 @@ export const PRODUCTS_LIST = [
     title: "Graphite Work Jacket",
     slug: "graphite-work-jacket",
     category: "Outerwear",
+    collection : "",
     price: 240,
     primaryImage: "https://images.unsplash.com/photo-1592833159155-c62df1b65634?q=80&w=800",
     images: [
@@ -149,7 +152,8 @@ export const PRODUCTS_LIST = [
     id: "zy-05",
     title: "Technical Puffer Jacket",
     slug: "technical-puffer",
-    category: "Outerwear",
+    category: "Tops",
+    collection:"basics",
     price: 350,
     primaryImage: "https://images.unsplash.com/photo-1604644401890-0bd678c83788?q=80&w=800",
     images: [
@@ -188,6 +192,7 @@ export const PRODUCTS_LIST = [
     title: "Graphic Logo Crewneck",
     slug: "graphic-logo-crewneck",
     category: "Tops",
+    collection: "",
     price: 95,
     primaryImage: "https://images.unsplash.com/photo-1509948943821-395709971944?q=80&w=800",
     images: [
@@ -242,6 +247,7 @@ export const PRODUCTS_LIST = [
     title: "Heavyweight Pocket Longsleeve",
     slug: "pocket-longsleeve",
     category: "Tops",
+    collection: "basics",
     price: 75,
     primaryImage: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=800",
     images: [
@@ -318,6 +324,7 @@ export const PRODUCTS_LIST = [
     title: "Nylon Track Pant",
     slug: "nylon-track-pant",
     category: "Bottoms",
+    collection: "basics",
     price: 110,
     primaryImage: "https://images.unsplash.com/photo-1552664199-fd31f7431a55?q=80&w=800",
     images: [
@@ -552,20 +559,60 @@ export const FOOTER_LINKS = [
   {
     title: "More",
     links: [
-      { name: "Early Access", href: "/" },
       { name: "Contact Us", href: "/" },
-      { name: "Blog", href: "/" },
-      { name: "New", href: "/" },
-      { name: "Best Seller", href: "/" },
-      { name: "Shop All", href: "/" },
+      { name: "New", href: "/collections/new" },
+      { name: "Best Seller", href: "/collections/basics" },
+      { name: "Shop All", href: "/collections/shop-all" },
     ],
   },
   {
     title: "Socials",
     links: [
       { name: "Instagram", href: "https://www.instagram.com/zylo.studios/" },
-      { name: "Facebook", href: "/" },
-      { name: "YouTube", href: "/" },
     ],
   },
+];
+
+export const DELIVERY_LOCATIONS = [
+  { city: "Kathmandu", area: "Inside Ringroad", rate: 100 },
+  { city: "Lalitpur", area: "Inside Ringroad", rate: 100 },
+  { city: "Bhaktapur", area: "Inside Ringroad", rate: 100 },
+  { city: "Kirtipur", area: "Valley Suburb", rate: 120 },
+  { city: "Budhanilkantha", area: "Valley Suburb", rate: 120 },
+  { city: "Bhaisepati", area: "Valley Suburb", rate: 120 },
+  { city: "Jorpati", area: "Valley Suburb", rate: 120 },
+  { city: "Tokha", area: "Valley Suburb", rate: 120 },
+  { city: "Thankot", area: "Valley West", rate: 150 },
+  { city: "Suryabinayak", area: "Bhaktapur East", rate: 120 },
+  { city: "Pokhara", area: "Kaski", rate: 150 },
+  { city: "Butwal", area: "Rupandehi", rate: 150 },
+  { city: "Chitwan", area: "Narayangarh/Bharatpur", rate: 150 },
+  { city: "Biratnagar", area: "Morang", rate: 150 },
+  { city: "Itahari", area: "Sunsari", rate: 150 },
+  { city: "Dharan", area: "Sunsari", rate: 150 },
+  { city: "Nepalgunj", area: "Banke", rate: 150 },
+  { city: "Birtamod", area: "Jhapa", rate: 150 },
+  { city: "Hetauda", area: "Makwanpur", rate: 150 },
+  { city: "Bhairahawa", area: "Rupandehi", rate: 150 },
+  { city: "Dhangadhi", area: "Kailali", rate: 150 },
+  { city: "Banepa", area: "Kavre", rate: 150 },
+  { city: "Damak", area: "Jhapa", rate: 150 },
+  { city: "Birgunj", area: "Parsa", rate: 150 },
+  { city: "Surkhet", area: "Birendranagar", rate: 200 },
+  { city: "Tulsipur", area: "Dang", rate: 200 },
+  { city: "Ghorahi", area: "Dang", rate: 200 },
+  { city: "Lahan", area: "Siraha", rate: 200 },
+  { city: "Janakpur", area: "Dhanusa", rate: 200 },
+  { city: "Rajbiraj", area: "Saptari", rate: 200 },
+  { city: "Baglung", area: "Baglung Bazaar", rate: 200 },
+  { city: "Tansen", area: "Palpa", rate: 200 },
+  { city: "Gulmi", area: "Tamghas", rate: 200 },
+  { city: "Gorkha", area: "Gorkha Bazaar", rate: 200 },
+  { city: "Dhankuta", area: "Dhankuta Bazaar", rate: 200 },
+  { city: "Ilam", area: "Ilam Bazaar", rate: 200 },
+  { city: "Jumla", area: "Karnali", rate: 300 },
+  { city: "Mustang", area: "Jomsom", rate: 350 },
+  { city: "Solukhumbu", area: "Lukla/Salleri", rate: 350 },
+  { city: "Manang", area: "Chame", rate: 350 },
+  { city: "Darchula", area: "Far West", rate: 300 }
 ];

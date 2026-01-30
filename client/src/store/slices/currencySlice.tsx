@@ -17,8 +17,8 @@ interface CurrencyItem{
     title: string,
     code :string, 
     symbol :string,
+    
 }
-
 // Creating the currency types
 interface CurrencyState {
     currencyName : string ,
@@ -67,10 +67,8 @@ export const currencySlice = createSlice({
             } else {
                 state.rate = upperCaseCode ===  BASE_CODE ? BASE_RATE : state.rate ;
             }
-
             // Saving the data to LocalStorage after the user selects
             localStorage.setItem(LOCAL_CURRENCY, JSON.stringify(action.payload))
-            
         } 
     },
     // Handling the pending , fulfilled and rejected states from the creatAsyncThunk

@@ -3,22 +3,23 @@ import { Link , useNavigate } from "react-router-dom";
 import { Footer } from "@/reusable/Footer";
 import {NavigationBar} from "@/reusable/Navigation";
 import { CartItem } from "@/reusable/Cart";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { type RootState } from "@/store/store";
 import { ShoppingCart } from "lucide-react";
 import { PrimaryButton } from "@/reusable/ButtonComponent";
 import { Price } from "@/reusable/Price";
-import { totalCheckoutAmount } from "@/store/slices/cartSlice";
+import { subTotalAmount } from "@/store/slices/cartSlice";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "motion/react";
 import {setIsUploading, addNote, clearCart } from "@/store/slices/cartSlice";
 import { CircularProgress } from "@mui/material";
+import { useAppSelector } from "@/store/hook";
 
 export default function CartPage() {
-  const storeValue = useSelector((state: RootState) => state.cart.items);
-  const checkoutAmount = useSelector(totalCheckoutAmount);
-  const totalItem = useSelector((state: RootState) => state.cart.totalItems);
-  const globalNote = useSelector((state: RootState) => state.cart.orderNote);
+  const storeValue = useAppSelector((state: RootState) => state.cart.items);
+  const totalItem = useAppSelector((state: RootState) => state.cart.totalItems);
+  const globalNote = useAppSelector((state: RootState) => state.cart.orderNote);
+  const subCheckoutAmount = useAppSelector(subTotalAmount)
   
   const dispatch = useDispatch();
   // Handling the OPEN NOTE inside the CART
@@ -73,7 +74,7 @@ const handleCheckout = async () => {
                  <button
                 onClick={handleClearCart}
                 disabled={cleared}
-                className={`flex items-center flex gap-2 text-menu tracking-wide underline underline-offset-4 transition-all ${
+                className={`items-center flex gap-2 text-menu tracking-wide underline underline-offset-4 transition-all ${
                   cleared
                     ? "text-muted/50 cursor-not-allowed"
                     : "text-muted hover:text-main"
@@ -100,7 +101,7 @@ const handleCheckout = async () => {
                     Subtotal
                   </span>
                   <span className="font-medium text-main/45 text-product-title">
-                    <Price amount={checkoutAmount} />
+                    <Price amount={subCheckoutAmount} />
                   </span>
                 </div>
                 <motion.div
@@ -158,7 +159,7 @@ const handleCheckout = async () => {
                   Total
                 </span>
                 <span className="text-main uppercase tracking-wide font-semibold">
-                  <Price amount={checkoutAmount} />
+                  <Price amount={subCheckoutAmount} />
                 </span>
               </div>
 

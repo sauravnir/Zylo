@@ -6,6 +6,9 @@ import { PRODUCTS_LIST } from "@/objects/Objects";
 
 import { Carousel, CarouselContent , CarouselNext , CarouselPrevious , CarouselItem } from "@/components/ui/carousel";
 export function CollectionSectionMain() {
+  // Filtering out the items based on the collection
+  const collectionItem = PRODUCTS_LIST.filter((item)=>item.collection === "basics")
+
   return (
     <div className="relative md:px-20 py-40 bg-background border-2 border-b">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30">
@@ -39,7 +42,7 @@ export function CollectionSectionMain() {
         >
             
           <CarouselContent className="-ml-4">
-            {PRODUCTS_LIST.map((items) => (
+            {collectionItem.map((items) => (
 
             <CarouselItem key={items.id} className=" md:p-4 lg:p-8 basis-[85%] md:basis-1/2 lg:basis-1/3">
                     <motion.div
@@ -49,7 +52,6 @@ export function CollectionSectionMain() {
                 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
               >
-                {/* Change the object according to the collection. Using MainCard Object Currently for Testing Purposes.   */}
                 <ProductCard key={items.id} {...items} />
               </motion.div>
             </CarouselItem>

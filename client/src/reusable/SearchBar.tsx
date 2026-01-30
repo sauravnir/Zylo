@@ -10,7 +10,6 @@ import { motion } from "motion/react";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import ProductCard from "./CardComponent";
-import { Link } from "react-router-dom";
 import { PrimaryButton } from "./ButtonComponent";
 import { useSearchParams, useNavigate } from "react-router-dom";
 
@@ -136,7 +135,7 @@ const handleCategoryClick =(category:any) => {
                           hover:text-primary
                         "
                       >
-                        Collections
+                        Categories
                       </TabsTrigger>
                     </TabsList>
 

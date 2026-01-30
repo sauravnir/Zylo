@@ -1,7 +1,6 @@
 import { createContext, useContext, useState, useMemo } from "react";
 import type { ProductCardProps } from "@/reusable/CardComponent";
-import { useParams } from "react-router-dom";
-import { process } from "zod/v4/core";
+
 // Defining the filter functionality
 interface Filters {
   availability: string;
@@ -53,15 +52,16 @@ export const ProductProvider = ({  children,data,}: {  children: React.ReactNode
         (product) =>{
           const title = product.title.toLowerCase();
           const category = product.category.toLowerCase();
+          const collection = product.collection?.toLowerCase();
           // Checking for the exact match for categories
           const isExactCategory = category === lowerCaseItem;
+          const isExactCollection = collection === lowerCaseItem;
           const isTitleMatch = title.includes(lowerCaseItem);
           const isColorMatch = product.colors?.some((color)=>color.name.toLowerCase()=== lowerCaseItem);
           const isAvailabilityMatch = product.availability.toLowerCase().includes(lowerCaseItem);
-          return isExactCategory || isTitleMatch || isAvailabilityMatch || isColorMatch
+          return isExactCategory || isTitleMatch || isAvailabilityMatch || isColorMatch || isExactCollection
         }
       );
-      
     }
 
     // Empty array for storing the page results
@@ -69,9 +69,18 @@ export const ProductProvider = ({  children,data,}: {  children: React.ReactNode
 // If the user is searching then populating the search result to empty array
     if(lowerCaseItem !== ""){
       pageResult = [...suggestionResult];
+    } 
+    // Filtering the product in the new page
+    // Filtering 12 items from the end of the object so that new items get to the top
+    else if ( activeCategory === "new"){
+      pageResult = [...data].slice(-12).reverse()
+    }
+    // Filtering if the collection === "basics"
+    else if (activeCategory === "basics" || activeCategory === "basic"){
+      pageResult = data.filter((item)=> item.collection?.toLocaleLowerCase() === "basics")
     }
     // Filtering the page by category if no search is active
-    else if (activeCategory !== "all" && activeCategory !== "shop-all" && activeCategory !=="basic" && activeCategory !=="new" ) {
+    else if (activeCategory !== "all" && activeCategory !== "shop-all" ) {
       pageResult = data.filter((p) => {
         const productCat = p.category?.trim().toLowerCase();
         const activeCat = activeCategory.trim().toLowerCase();
@@ -82,6 +91,7 @@ export const ProductProvider = ({  children,data,}: {  children: React.ReactNode
       // If nothing then showing all the objects
       pageResult = [...data];
     }
+
 // Availability Filters logic
     if (filters.availability !== "all") {
       pageResult = pageResult.filter((p) => {
@@ -94,6 +104,7 @@ export const ProductProvider = ({  children,data,}: {  children: React.ReactNode
         return true;
       });
     }
+
     //Storing the result in a new obj to stop mutating the original value
     const sortedResult = [...pageResult]
     // Dropdown filters logic
@@ -118,7 +129,7 @@ export const ProductProvider = ({  children,data,}: {  children: React.ReactNode
       gridCols: 4,
     });
   };
-
+  
   return (
     <ProductContext.Provider
       value={{
