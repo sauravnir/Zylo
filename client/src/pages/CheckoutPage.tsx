@@ -43,8 +43,8 @@ export default function CheckoutPage() {
                 <h2 className="text-base font-bold uppercase tracking-widest">
                   Order Summary ({totalItems})
                 </h2>
-                <Link to="/cart" className="group rounded-full  bg-main p-2 hover:scale-90">
-                  <Pencil className="group-hover:scale-90 text-white" size={16} />
+                <Link to="/cart" className="group rounded-full  bg-main p-2 hover:scale-90 transition-all duration-300">
+                  <Pencil className="group-hover:scale-90 text-white transition-all duration-300" size={16} />
                 </Link>
               </div>
 

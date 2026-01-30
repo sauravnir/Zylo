@@ -4,7 +4,7 @@
 
 @font-face {
     font-family: 'Estrella';
-    src: url('./assets/fonts/estrella-early.otf') format('opentype');
+    src: url('/public/fonts/estrella-early.otf') format('opentype');
     font-weight: 400;
     font-style: normal;
 }

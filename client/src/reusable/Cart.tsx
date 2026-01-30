@@ -80,6 +80,7 @@ export const CartSheet = () => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
     dispatch(setIsUploading(false));
     dispatch(setCartOpen(false));
+    setNoteCart(!noteCart);
     navigate("/checkout");
   };
 

@@ -28,7 +28,8 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { Truck, Banknote } from "lucide-react";
-// import html2pdf from 'html2pdf.js/dist/html2pdf.bundle.min.js';
+import { ZyloReceipt } from "@/reusable/ReceiptDownload";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 
 export function OrderConfirmation() {
   const location = useLocation();
@@ -45,47 +46,6 @@ export function OrderConfirmation() {
       console.log("Failed to copy code!", error);
     }
   };
-
-//   Creating and handling the pdf download option
-
-// const handleDownload = async () => {
-//     const downloadSection = document.getElementById('zylo-receipt-download');
-//     if (!downloadSection) return;
-
-//     // 1. Create a clone so we don't mess up the actual UI the user sees
-//     const element = downloadSection.cloneNode(true) as HTMLElement;
-
-//     // 2. FORCE ACCORDIONS OPEN (Search for all hidden content and make it block)
-//     // This targets common Shadcn/Radix hidden states
-//     const hiddenElements = element.querySelectorAll('[data-state="closed"], .hidden');
-//     hiddenElements.forEach((el) => {
-//         (el as HTMLElement).style.display = 'block';
-//         (el as HTMLElement).style.height = 'auto';
-//         (el as HTMLElement).setAttribute('data-state', 'open');
-//     });
-
-//     const options = {
-//         margin: 0.5,
-//         filename: `Zylo-Order-${orderDetails.orderSummary.orderNumber}.pdf`,
-//         image: { type: 'jpeg', quality: 0.98 },
-//         html2canvas: { 
-//             scale: 2, 
-//             useCORS: true, 
-//             letterRendering: true,
-//             scrollY: 0, // Prevents "Blank Page" if user is scrolled down
-//             windowWidth: downloadSection.scrollWidth,
-//             windowHeight: downloadSection.scrollHeight
-//         },
-//         jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
-//     };
-
-//     try {
-//         // Use the 'element' (the clone), not 'downloadSection' (the live UI)
-//         await html2pdf().set(options).from(element).save();
-//     } catch (error) {
-//         console.error("PDF Generation Error:", error);
-//     }
-// };
 
 
   useEffect(() => {
@@ -123,7 +83,7 @@ export function OrderConfirmation() {
                     onClick={() =>
                       copyText(orderDetails.orderSummary.orderNumber)
                     }
-                    className="shadow  shadow-2xl p-6 hover:bg-primary/80 transition-all duration-300"
+                    className="shadow-2xl p-6 hover:bg-primary/80 transition-all duration-300"
                   >
                     <span className="text-card text-base font-normal tracking-normal px-2 py-4">
                       Order Id :{" "}
@@ -331,14 +291,21 @@ export function OrderConfirmation() {
           </Accordion>
         </div>
         {/* End CTA's */}
-        <div className="flex flex-col items-center md:flex-row lg:flex-row md:justify-center mt-6">
-            <Button
-            disabled
+        <div className="flex flex-col items-center md:flex-row lg:flex-row md:justify-center mt-6"> 
+           
+            <PDFDownloadLink
+              document={<ZyloReceipt 
+                order={orderDetails}
+              />}
+              fileName={`Zylo_Order_${orderDetails.orderSummary.orderNumber}.pdf`}
+            >
+              <Button
               variant="ghost"
               className="rounded-none text-main text-button underline underline-offset-4"
             >
               Download Receipt
-            </Button>
+            </Button> 
+            </PDFDownloadLink>
           <Link to="/">
             <Button
               variant="ghost"

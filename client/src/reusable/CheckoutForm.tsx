@@ -189,7 +189,7 @@ export function CheckoutForm({
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-nav uppercase tracking-widest">
-                  Country/Region *
+                  Country*
                 </FormLabel>
 
                 {/* 1. Select wraps everything */}
@@ -219,7 +219,7 @@ export function CheckoutForm({
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-nav uppercase tracking-widest">
-                  City *
+                  City*
                 </FormLabel>
                 <Select
                   onValueChange={(value) => {
@@ -259,7 +259,7 @@ export function CheckoutForm({
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-nav uppercase tracking-widest">
-                  Address *
+                  Address*
                 </FormLabel>
                 <FormControl>
                   <Input placeholder="Address" {...field} />

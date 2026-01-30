@@ -13,7 +13,7 @@ import { OrderConfirmation } from "./pages/orderSuccess";
 import { Toaster } from "sonner";
 import { SearchPage } from "./pages/SearchPage";
 import Collections from "./pages/Collections";
-import { Error404 } from "./reusable/404Error";
+import { Error404 } from "./pages/404Error";
 // Scrolling the page on top while new page navigate
 const ScrolltoTop = () => {
   const location = useLocation();
