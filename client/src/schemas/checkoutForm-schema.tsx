@@ -52,8 +52,7 @@ export const checkoutSchema = z.object({
   lastName: z.string().min(3, "Last Name is required"),
   phone: z
     .string()
-    .min(10, "Phone number must be 10 digits.")
-    .max(10, "Phone number must be 10 digits.")
+    .length(10, "Phone number must be 10 digits.")
     .refine(
       (value) => {
         const num = parsePhoneNumberFromString(value, "NP");

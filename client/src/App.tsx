@@ -14,6 +14,8 @@ import { Toaster } from "sonner";
 import { SearchPage } from "./pages/SearchPage";
 import Collections from "./pages/Collections";
 import { Error404 } from "./pages/404Error";
+import { Shipping } from "./pages/Shipping";
+import { Returns } from "./pages/Return";
 // Scrolling the page on top while new page navigate
 const ScrolltoTop = () => {
   const location = useLocation();
@@ -50,10 +52,9 @@ function App() {
     <>
       {showLoader && <CustomLoader onFinish={handleLoaderFinish} />}
       <Toaster richColors position="top-center"/>
-      <BrowserRouter basename="/Zylo">
+      <HashRouter >
         <ScrolltoTop />
         <Routes>
-         
           <Route path="/" element={<HomePage />} />
           <Route path="/products/:slug" element={<ProductPage />} />
           <Route path="/cart" element={<CartPage />} />
@@ -61,10 +62,12 @@ function App() {
           <Route path="/thank-you" element={<OrderConfirmation />} />
           <Route path="/search" element={<SearchPage />}/>
           <Route path="/collections/:category" element={<Collections />}/>
+          <Route path="/shipping" element={<Shipping />}/>
+          <Route path="/returns" element={<Returns />}/>
           {/* Catching all the unknown urls and navigating to 404Error page */}
          <Route path="*" element={<Error404 />} />
         </Routes>
-      </BrowserRouter>
+      </HashRouter>
     </>
   );
 }

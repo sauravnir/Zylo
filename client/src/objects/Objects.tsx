@@ -549,8 +549,8 @@ export const FOOTER_LINKS = [
   {
     title: "Help",
     links: [
-      { name: "Shipping", href: "/" },
-      { name: "Returns", href: "/" },
+      { name: "Shipping", href: "/shipping" },
+      { name: "Returns", href: "/returns" },
       { name: "FAQs", href: "/" },
       { name: "Terms and Condition", href: "/" },
       { name: "Privacy Policy", href: "/" },
@@ -615,4 +615,60 @@ export const DELIVERY_LOCATIONS = [
   { city: "Solukhumbu", area: "Lukla/Salleri", rate: 350 },
   { city: "Manang", area: "Chame", rate: 350 },
   { city: "Darchula", area: "Far West", rate: 300 }
+];
+
+export const SHIPPINGFAQS = [
+  {
+    id: "item-1",
+    question: "Delivery Timeline",
+    answer: "For orders within Kathmandu Valley, we deliver within 24-48 hours. For outside valley orders, please allow 3-5 business days depending on your location."
+  },
+  {
+    id: "item-2",
+    question: "Shipping Rates",
+    answer: "We offer a flat shipping rate of Rs. 150 within Kathmandu. Outside valley shipping is calculated at checkout based on your specific district and package weight."
+  },
+  {
+    id: "item-3",
+    question: "Cash on Delivery (COD) Policy",
+    answer: "We offer COD for all orders. However, for high-value orders or remote locations, our team may call you for a quick verification before dispatching your package."
+  },
+  {
+    id: "item-4",
+    question: "Order Tracking",
+    answer: "Once your order is verified and dispatched, you will receive an SMS with your tracking details. You can use this to check the real-time status of your delivery."
+  },
+  {
+    id: "item-5",
+    question: "Exchange & Returns",
+    answer: "If the fit isn't right, we offer a 7-day exchange policy. Items must be unworn, unwashed, and have the original Zylo tags attached. Delivery charges for exchanges are borne by the customer."
+  }
+];
+
+export const RETURNFAQS = [
+  {
+    id: "return-1",
+    question: "7-Day Return Policy",
+    answer: "We accept returns and exchanges within 7 days of delivery. The item must be in its original condition: unworn, unwashed, and with all Zylo tags and original packaging intact."
+  },
+  {
+    id: "return-2",
+    question: "How to Initiate a Return",
+    answer: "To start a return, please contact our support team via WhatsApp or Instagram DM with your Order ID and photos of the item. Once approved, you can send the item back to our central hub."
+  },
+  {
+    id: "return-3",
+    question: "Refund Method",
+    answer: "For Cash on Delivery orders, we offer refunds via eSewa, Khalti, or Bank Transfer within 3-5 business days after we receive and inspect the returned item."
+  },
+  {
+    id: "return-4",
+    question: "Exchange Shipping Costs",
+    answer: "If you received a defective or wrong item, Zylo covers all shipping costs. For size exchanges or change-of-mind returns, the customer is responsible for the return shipping fee."
+  },
+  {
+    id: "return-5",
+    question: "Non-Returnable Items",
+    answer: "For hygiene reasons, innerwear, socks, and items purchased during 'Final Clearance' sales are not eligible for return or exchange."
+  }
 ];
