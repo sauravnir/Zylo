@@ -2,7 +2,7 @@ import { useParams, useNavigate , Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useProducts } from "@/context/ProductContext";
 import { motion } from "motion/react";
-import { PRODUCTS_LIST } from "@/objects/Objects";
+// import { PRODUCTS_LIST } from "@/objects/Objects";
 import { NavigationBar } from "@/components/reusable/Navigation";
 import { Footer } from "@/components/reusable/Footer";
 import { ItemFilters } from "@/components/reusable/FilterComponent";

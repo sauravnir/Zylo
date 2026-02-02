@@ -31,6 +31,7 @@ import {
 import { PrimaryButton } from "./ButtonComponent";
 import { useNavigate } from "react-router-dom";
 import { DELIVERY_LOCATIONS } from "@/objects/Objects";
+import { requestOtp } from "@/api/authService";
 
 export function CheckoutForm({
   subTotal,
@@ -98,9 +99,17 @@ export function CheckoutForm({
         orderNumber: `ZY-${Math.floor(Math.random() * 900) + 1000}`,
       },
     };
-
     await new Promise((resolve) => setTimeout(resolve, 2000));
-    dispatch(setIsUploading(false));
+    try {
+      // Requesting the otp from the server 
+      await requestOtp(formData.email);
+      
+    } catch (error) {
+      
+    }finally {
+      dispatch(setIsUploading(false));
+    }
+    
     navigate("/thank-you", { state: { order: confirmOrder } });
   };
   return (
