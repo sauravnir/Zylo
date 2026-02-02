@@ -95,7 +95,7 @@ export const ProductDetail = ({ props, viewMode , closeModal }: ProductDetailPro
       (slide) => (slide - 1 + modalImage.length) % modalImage.length,
     );
   };
-  const [error, setError] = useState(false);
+  // const [error, setError] = useState(false);
   // Handling the increment and decrement of the Quantity button
   const [num, setNum] = useState(1);
   const increment = () => setNum((prev) => prev + 1);
@@ -136,6 +136,7 @@ export const ProductDetail = ({ props, viewMode , closeModal }: ProductDetailPro
     await new Promise((resolve) => setTimeout(resolve, 800));
     // Dispatching the product after the timer
     dispatch(addItem({ product: props, size: productSize, itemQuantity: num }));
+    
     dispatch(setIsUploading(false));
 
     // Closing the modal when the add to cart items is clicked
@@ -187,7 +188,7 @@ export const ProductDetail = ({ props, viewMode , closeModal }: ProductDetailPro
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
               className="w-full h-full object-cover"
-              onError={() => setError(true)}
+              // onError={() => setError(true)}
             />
           </AnimatePresence>
 
@@ -256,7 +257,7 @@ export const ProductDetail = ({ props, viewMode , closeModal }: ProductDetailPro
                     src={image}
                     alt={`Product thumbnail ${index + 1}`}
                     className="w-full h-full object-cover"
-                    onError={() => setError(true)}
+                    // onError={() => setError(true)}
                   />
                 </button>
               );
