@@ -50,7 +50,7 @@ export const DownCurrencyMenu = ({ item }: { item: any }) => {
         align="end"
       >
         <motion.div
-          variants={parentVariants}
+          
           initial="hidden"
           animate="visible"
         >
@@ -61,7 +61,7 @@ export const DownCurrencyMenu = ({ item }: { item: any }) => {
           {item.children.map((child: any) => {
             const isActive = activeCurrency === child.code;
             return (
-              <motion.div  key={child.code} variants={itemVariants}>
+              <motion.div  key={child.code} >
               <DropdownMenuItem
                
                 onClick={() => handleCurrencySelection(child)}

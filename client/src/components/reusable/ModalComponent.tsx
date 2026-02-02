@@ -136,7 +136,7 @@ export const ProductDetail = ({ props, viewMode , closeModal }: ProductDetailPro
     await new Promise((resolve) => setTimeout(resolve, 800));
     // Dispatching the product after the timer
     dispatch(addItem({ product: props, size: productSize, itemQuantity: num }));
-    
+
     dispatch(setIsUploading(false));
 
     // Closing the modal when the add to cart items is clicked
@@ -389,8 +389,8 @@ export const ProductDetail = ({ props, viewMode , closeModal }: ProductDetailPro
             <div className="flex items-center border border-border w-fit">
               <button
                 onClick={decrement}
-                className="w-10 h-10 flex items-center justify-center text-muted hover:text-white transition-all duration-300 hover:bg-main border-r border-border"
-              >
+                className={`w-10 h-10 flex items-center justify-center ${num === 1 && `cursor-not-allowed bg-muted/50 hover:bg-muted/50`} text-muted hover:text-white transition-all duration-300 hover:bg-main border-r border-border`}
+              > 
                 <Minus size={16} />
               </button>
               <div className="text-muted w-12 flex items-center justify-center text-sm tabular-nums">
