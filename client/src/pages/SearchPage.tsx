@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { useProducts } from "@/context/ProductContext";
-import { NavigationBar } from "@/reusable/Navigation";
-import { Footer } from "@/reusable/Footer";
-import ProductCard from "@/reusable/CardComponent";
+import { NavigationBar } from "@/components/reusable/Navigation";
+import { Footer } from "@/components/reusable/Footer";
+import ProductCard from "@/components/reusable/CardComponent";
 import { Input } from "@/components/ui/input";
-import { ItemFilters } from "@/reusable/FilterComponent";
+import { ItemFilters } from "@/components/reusable/FilterComponent";
 import { motion } from "motion/react";
 import { itemVariants, parentVariants } from "@/objects/Animations";
 

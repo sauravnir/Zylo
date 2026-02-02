@@ -3,16 +3,16 @@ import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@mui/material";
-import { ShoppingCart, X, Minus, Plus, Trash2 } from "lucide-react";
+import { ShoppingCart, X, Minus, Plus } from "lucide-react";
 import { PrimaryButton } from "./ButtonComponent";
 import { CircularProgress } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 // Importing the redux components
 
 import type { RootState } from "@/store/store";
@@ -29,7 +29,6 @@ import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 
 import { Price } from "./Price";
-import { Link, useNavigate } from "react-router-dom";
 
 // Overall Cart Sheet Drawer
 export const CartSheet = () => {
@@ -42,7 +41,7 @@ export const CartSheet = () => {
   const isCartOpen = useSelector((state: RootState) => state.cart.cartOpen);
   const checkoutAmount = useSelector(totalCheckoutAmount);
   const globalNote = useSelector((state: RootState) => state.cart.orderNote);
-  const { activeCurrency, rate, symbol } = useSelector(
+  const {  rate, symbol } = useSelector(
     (state: RootState) => state.currency,
   );
   // Handling the cart Open Logic
@@ -133,27 +132,25 @@ export const CartSheet = () => {
           </span>
         </Badge>
       </SheetTrigger>
-      <SheetContent className="py-8 px-0 bg-card " side="right">
+      <SheetContent className="py-8 px-0 bg-card " side="right" onOpenAutoFocus={(e)=>e.preventDefault()}>
         <SheetHeader>
           <SheetTitle className="flex items-center justify-between px-4">
             <span className="flex text-base text-main gap-2 uppercase font-medium tracking-widest">
               Cart <span>({totalItems})</span>
             </span>
             <SheetClose className="flex items-center">
-              <button>
-                <X size={20} className="text-muted hover:text-main" />
-              </button>
+                <X size={20} className="text-muted hover:text-main" /> 
             </SheetClose>
           </SheetTitle>
         </SheetHeader>
         <Separator className="w-full mt-6" />
 
-        <SheetDescription className="h-full flex flex-col ">
+        <div className="h-full flex flex-col ">
           {/* Cart Content */}
           <div className="flex-1 overflow-y-auto pr-2 gap-6 px-8 py-4 flex flex-col">
             {storeValue.length > 0 ? (
               storeValue.map((item) => (
-                <CartItem item={item} isReadOnly={false} />
+                <CartItem key={item.title} item={item} isReadOnly={false} />
               ))
             ) : (
               <div className="flex h-full flex-col items-center justify-center px-4">
@@ -197,7 +194,7 @@ export const CartSheet = () => {
                       className="overflow-hidden flex flex-col gap-3"
                     >
                       <textarea
-                        autoFocus
+                        
                         value={localNote}
                         onChange={(e) => setLocalNote(e.target.value)}
                         placeholder="How can we help you?"
@@ -239,7 +236,7 @@ export const CartSheet = () => {
               </div>
             </motion.div>
           )}
-        </SheetDescription>
+        </div>
       </SheetContent>
     </Sheet>
   );
@@ -294,7 +291,7 @@ export const CartItem = ({
   return (
     <div
       key={`${item.slug}-${item.productSize}`}
-      className="flex flex-row gap-6 border-b border-b py-8 first:pt-0 last:border-0"
+      className="flex flex-row gap-6 border-b py-8 first:pt-0 last:border-0"
     >
       <div className="relative h-36 w-24 flex-shrink-0 overflow-hidden bg-[#f9f9f9]">
         <img

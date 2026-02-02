@@ -1,5 +1,5 @@
-import { ProductCard, type ProductCardProps } from "@/reusable/CardComponent";
-import { ProductDetail } from "@/reusable/ModalComponent";
+import { ProductCard, type ProductCardProps } from "@/components/reusable/CardComponent";
+import { ProductDetail } from "@/components/reusable/ModalComponent";
 import { motion } from "motion/react";
 import {
   Carousel,

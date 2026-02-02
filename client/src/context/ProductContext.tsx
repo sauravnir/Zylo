@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useMemo } from "react";
-import type { ProductCardProps } from "@/reusable/CardComponent";
+import type { ProductCardProps } from "@/components/reusable/CardComponent";
 
 // Defining the filter functionality
 interface Filters {

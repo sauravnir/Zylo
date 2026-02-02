@@ -5,7 +5,7 @@ import HomePage from "./pages/Home";
 import { ProductPage } from "./pages/Products";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
-import { CustomLoader } from "./reusable/CustomLoader";
+import { CustomLoader } from "./components/reusable/CustomLoader";
 import { type AppDispatch } from "./store/store";
 import { useDispatch } from "react-redux";
 import { fetchLiveRates } from "./store/slices/currencySlice";

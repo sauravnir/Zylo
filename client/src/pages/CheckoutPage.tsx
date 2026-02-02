@@ -1,31 +1,36 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { CheckoutNav } from "@/reusable/Navigation";
+import { CheckoutNav } from "@/components/reusable/Navigation";
 import type { RootState } from "@/store/store";
 import { useNavigate } from "react-router-dom";
-import { CheckoutForm } from "@/reusable/CheckoutForm";
-import { Pencil } from "lucide-react";
-import { CartItem } from "@/reusable/Cart";
-import { Price } from "@/reusable/Price";
+import { CheckoutForm } from "@/components/reusable/CheckoutForm";
+import { TicketPercent } from "lucide-react";
+import { CartItem } from "@/components/reusable/Cart";
+import { Price } from "@/components/reusable/Price";
 import { subTotalAmount, totalCheckoutAmount } from "@/store/slices/cartSlice";
 import { useAppSelector } from "@/store/hook";
+import { Input } from "@/components/ui/input";
+import { PrimaryButton } from "@/components/reusable/ButtonComponent";
 
 export default function CheckoutPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const totalItems = useAppSelector((state: RootState) => state.cart.totalItems);
+  const totalItems = useAppSelector(
+    (state: RootState) => state.cart.totalItems,
+  );
   const cartItems = useAppSelector((state: RootState) => state.cart.items);
-  const {symbol} = useAppSelector((state:RootState)=> state.currency);
-  const shippingCost = useAppSelector((state:RootState)=>state.cart.shippingCost) ?? 0;
+  const { symbol } = useAppSelector((state: RootState) => state.currency);
+  const shippingCost =
+    useAppSelector((state: RootState) => state.cart.shippingCost) ?? 0;
   const checkoutAmount = useAppSelector(totalCheckoutAmount);
   const navigate = useNavigate();
-  const subTotal = useAppSelector(subTotalAmount)
+  const subTotal = useAppSelector(subTotalAmount);
 
   //   If there are no cart items and if the isSubmitting state is not true then the user cannot navigate to the page
   useEffect(() => {
     if (totalItems < 1 && !isSubmitting) {
       navigate("/cart");
     }
-  }, [totalItems, navigate , isSubmitting]);
+  }, [totalItems, navigate, isSubmitting]);
   if (totalItems === 0) return null;
 
   return (
@@ -35,16 +40,28 @@ export default function CheckoutPage() {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 ">
           {/* Checkout Form  */}
           <div className="order-2 lg:order-1 lg:col-span-7 space-y-10 p-4 border-r ">
-            <CheckoutForm symbol={symbol} shippingAmount={shippingCost} totalAmount={checkoutAmount} subTotal={subTotal} onStartSubmitting={()=>setIsSubmitting(true)}/>
+            <CheckoutForm
+              symbol={symbol}
+              shippingAmount={shippingCost}
+              totalAmount={checkoutAmount}
+              subTotal={subTotal}
+              onStartSubmitting={() => setIsSubmitting(true)}
+            />
           </div>
           <aside className="order-1 lg:order-1 lg:col-span-5">
-            <div className="sticky top-32 space-y-8">
+            <div className="sticky top-32 space-y-4">
               <div className="flex items-center justify-between px-0 p-4 border-b rounded-none">
                 <h2 className="text-base font-bold uppercase tracking-widest">
                   Order Summary ({totalItems})
                 </h2>
-                <Link to="/cart" className="group rounded-full  bg-main p-2 hover:scale-90 transition-all duration-300">
-                  <Pencil className="group-hover:scale-90 text-white transition-all duration-300" size={16} />
+                <Link
+                  to="/cart"
+                  className="group rounded-full p- transition-all duration-300"
+                >
+                  {/* <Pencil className="group-hover:scale-90 text-white transition-all duration-300" size={16} /> */}
+                  <span className="underline text-main text-tiny uppercase hover:text-muted">
+                    Edit
+                  </span>
                 </Link>
               </div>
 
@@ -53,6 +70,29 @@ export default function CheckoutPage() {
                   cartItems.map((items) => (
                     <CartItem key={items.id} item={items} isReadOnly={true} />
                   ))}
+              </div>
+
+              {/* Coupon Button */}
+              <div className="flex flex-row items-center gap-4 ">
+                <div className="relative flex-1 shadow-lg">
+                  <TicketPercent
+                    className="absolute left-3 top-1/2 -translate-y-1/2 text-muted"
+                    size={16}
+                  />
+                  <Input
+                  disabled={true}
+                    placeholder="Discount code or gift card"
+                    className="pl-10 rounded-none border-muted/30 focus-visible:ring-main font-mono placeholder:font-bold placeholder:tracking-tight text-sm h-11"
+                  />
+                </div>
+
+                <div className="w-1/3 ">
+                  <PrimaryButton
+                    name="Apply"
+                    isDisabled={true}
+                    onClick={() => {}}
+                  />
+                </div>
               </div>
               {/* Trust Badges or Help Section */}
               <div className="flex flex-col space-y-2 px-4 py-4 border border-dashed border-muted bg-muted/10 text-center">

@@ -1,5 +1,5 @@
-import {NavigationBar} from "@/reusable/Navigation";
-import { Footer } from "@/reusable/Footer";
+import {NavigationBar} from "@/components/reusable/Navigation";
+import { Footer } from "@/components/reusable/Footer";
 import { ProductMain } from "@/layout/Product/ProductMain";
 import { PRODUCTS_LIST } from "@/objects/Objects";
 import { useParams, Navigate } from "react-router-dom";

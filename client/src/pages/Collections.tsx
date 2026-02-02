@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import { useProducts } from "@/context/ProductContext";
 import { motion } from "motion/react";
 import { PRODUCTS_LIST } from "@/objects/Objects";
-import { NavigationBar } from "@/reusable/Navigation";
-import { Footer } from "@/reusable/Footer";
-import { ItemFilters } from "@/reusable/FilterComponent";
+import { NavigationBar } from "@/components/reusable/Navigation";
+import { Footer } from "@/components/reusable/Footer";
+import { ItemFilters } from "@/components/reusable/FilterComponent";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -14,7 +14,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import { itemVariants, parentVariants } from "@/objects/Animations";
-import ProductCard from "@/reusable/CardComponent";
+import ProductCard from "@/components/reusable/CardComponent";
 import { Input } from "@/components/ui/input";
 
 export default function Collections() {

@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link , useNavigate } from "react-router-dom";
-import { Footer } from "@/reusable/Footer";
-import {NavigationBar} from "@/reusable/Navigation";
-import { CartItem } from "@/reusable/Cart";
+import { Footer } from "@/components/reusable/Footer";
+import {NavigationBar} from "@/components/reusable/Navigation";
+import { CartItem } from "@/components/reusable/Cart";
 import { useDispatch } from "react-redux";
 import { type RootState } from "@/store/store";
 import { ShoppingCart } from "lucide-react";
-import { PrimaryButton } from "@/reusable/ButtonComponent";
-import { Price } from "@/reusable/Price";
+import { PrimaryButton } from "@/components/reusable/ButtonComponent";
+import { Price } from "@/components/reusable/Price";
 import { subTotalAmount } from "@/store/slices/cartSlice";
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "motion/react";
@@ -48,6 +48,7 @@ const handleCheckout = async () => {
     dispatch(setIsUploading(true));
     await new Promise((resolve)=>setTimeout(resolve , 800));
     dispatch(setIsUploading(false));
+    setNoteCart(false);
     navigate('/checkout');
 }
 

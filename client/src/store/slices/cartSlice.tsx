@@ -3,7 +3,7 @@ import {
   type PayloadAction,
   createSelector,
 } from "@reduxjs/toolkit";
-import type { ProductCardProps } from "@/reusable/CardComponent";
+import type { ProductCardProps } from "@/components/reusable/CardComponent";
 import type { RootState } from "../store";
 import { useSelector } from "react-redux";
 

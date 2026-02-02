@@ -1,6 +1,6 @@
-import { LinkDown } from "@/reusable/ButtonComponent";
+import { LinkDown } from "@/components/reusable/ButtonComponent";
 import { motion } from "motion/react";
-import ProductCard from "@/reusable/CardComponent";
+import ProductCard from "@/components/reusable/CardComponent";
 import { PRODUCTS_LIST } from "@/objects/Objects";
 
 export function HomeMain() {

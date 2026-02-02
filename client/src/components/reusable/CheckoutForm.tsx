@@ -3,7 +3,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import {
   checkoutSchema,
   type CheckoutFormValidation,
-} from "../schemas/checkoutForm-schema";
+} from "../../schemas/checkoutForm-schema";
 import {
   Form,
   FormControl,

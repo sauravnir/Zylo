@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
-import { LinkDown } from "@/reusable/ButtonComponent";
+import { LinkDown } from "@/components/reusable/ButtonComponent";
 import { parentVariants } from "@/objects/Animations";
-import ProductCard from "@/reusable/CardComponent";
+import ProductCard from "@/components/reusable/CardComponent";
 import { PRODUCTS_LIST } from "@/objects/Objects";
 
 import { Carousel, CarouselContent , CarouselNext , CarouselPrevious , CarouselItem } from "@/components/ui/carousel";
@@ -60,7 +60,7 @@ export function CollectionSectionMain() {
           </CarouselContent>
           <div className="flex justify-center items-center mt-8 md:mt-4">
       <div className="relative flex gap-2">
-        <CarouselPrevious className="rounded-none w-10 h-10 text-white bg-main hover:bg-primary transition-colors duration-400 data-[]:" />
+        <CarouselPrevious className="rounded-none w-10 h-10 text-white bg-main hover:bg-primary transition-colors duration-400 :" />
         <CarouselNext className="rounded-none w-10 h-10 text-white bg-main hover:bg-primary transition-colors duration-400" />
       </div>
     </div>

@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { NavigationBar } from "@/reusable/Navigation";
+import { NavigationBar } from "@/components/reusable/Navigation";
 import { useEffect } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -28,7 +28,7 @@ import {
   TableCell,
 } from "@/components/ui/table";
 import { Truck, Banknote } from "lucide-react";
-import { ZyloReceipt } from "@/reusable/ReceiptDownload";
+import { ZyloReceipt } from "@/components/reusable/ReceiptDownload";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 
 export function OrderConfirmation() {
