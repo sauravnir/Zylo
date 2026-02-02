@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { HashRouter, Routes, Route, useLocation, BrowserRouter } from "react-router-dom";
+import { HashRouter, Routes, Route, useLocation } from "react-router-dom";
 import "./index.css";
 import HomePage from "./pages/Home";
 import { ProductPage } from "./pages/Products";
@@ -47,6 +47,7 @@ function App() {
 
   // Setting up dispatch function from the store
   const dispatch = useDispatch<AppDispatch>();
+  
   // Fetching the currencies when page load
   useEffect(() => {
     dispatch(fetchLiveRates());

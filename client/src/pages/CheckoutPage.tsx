@@ -39,7 +39,7 @@ export default function CheckoutPage() {
       <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-8 py-12 md:py-8 border-l border-r ">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 ">
           {/* Checkout Form  */}
-          <div className="order-2 lg:order-1 lg:col-span-7 space-y-10 p-4 border-r ">
+          <div className="order-2 lg:order-1 lg:col-span-7 space-y-10 p-4 border-r  ">
             <CheckoutForm
               symbol={symbol}
               shippingAmount={shippingCost}
@@ -47,7 +47,24 @@ export default function CheckoutPage() {
               subTotal={subTotal}
               onStartSubmitting={() => setIsSubmitting(true)}
             />
+            {/* Bottom Links */}
+            <div className="border-t flex flex-row items-center justify-center gap-4 p-2 underline pt-4">
+              <Link to="/shipping" className="text-tiny uppercase text-main/80 hover:text-muted transition-colors duration-300">
+              Shipping
+              </Link>
+              <Link to="/returns" className="text-tiny uppercase text-main/80 hover:text-muted transition-colors duration-300">
+              Returns
+              </Link>
+              <Link to="/policy" className="text-tiny uppercase text-main/80 hover:text-muted transition-colors duration-300">
+              Policy
+              </Link>
+              <Link to="/terms" className="text-tiny uppercase text-main/80 hover:text-muted transition-colors duration-300">
+              Terms
+              </Link>
+            </div>
           </div>
+            
+
           <aside className="order-1 lg:order-1 lg:col-span-5">
             <div className="sticky top-32 space-y-4">
               <div className="flex items-center justify-between px-0 p-4 border-b rounded-none">
@@ -74,7 +91,7 @@ export default function CheckoutPage() {
 
               {/* Coupon Button */}
               <div className="flex flex-row items-center gap-4 ">
-                <div className="relative flex-1 shadow-lg">
+                <div className="relative flex-1 shadow">
                   <TicketPercent
                     className="absolute left-3 top-1/2 -translate-y-1/2 text-muted"
                     size={16}

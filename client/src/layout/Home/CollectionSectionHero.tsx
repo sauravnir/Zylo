@@ -1,6 +1,4 @@
-import React from "react"
 import { motion } from "motion/react";
-import LogoWhite from "@/assets/logo/LogoWhite.svg"
 
 export function CollectionHero (){
     return (
@@ -11,11 +9,14 @@ export function CollectionHero (){
     transition={{ duration: 0.7, delay: 0.8 }}
     className="absolute inset-0 z-10 flex items-center justify-center p-6"
   >
-    <img
+    <span className="text-white text-[200px] font-logo">
+      Basics
+    </span>
+    {/* <img
       src={LogoWhite}
       alt="LogoWhite"
       className="w-48 md:w-72 h-auto object-contain"
-    />
+    /> */}
   </motion.div>
 </div>
     )

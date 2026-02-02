@@ -543,6 +543,7 @@ export const PRODUCTS_LIST = [
     availability: "In Stock"
   }
 ];
+// Footer Object
 export const FOOTER_LINKS = [
   {
     title: "Help",
@@ -571,6 +572,7 @@ export const FOOTER_LINKS = [
   },
 ];
 
+// Delivery Location
 export const DELIVERY_LOCATIONS = [
   { city: "Kathmandu", area: "Inside Ringroad", rate: 100 },
   { city: "Lalitpur", area: "Inside Ringroad", rate: 100 },
@@ -615,6 +617,7 @@ export const DELIVERY_LOCATIONS = [
   { city: "Darchula", area: "Far West", rate: 300 }
 ];
 
+// Shipping
 export const SHIPPINGFAQS = [
   {
     id: "item-1",
@@ -642,7 +645,7 @@ export const SHIPPINGFAQS = [
     answer: "If the fit isn't right, we offer a 7-day exchange policy. Items must be unworn, unwashed, and have the original Zylo tags attached. Delivery charges for exchanges are borne by the customer."
   }
 ];
-
+// return
 export const RETURNFAQS = [
   {
     id: "return-1",
@@ -670,7 +673,7 @@ export const RETURNFAQS = [
     answer: "For hygiene reasons, innerwear, socks, and items purchased during 'Final Clearance' sales are not eligible for return or exchange."
   }
 ];
-
+// FAQS
 export const FAQS = [
   {
     id: "faq-1",

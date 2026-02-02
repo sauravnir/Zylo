@@ -63,7 +63,7 @@ const handleCheckout = async () => {
         {storeValue.length > 0 ? (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
             <div className="lg:col-span-7 flex flex-col gap-2">
-              {storeValue.map((item) => (
+              {storeValue.map((item:any) => (
                 <CartItem
                   key={`${item.slug}-${item.productSize}`}
                   item={item}

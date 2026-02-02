@@ -16,6 +16,7 @@ import {
 import { itemVariants, parentVariants } from "@/objects/Animations";
 import ProductCard from "@/components/reusable/CardComponent";
 import { Input } from "@/components/ui/input";
+// import { ProductPagination } from "@/components/reusable/PaginationComponent";
 
 export default function Collections() {
   const { category } = useParams();
@@ -122,7 +123,10 @@ export default function Collections() {
             {filteredProducts.map((items) => (
               <ProductCard key={items.id} {...items} isSearchContent={false} />
             ))}
+            {/* <ProductPagination totalPages={2}/> */}
           </motion.div>
+
+          
         </motion.div>
       ) : (
         <div className=" max-w-sm mx-auto py-60 px-4 text-center">
