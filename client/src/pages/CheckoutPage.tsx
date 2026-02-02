@@ -84,7 +84,7 @@ export default function CheckoutPage() {
 
               <div className="max-h-[350px] overflow-y-auto pr-4 scrollbar-thin ">
                 {cartItems.length > 0 &&
-                  cartItems.map((items) => (
+                  cartItems.map((items:any) => (
                     <CartItem key={items.id} item={items} isReadOnly={true} />
                   ))}
               </div>

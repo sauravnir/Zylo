@@ -8,6 +8,7 @@ import {ProductModal} from "./ModalComponent";
 import { Link } from "react-router-dom";
 import { Price } from "./Price";
 
+
 // Type casting all the object data and passing as a prop
 export interface ProductCardProps {
   id:string,
@@ -32,7 +33,7 @@ export function ProductCard({isSearchContent , ...props}:ProductCardProps & {isS
   const [Error , setError] = useState(false);
 // Handling the modal open prop
   const [isOpenModal , setIsOpenModal] = useState(false);
-
+ 
   return (
     <motion.div
     variants={itemVariants}
@@ -121,7 +122,7 @@ export function ProductCard({isSearchContent , ...props}:ProductCardProps & {isS
         </div>
     </motion.div>
 
-    <ProductModal isOpenModal={isOpenModal} isSetOpenModal={setIsOpenModal} {...props}/>
+    <ProductModal isOpenModal={isOpenModal} isSetOpenModal={setIsOpenModal} closeModal ={()=>setIsOpenModal(false)} {...props}/>
 </motion.div>
   );
 }

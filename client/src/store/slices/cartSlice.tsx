@@ -5,7 +5,6 @@ import {
 } from "@reduxjs/toolkit";
 import type { ProductCardProps } from "@/components/reusable/CardComponent";
 import type { RootState } from "../store";
-import { useSelector } from "react-redux";
 
 // Type casting the payload
 export interface CartProps extends ProductCardProps {
@@ -20,6 +19,7 @@ export interface CartState {
   totalItems: number;
   // State for cart open property
   cartOpen: boolean;
+
   isUploading: boolean;
   orderNote: string;
   shippingCost : number,
@@ -33,7 +33,7 @@ const initialState: CartState = {
   isUploading: false,
   orderNote: "",
   shippingCost : 0,
-  shippingCity : ""
+  shippingCity : "",
 };
 
 export const cartSlice = createSlice({
@@ -71,6 +71,7 @@ export const cartSlice = createSlice({
       // Setting the global cart open state
       state.cartOpen = true;
     },
+    // Removing cart items
     removeItem: (
       state,
       action: PayloadAction<{ slug: string; size: string }>,
@@ -89,16 +90,18 @@ export const cartSlice = createSlice({
           (item) => !(item.slug === slug && item.productSize === size),
         );
       }
-      // Removing the OrderNote if the cart is empty and setting the totalItems value to 0 for safety
+      // Removing the OrderNote if the cart is empty and setting the totalItems value to 0 for safety and also removing the shipping cost
       if (state.items.length === 0) {
         state.orderNote = "";
         state.totalItems = 0;
+        state.shippingCost = 0;
       }
     },
     // Clearing the overall Cart
     clearCart: (state) => {
       state.items = [];
       state.totalItems = 0;
+      state.shippingCost = 0;
     },
     // Calculating the Plus and Minus quantity inside the cart
     updateQuantity: (
@@ -169,8 +172,6 @@ export const subTotalAmount = createSelector(
       0,
     ), 
 );
-
-
 
 // Creating Action Creators for each reducer actions
 // Think this as the method for the reducers

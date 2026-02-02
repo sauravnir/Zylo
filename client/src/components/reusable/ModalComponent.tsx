@@ -24,17 +24,21 @@ import { Price } from "./Price";
 import { addItem, setCartOpen, setIsUploading } from "@/store/slices/cartSlice";
 import { useDispatch  } from "react-redux";
 
+
 // Scattering the two defined props and all the details from the ProductCardProps Component.
 interface ProductModalProps extends ProductCardProps {
   isOpenModal: boolean;
   isSetOpenModal: (open: boolean) => void;
+  closeModal : ()=>void;
 }
 // Modal Component of product cards
 export function ProductModal({
   isOpenModal,
   isSetOpenModal,
+  closeModal ,
   ...props
 }: ProductModalProps) {
+
   return (
     <Dialog open={isOpenModal} onOpenChange={isSetOpenModal}>
   <DialogContent className="max-w-4xl p-0 border-none rounded-none md:h-[85vh] max-h-[85vh] md:max-h-[700px] overflow-y-auto md:overflow-hidden">
@@ -57,9 +61,8 @@ export function ProductModal({
       </button>
     </div>
 
-    
     <div className="py-4 md:p-0 w-full h-full">
-      <ProductDetail props={props} viewMode={"modal"} />
+      <ProductDetail props={props} closeModal={closeModal} viewMode={"modal"} />
     </div>
     
   </DialogContent>
@@ -73,10 +76,11 @@ export function ProductModal({
 interface ProductDetailProps {
   viewMode: "modal" | "page";
   props: ProductCardProps;
+  closeModal:()=>void
 }
 
 // Details Component of the Products
-export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
+export const ProductDetail = ({ props, viewMode , closeModal }: ProductDetailProps) => {
   // Handling the carousel images in the modal
   const [currSlide, setCurrSlide] = useState(0);
   // Storing the images in a variable
@@ -133,6 +137,10 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
     // Dispatching the product after the timer
     dispatch(addItem({ product: props, size: productSize, itemQuantity: num }));
     dispatch(setIsUploading(false));
+
+    // Closing the modal when the add to cart items is clicked
+    closeModal();
+
     // Slide the cart open
     dispatch(setCartOpen(true));
   };
