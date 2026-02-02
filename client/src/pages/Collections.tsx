@@ -61,12 +61,12 @@ export default function Collections() {
             transition={{ duration: 0.5, delay: 0, ease: "linear" }}
             className="absolute inset-0 mt-20"
           >
-            <img
+             {/* <img
               src={PRODUCTS_LIST[14].primaryImage}
               alt="Collection Page"
               className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-black/60" />
+            /> */}
+            <div className="absolute inset-0 bg-black" /> 
           </motion.div>
 
           <motion.div
@@ -75,7 +75,7 @@ export default function Collections() {
             transition={{ duration: 0.5, delay: 0.5 }}
             className="absolute inset-0 z-10 flex items-center justify-center p-6"
           >
-            <h1 className="text-h3 text-white uppercase text-center">
+            <h1 className="text-display font-logo text-white  text-center">
               {category}
             </h1>
           </motion.div>
