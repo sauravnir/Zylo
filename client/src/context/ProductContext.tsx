@@ -25,7 +25,7 @@ interface ProductContextType {
 // Creating a product context object
 const ProductContext = createContext<ProductContextType | undefined>(undefined);
 // Creating a context provider. This context provider broadcasts the overall data throughout the site
-export const ProductProvider = ({  children,data,}: {  children: React.ReactNode;  data: ProductCardProps[];}) => {
+export const ProductProvider = ({  children, data }: {  children: React.ReactNode;  data: ProductCardProps[];}) => {
   // Item search state
   const [searchTerm, setSearchItem] = useState("");
   const [activeCategory, setActiveCategory] = useState("all");

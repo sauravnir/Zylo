@@ -20,12 +20,12 @@ export function NavigationBar() {
         </div>
 
         {/* Menu Items */}
-        <div className="hidden md:flex justify-center items-center font-body text-menu text-muted gap-10">
+        <div className="hidden md:flex justify-center items-center font-body text-product-title  text-muted gap-10">
           {menuItems.map((item) => (
             <Link
               key={item.title}
               to={item.link}
-              className="uppercase hover:text-main transition-colors duration-400 ease-in-out"
+              className="uppercase hover:text-main transition-colors duration-400 "
             >
               {item.title === "Shop" ? (
                 <DownMenu key={item.title} item={item} />
@@ -37,7 +37,7 @@ export function NavigationBar() {
         </div>
 
         {/* CTA Items */}
-        <div className="hidden md:flex justify-end items-center font-body text-menu text-muted gap-8">
+        <div className="hidden md:flex justify-end items-center font-body text-product-title text-muted gap-8">
           {cta.map((item) => {
             // 1. Handle "Cart"
             if (item.title === "Cart") {

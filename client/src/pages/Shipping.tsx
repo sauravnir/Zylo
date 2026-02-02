@@ -32,9 +32,7 @@ export const Shipping = () => {
                 </AccordionContent>
             </AccordionItem>
         ))}
-
         </Accordion>
-
       </div>
 
       <Footer />

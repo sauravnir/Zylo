@@ -31,7 +31,7 @@ export function ProductCard({isSearchContent , ...props}:ProductCardProps & {isS
   const [currImage , setCurrImage] = useState(props.primaryImage);
   const [Error , setError] = useState(false);
 // Handling the modal open prop
-const [isOpenModal , setIsOpenModal] = useState(false);
+  const [isOpenModal , setIsOpenModal] = useState(false);
 
   return (
     <motion.div
@@ -47,7 +47,7 @@ const [isOpenModal , setIsOpenModal] = useState(false);
         <Card className={`border-none bg-transparent shadow-none rounded-none overflow-hidden ${
             isSearchContent ? "w-20 h-24 md:w-full md:h-auto" : "w-full"
         }`}>
-            <CardContent className={`p-0 relative ${isSearchContent ? "h-full md:aspect-[3/4]" : "aspect-[3/4]"}`}>
+            <CardContent  className={`p-0 relative ${isSearchContent ? "h-full md:aspect-[3/4]" : "aspect-[3/4]"}`}>
                 {/* Routing to Products Page */}
                 <Link to={`/products/${props.slug}`}>
                     {/* Desktop Image Section */}
@@ -55,7 +55,7 @@ const [isOpenModal , setIsOpenModal] = useState(false);
                         src={Error ? props.primaryImage : currImage}
                         alt={props.title}
                         className="w-full h-full object-cover hidden md:block"
-                        onMouseEnter={() => setCurrImage(hoverImage)}
+                        onMouseEnter={() => setCurrImage(hoverImage)  }
                         onMouseLeave={() => setCurrImage(props.primaryImage)}
                         onError={() => setError(true)}
                     />
@@ -74,9 +74,9 @@ const [isOpenModal , setIsOpenModal] = useState(false);
                             hover: { opacity: 1, y: 0 }
                         }}
                         transition={{ duration: 0.3 }}
-                        className="hidden md:block absolute bottom-2 right-2 z-20 p-2 group"
+                        className=" hidden md:flex absolute bottom-2 right-2 z-20 p-2 "
                     >
-                        <Button variant="ghost" className="w-8 h-8 bg-card rounded-none" onClick={(e)=>{e.stopPropagation(); setIsOpenModal(true)}}>
+                        <Button variant="ghost" className="group w-8 h-8 bg-card rounded-none" onClick={(e)=>{e.stopPropagation(); setIsOpenModal(true)}}>
                             <Plus className="text-main transition-transform duration-300 ease-in-out group-hover:rotate-90" />
                         </Button>
                     </motion.div>
@@ -93,8 +93,8 @@ const [isOpenModal , setIsOpenModal] = useState(false);
 
                 {/* Items Availability Badge */}
                 {props.availability === "Sold Out" && (
-                    <div className="absolute top-1 left-1">
-                        <span className="bg-muted text-white text-[8px] md:text-tiny uppercase px-1 md:px-2 py-1 font-medium tracking-widest">
+                    <div className="absolute top-1 left-2">
+                        <span className="bg-muted text-white text-[8px] md:text-sm uppercase px-1 md:px-2 py-1 font-medium tracking-widest">
                             {props.availability}
                         </span>
                     </div>
@@ -113,7 +113,7 @@ const [isOpenModal , setIsOpenModal] = useState(false);
             }`}>
                 {props.title}
             </h1>
-            <span className={`text-muted uppercase ${
+            <span className={`text-muted font- uppercase ${
                 isSearchContent ? "text-[10px] md:text-product-title" : "text-product-title"
             }`}>
                 <Price amount={props.price} />

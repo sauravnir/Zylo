@@ -56,7 +56,7 @@ const handleCategoryClick =(category:any) => {
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
         <div>
-          <button className="hidden md:block text-muted uppercase text-menu hover:text-main outline-none">
+          <button className="hidden md:block text-muted uppercase text-product-title hover:text-main outline-none">
             {title}
           </button>
           <Search size={24} className="md:hidden lg:hidden text-muted" />
@@ -145,7 +145,7 @@ const handleCategoryClick =(category:any) => {
                         {/* Only displaying a maximum of 5 cards in the search bar */}
                         {searchSuggestions.slice(0, 6).map((product) => (
                           // Re-using the Product card component to display the products
-                          // using the conditional isSearchContent to conditionally render the add to cart popup button at the bottom-right
+                          // using the conditional isSearchContent to conditionally remove the render of add to cart popup button at the bottom-right
                           <motion.div
                             initial={{ opacity: 0, y: -5 }}
                             whileInView={{ opacity: 1, y: 0 }}

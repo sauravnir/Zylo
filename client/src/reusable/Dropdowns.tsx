@@ -6,7 +6,7 @@ import { setCurrency } from "@/store/slices/currencySlice";
 import {motion} from "motion/react"
 import { ChevronDown, Menu, User, X } from "lucide-react";
 import { itemVariants, parentVariants } from "@/objects/Animations";
-import { Sheet, SheetClose, SheetContent, SheetFooter, SheetTrigger } from "@/components/ui/sheet";
+import { Sheet, SheetClose, SheetContent, SheetFooter, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { cta, menuItems } from "@/objects/Objects";
 import { Link } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
@@ -34,7 +34,7 @@ export const DownCurrencyMenu = ({ item }: { item: any }) => {
     //OnOpenChange Returns Boolean and flips the truthy value
     <DropdownMenu open={open} onOpenChange={isOpen}>
       <DropdownMenuTrigger asChild>
-        <button className="flex gap-1 items-center text-menu uppercase text-muted hover:text-main uppercase">
+        <button className="flex gap-1 items-center text-product-title text-muted hover:text-main uppercase">
           <span>{activeCurrency}</span>
           <span>({symbol})</span>
           <motion.span
@@ -61,9 +61,9 @@ export const DownCurrencyMenu = ({ item }: { item: any }) => {
           {item.children.map((child: any) => {
             const isActive = activeCurrency === child.code;
             return (
-              <motion.div variants={itemVariants}>
+              <motion.div  key={child.code} variants={itemVariants}>
               <DropdownMenuItem
-                key={child.code}
+               
                 onClick={() => handleCurrencySelection(child)}
                 className={`flex text-muted hover:text-main items-center gap-1 mt-1 cursor-pointer active:text-main
                    ${isActive ? "text-main font-medium" :""}
@@ -96,12 +96,14 @@ export const MobileMenuSheet = () => {
 
         <SheetContent side="left" className="bg-card flex flex-col h-full py-4">
           {/* Header */}
-          <div className="flex items-center justify-start py-6 px-2">
+          <SheetTitle>
+            <div className="flex items-center justify-start py-6 px-2">
             <SheetClose>
               <X size={24} className="text-muted hover:text-main" />
             </SheetClose>
           </div>
-
+          </SheetTitle>
+          
           {/* Menu  */}
           <motion.div
             variants={parentVariants}
@@ -139,7 +141,7 @@ export const MobileMenuSheet = () => {
               <Link to={cta[2].link}>
                 <span className="flex items-center gap-2 text-muted hover:text-main text-menu uppercase">
                   <User size={20} />
-                  {cta[2].title}
+                  Login
                 </span>
               </Link>
             </motion.div>
@@ -157,7 +159,7 @@ export const DownMenu = ({ item }: { item: any }) => {
     //OnOpenChange Returns Boolean and flips the truthy value
     <DropdownMenu open={open} onOpenChange={isOpen}>
       <DropdownMenuTrigger asChild>
-        <button className="flex items-center gap-1 text-menu text-muted hover:text-main uppercase">
+        <button className="flex items-center gap-1 text-product-title text-muted hover:text-main uppercase">
           {item.title}
           <motion.span
             animate={{ rotate: open ? 180 : 0 }}

@@ -15,7 +15,6 @@ export const menuItems = [
     ],
   },
 ];
-
 // Navigation Call-To-Actions Items
 export const cta = [
   {
@@ -69,7 +68,6 @@ export const cta = [
   // { title: "Login", link: "/" },
   { title: "Cart", link: "#" },
 ];
-
 // Product Items Objects 
 export const PRODUCTS_LIST = [
   // --- OUTERWEAR ---
@@ -551,9 +549,9 @@ export const FOOTER_LINKS = [
     links: [
       { name: "Shipping", href: "/shipping" },
       { name: "Returns", href: "/returns" },
-      { name: "FAQs", href: "/" },
-      { name: "Terms and Condition", href: "/" },
-      { name: "Privacy Policy", href: "/" },
+      { name: "FAQs", href: "/faqs" },
+      { name: "Terms and Condition", href: "/terms" },
+      { name: "Privacy Policy", href: "/policy" },
     ],
   },
   {
@@ -670,5 +668,38 @@ export const RETURNFAQS = [
     id: "return-5",
     question: "Non-Returnable Items",
     answer: "For hygiene reasons, innerwear, socks, and items purchased during 'Final Clearance' sales are not eligible for return or exchange."
+  }
+];
+
+export const FAQS = [
+  {
+    id: "faq-1",
+    question: "How long does delivery take?",
+    answer: "Inside Kathmandu Valley, we deliver within 24-48 hours. For outside valley orders, it typically takes 3-5 business days depending on your location."
+  },
+  {
+    id: "faq-2",
+    question: "How do I know my size?",
+    answer: "Our fits are generally 'Streetwear Oversized.' We recommend checking the Size Chart on the product page or ordering your standard size for that relaxed look. If you're between sizes, size down for a more standard fit."
+  },
+  {
+    id: "faq-3",
+    question: "Do you offer Cash on Delivery (COD)?",
+    answer: "Yes, we offer COD nationwide. However, for high-value orders or certain remote locations, our team might reach out for a small commitment advance via eSewa/Khalti."
+  },
+  {
+    id: "faq-4",
+    question: "Can I return an item if it doesn't fit?",
+    answer: "Absolutely. We have a 7-day exchange policy. The item must be unworn with all Zylo tags attached. Note that the customer handles the return shipping costs for size exchanges."
+  },
+  {
+    id: "faq-5",
+    question: "Are your drops limited edition?",
+    answer: "Most of our seasonal collections are 'One-Time Drops.' Once a specific design is sold out, we rarely restock it to maintain the exclusivity of the piece."
+  },
+  {
+    id: "faq-6",
+    question: "How should I wash my Zylo gear?",
+    answer: "To preserve the print and fabric quality, we recommend washing inside out in cold water and hanging to dry. Avoid direct sunlight and never iron directly over the graphics."
   }
 ];

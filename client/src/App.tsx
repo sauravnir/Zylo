@@ -16,6 +16,9 @@ import Collections from "./pages/Collections";
 import { Error404 } from "./pages/404Error";
 import { Shipping } from "./pages/Shipping";
 import { Returns } from "./pages/Return";
+import { FaqPage } from "./pages/FAQs";
+import { TermsandConditions } from "./pages/TermsAndConditions";
+import { Policy } from "./pages/Policy";
 // Scrolling the page on top while new page navigate
 const ScrolltoTop = () => {
   const location = useLocation();
@@ -64,6 +67,9 @@ function App() {
           <Route path="/collections/:category" element={<Collections />}/>
           <Route path="/shipping" element={<Shipping />}/>
           <Route path="/returns" element={<Returns />}/>
+          <Route path="/faqs" element={<FaqPage />}/>
+          <Route path="/terms" element={<TermsandConditions />}/>
+          <Route path="/policy" element={<Policy />} />
           {/* Catching all the unknown urls and navigating to 404Error page */}
          <Route path="*" element={<Error404 />} />
         </Routes>

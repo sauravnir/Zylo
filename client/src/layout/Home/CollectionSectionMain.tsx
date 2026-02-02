@@ -60,8 +60,8 @@ export function CollectionSectionMain() {
           </CarouselContent>
           <div className="flex justify-center items-center mt-8 md:mt-4">
       <div className="relative flex gap-2">
-        <CarouselPrevious className="rounded-none w-10 h-10 text-muted hover:text-white hover:bg-primary transition-colors duration-400" />
-        <CarouselNext className="rounded-none w-10 h-10 text-muted hover:text-white hover:bg-primary transition-colors duration-400" />
+        <CarouselPrevious className="rounded-none w-10 h-10 text-white bg-main hover:bg-primary transition-colors duration-400 data-[]:" />
+        <CarouselNext className="rounded-none w-10 h-10 text-white bg-main hover:bg-primary transition-colors duration-400" />
       </div>
     </div>
         </Carousel>

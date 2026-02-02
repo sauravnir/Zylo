@@ -12,7 +12,7 @@ export function Footer (){
             {/* CTA Section  */}
             <div className="flex flex-col space-y-6 p-2">
                 <h1 className="text-main text-menu font-normal uppercase ">Newsletter</h1>
-                <p className="text-muted text-menu ">Sign up to our newsletter for early access to releases and more.</p>
+                <p className="text-muted text-small tracking-tighter">Sign up to our newsletter for early access to releases and more.</p>
                 <div className="space-y-6">
                 <Input  
               className="text-menu placeholder:text-muted border border-muted/50 bg-transparent focus:bg-background focus:border-main rounded-none focus-visible:ring-0 focus-visible:ring-offset-0 w-full p-3 px-4"
@@ -29,7 +29,7 @@ export function Footer (){
                     <h1 className="text-main text-menu font-normal uppercase ">{item.title}</h1>
                     <ul className="space-y-2"> 
                         {item.links.map((item)=>(
-                            <li key={item.name} className="text-muted text-menu hover:text-main uppercase tracking-normal">
+                            <li key={item.name} className="text-muted text-menu hover:text-main transition-colors duration-300 uppercase tracking-normal">
                                 {item.href.startsWith("http") ? (
                                     <a 
                                         href={item.href}

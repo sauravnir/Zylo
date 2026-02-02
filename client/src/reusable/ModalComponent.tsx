@@ -1,11 +1,5 @@
-import React, { useState } from "react";
-import {
-  AlertDialog,
-  AlertDialogContent,
-  AlertDialogCancel,
-} from "@/components/ui/alert-dialog";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-
 import { motion, AnimatePresence } from "motion/react";
 import type { ProductCardProps } from "./CardComponent";
 import { X, ChevronLeft, ChevronRight, Plus, Minus, Dot } from "lucide-react";
@@ -16,13 +10,19 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog"
 // Importing Custom cursor
 import { Cursor } from "./Cursor";
 import { Price } from "./Price";
 // Importing Redux Toolkits essentials
-
 import { addItem, setCartOpen, setIsUploading } from "@/store/slices/cartSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch  } from "react-redux";
 
 // Scattering the two defined props and all the details from the ProductCardProps Component.
 interface ProductModalProps extends ProductCardProps {
@@ -36,20 +36,34 @@ export function ProductModal({
   ...props
 }: ProductModalProps) {
   return (
-    <AlertDialog open={isOpenModal} onOpenChange={isSetOpenModal}>
-      <AlertDialogContent className="max-w-4xl p-0 border-none rounded-none md:h-[85vh] max-h-[85vh] md:max-h-[700px] overflow-y-auto md:overflow-hidden ">
-        {/* Absolute Close Button */}
-        <div className="absolute right-2 top-2 md:right-4 md:top-4 z-50 group ">
-          <AlertDialogCancel className="h-8 w-8 rounded-none border-none bg-card/80 backdrop-blur-sm p-0 text-muted hover:bg-transparent shadow-none group-hover:text-main ">
-            <X size={24} />
-          </AlertDialogCancel>
-        </div>
-        {/* Rendering the product detail component inside the modal with custom viewMode property */}
-        <div className="py-4 md:p-0 w-full h-full">
-          <ProductDetail props={props} viewMode={"modal"} />
-        </div>
-      </AlertDialogContent>
-    </AlertDialog>
+    <Dialog open={isOpenModal} onOpenChange={isSetOpenModal}>
+  <DialogContent className="max-w-4xl p-0 border-none rounded-none md:h-[85vh] max-h-[85vh] md:max-h-[700px] overflow-y-auto md:overflow-hidden">
+    
+    
+    <DialogHeader className="sr-only">
+      <DialogTitle>Quick View: {props.title || "Product"}</DialogTitle>
+      <DialogDescription>
+        View product details and add {props.title} to your cart.
+      </DialogDescription>
+    </DialogHeader>
+
+   
+    <div className="absolute right-2 top-2 md:right-4 md:top-4 z-50 group">
+      <button 
+        onClick={() => isSetOpenModal(false)}
+        className="h-8 w-8 flex items-center justify-center bg-card/80 backdrop-blur-sm text-muted hover:text-main transition-colors"
+      >
+        <X size={24} />
+      </button>
+    </div>
+
+    
+    <div className="py-4 md:p-0 w-full h-full">
+      <ProductDetail props={props} viewMode={"modal"} />
+    </div>
+    
+  </DialogContent>
+</Dialog>
   );
 }
 
@@ -254,7 +268,7 @@ export const ProductDetail = ({ props, viewMode }: ProductDetailProps) => {
               {props.title} 
             </h1>
             <div className="text-base tracking-[0.1em] text-muted font-medium transition-colors ">
-              <Price amount={props.price} /> x {num}
+              <Price amount={props.price} /> 
             </div>
           </div>
 

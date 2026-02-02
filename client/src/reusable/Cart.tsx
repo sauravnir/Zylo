@@ -31,23 +31,20 @@ import { motion, AnimatePresence } from "motion/react";
 import { Price } from "./Price";
 import { Link, useNavigate } from "react-router-dom";
 
-
-
-
-
-
 // Overall Cart Sheet Drawer
 export const CartSheet = () => {
   // Getting the cart url
   const location = useLocation();
-  const isOnCartPage = location.pathname === "/cart"
+  const isOnCartPage = location.pathname === "/cart";
   const dispatch = useDispatch();
   const storeValue = useSelector((state: RootState) => state.cart.items);
   const totalItems = useSelector((state: RootState) => state.cart.totalItems);
   const isCartOpen = useSelector((state: RootState) => state.cart.cartOpen);
   const checkoutAmount = useSelector(totalCheckoutAmount);
   const globalNote = useSelector((state: RootState) => state.cart.orderNote);
-  const {activeCurrency, rate, symbol } = useSelector((state: RootState) => state.currency);
+  const { activeCurrency, rate, symbol } = useSelector(
+    (state: RootState) => state.currency,
+  );
   // Handling the cart Open Logic
   const handleCartOpen = (open: boolean) => {
     dispatch(setCartOpen(open));
@@ -104,29 +101,34 @@ export const CartSheet = () => {
           sx={{
             display: "flex",
             alignItems: "center",
+            cursor: "pointer",
             "& .MuiBadge-badge": {
               backgroundColor: "#ededed",
               color: "#575757",
-              fontSize: "10px",
-              minWidth: "18px",
-              height: "18px",
-              position: "absolute",
+              fontSize: "12px",
+              minWidth: "15px",
+              height: "15px",
+              transition: "all 0.3s ease",
               "@media (min-width: 640px)": {
                 position: "relative",
                 transform: "none",
-                top: "auto",
-                right: "auto",
                 marginLeft: "6px",
               },
             },
-          }}
-          className="p-2 cursor-pointer transition-all duration-300 hover:opacity-70"
-        >
-          {/* Mobile Icon */}
-          <ShoppingCart size={24} className="text-muted sm:hidden" />
 
-          {/* Desktop Text */}
-          <span className="hidden sm:block text-muted uppercase text-menu tracking-widest leading-none">
+            "&:hover .MuiBadge-badge": {
+              backgroundColor: "#000",
+              color: "#fff",
+            },
+          }}
+          className="group transition-all duration-300"
+        >
+          <ShoppingCart
+            size={24}
+            className="text-muted sm:hidden transition-colors duration-300 group-hover:text-main"
+          />
+
+          <span className="hidden sm:block text-muted uppercase text-product-title tracking-widest leading-none transition-colors duration-300 group-hover:text-main">
             Cart
           </span>
         </Badge>
@@ -134,8 +136,8 @@ export const CartSheet = () => {
       <SheetContent className="py-8 px-0 bg-card " side="right">
         <SheetHeader>
           <SheetTitle className="flex items-center justify-between px-4">
-            <span className="text-base text-main uppercase font-medium tracking-widest">
-              Cart
+            <span className="flex text-base text-main gap-2 uppercase font-medium tracking-widest">
+              Cart <span>({totalItems})</span>
             </span>
             <SheetClose className="flex items-center">
               <button>
@@ -150,7 +152,9 @@ export const CartSheet = () => {
           {/* Cart Content */}
           <div className="flex-1 overflow-y-auto pr-2 gap-6 px-8 py-4 flex flex-col">
             {storeValue.length > 0 ? (
-              storeValue.map((item) => <CartItem item={item} isReadOnly={false}/>)
+              storeValue.map((item) => (
+                <CartItem item={item} isReadOnly={false} />
+              ))
             ) : (
               <div className="flex h-full flex-col items-center justify-center px-4">
                 <div className="w-16 h-16 bg-neutral-100 rounded-full flex items-center justify-center mb-4">
@@ -242,7 +246,13 @@ export const CartSheet = () => {
 };
 
 // Individual cart Items
-export const CartItem = ({ item , isReadOnly }: { item: any ,isReadOnly : boolean }) => {
+export const CartItem = ({
+  item,
+  isReadOnly,
+}: {
+  item: any;
+  isReadOnly: boolean;
+}) => {
   const dispatch = useDispatch();
 
   const [incDelay, setIncDelay] = useState(false);
@@ -272,7 +282,7 @@ export const CartItem = ({ item , isReadOnly }: { item: any ,isReadOnly : boolea
     );
     setIncDelay(false);
   };
-// Size decrement function
+  // Size decrement function
   const handleDecrement = async () => {
     setDecDelay(true);
     await new Promise((resolve) => setTimeout(resolve, 800));
@@ -298,68 +308,71 @@ export const CartItem = ({ item , isReadOnly }: { item: any ,isReadOnly : boolea
         <div className="flex flex-col gap-1.5">
           {/* Title & Quantity Display */}
           <h3 className="text-main text-product-title tracking-wide uppercase font-medium">
-            {item.title} {isReadOnly && <span className="font-bold">x {item.itemCartQuantity}</span>} 
+            {item.title}{" "}
+            {isReadOnly && (
+              <span className="font-bold">x {item.itemCartQuantity}</span>
+            )}
           </h3>
 
           {/* Price */}
           <div className="text-sm tracking-wide font-medium text-neutral-700 mt-1">
-    <Price amount={item.price} />
-  </div>
+            <Price amount={item.price} />
+          </div>
 
           {/* Size */}
           <div className="flex items-center gap-2">
-    <span className="text-[10px] uppercase tracking-widest text-neutral-400 font-medium">
-      Size: <span className="text-neutral-600">{item.productSize}</span>
-    </span>
-  </div>
+            <span className="text-[10px] uppercase tracking-widest text-neutral-400 font-medium">
+              Size: <span className="text-neutral-600">{item.productSize}</span>
+            </span>
+          </div>
         </div>
 
-{/* Conditinally rendering these items  */}
-        {isReadOnly === false && <div className="flex items-center gap-4 mt-4">
-          {/* Quantity Selector */}
-          <div className="flex items-center border border-border w-fit">
-            <button
-              onClick={handleDecrement}
-              disabled={item.itemCartQuantity < 1 || decDelay}
-              className="w-8 h-8 flex items-center justify-center text-muted hover:text-white transition-all hover:bg-main border-r border-border"
-            >
-              <Minus size={14} />
-            </button>
-            <div className="text-muted w-10 flex items-center justify-center text-sm tabular-nums font-medium">
-              {item.itemCartQuantity}
+        {/* Conditinally rendering these items  */}
+        {isReadOnly === false && (
+          <div className="flex items-center gap-4 mt-4">
+            {/* Quantity Selector */}
+            <div className="flex items-center border border-border w-fit">
+              <button
+                onClick={handleDecrement}
+                disabled={item.itemCartQuantity < 1 || decDelay}
+                className="w-8 h-8 flex items-center justify-center text-muted hover:text-white transition-all hover:bg-main border-r border-border"
+              >
+                <Minus size={14} />
+              </button>
+              <div className="text-muted w-10 flex items-center justify-center text-sm tabular-nums font-medium">
+                {item.itemCartQuantity}
+              </div>
+              <button
+                onClick={handleIncrement}
+                disabled={incDelay}
+                className="w-8 h-8 flex items-center justify-center text-muted hover:text-white transition-all hover:bg-main border-l border-border"
+              >
+                <Plus size={14} />
+              </button>
             </div>
+
             <button
-              onClick={handleIncrement}
-              disabled={incDelay}
-              className="w-8 h-8 flex items-center justify-center text-muted hover:text-white transition-all hover:bg-main border-l border-border"
+              onClick={() =>
+                handleRemoveItem({ slug: item.slug, size: item.productSize })
+              }
+              disabled={removed}
+              className={`flex items-center gap-2 text-tiny tracking-wide underline underline-offset-4 transition-all ${
+                removed
+                  ? "text-muted/50 cursor-not-allowed"
+                  : "text-muted hover:text-main"
+              }`}
             >
-              <Plus size={14} />
+              {removed && (
+                <CircularProgress
+                  size={12}
+                  thickness={5}
+                  sx={{ color: "inherit" }}
+                />
+              )}
+              <span>{removed ? "Removing..." : "Remove"}</span>
             </button>
           </div>
-
-          <button
-            onClick={() =>
-              handleRemoveItem({ slug: item.slug, size: item.productSize })
-            }
-            disabled={removed}
-            className={`flex items-center gap-2 text-tiny tracking-wide underline underline-offset-4 transition-all ${
-              removed
-                ? "text-muted/50 cursor-not-allowed"
-                : "text-muted hover:text-main"
-            }`}
-          >
-            {removed && (
-              <CircularProgress
-                size={12}
-                thickness={5}
-                sx={{ color: "inherit" }}
-              />
-            )}
-            <span>{removed ? "Removing..." : "Remove"}</span>
-          </button>
-          
-        </div>}
-        
+        )}
       </div>
     </div>
   );
