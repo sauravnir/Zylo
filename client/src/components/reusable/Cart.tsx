@@ -332,7 +332,7 @@ export const CartItem = ({
               <button
                 onClick={handleDecrement}
                 disabled={item.itemCartQuantity < 1 || decDelay}
-                className="w-8 h-8 flex items-center justify-center text-muted hover:text-white transition-all hover:bg-main border-r border-border"
+                className={`w-8 h-8 flex items-center justify-center text-muted ${item.itemCartQuantity == 1 && `bg-muted/50 hover:bg-muted/50`} hover:text-white transition-all hover:bg-main border-r border-border`}
               >
                 <Minus size={14} />
               </button>
