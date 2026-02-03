@@ -301,7 +301,7 @@ export function OrderConfirmation() {
             >
               <Button
               variant="ghost"
-              className="rounded-none text-main text-button underline underline-offset-4"
+              className="rounded-none text-main hover:text-muted text-button underline underline-offset-4"
             >
               Download Receipt
             </Button> 
@@ -309,7 +309,7 @@ export function OrderConfirmation() {
           <Link to="/">
             <Button
               variant="ghost"
-              className="rounded-none text-main text-button underline underline-offset-4"
+              className="rounded-none text-main text-button hover:text-muted underline underline-offset-4"
             >
               Continue Shopping
             </Button>

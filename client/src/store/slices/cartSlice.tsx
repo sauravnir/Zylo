@@ -19,7 +19,6 @@ export interface CartState {
   totalItems: number;
   // State for cart open property
   cartOpen: boolean;
-
   isUploading: boolean;
   orderNote: string;
   shippingCost : number,

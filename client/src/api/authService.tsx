@@ -7,7 +7,7 @@ export const requestOtp = async (email : string)=>{
 }    
 
 // Creating verifyOtp method
-export const verifyOtp= async(email:string , otp:string)=>{
-    const response = await axiosInstance.post('/auth/verify-otp', {email , otp})
+export const verifyOtp= async(email:string , otp:string , orderData: any)=>{
+    const response = await axiosInstance.post('/auth/verify-otp', {email , otp , orderData})
     return response.data;
 }

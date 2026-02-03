@@ -62,7 +62,7 @@ export function CheckoutForm({
   const isUploading = useAppSelector(
     (state: RootState) => state.cart.isUploading,
   );
-  
+
   // Creating otp handling states
   const [showOtp, setShowOtp] = useState(false); //Opening and closing the otp entry field
   const [otpValue, setOtpValue] = useState(""); //State for managing the otp value
@@ -118,36 +118,49 @@ export function CheckoutForm({
 
   // When clicking on the verify otp button.
   const handleOtpVerification = async () => {
-    if (!otpValue) return toast.error("Please enter the code.");
-    dispatch(setIsUploading(true));
-    try {
-      // Getting the email from the client
-      const email = form.getValues("email");
-      // Verifying the otp
-      const response = await verifyOtp(email, otpValue);
-      // Setting a timer of 2 seconds
+  if (!otpValue) return toast.error("Please enter the code.");
+  if (otpValue.length < 6) return toast.error("Please enter the full 6-digit code.");
+  
+  dispatch(setIsUploading(true));
+  const localCartItem = [...cartItems];
+
+  try {
+    const email = form.getValues("email");
+    const orderData = {
+      customerData: form.getValues(),
+      items: localCartItem,
+      orderSummary: {
+        subTotal,
+        shippingAmount,
+        totalAmount,
+        symbol,
+        orderNumber: `ZY-${Math.floor(Math.random() * 900) + 1000}`,
+      },
+    };
+
+    
+    const result = await verifyOtp(email, otpValue, orderData);
+
+    
+    if (result.success) {
+      
       await new Promise((resolve) => setTimeout(resolve, 2000));
-      // If the otp is verified from the backend then sending the values in url state and navigating
-      if (response) {
-        const confirmOrder = {
-          customerData: form.getValues(),
-          items: cartItems,
-          orderSummary: {
-            subTotal,
-            shippingAmount,
-            totalAmount,
-            symbol,
-            orderNumber: `ZY-${Math.floor(Math.random() * 900) + 1000}`,
-          },
-        };
-        navigate("/thank-you", { state: { order: confirmOrder } });
-      }
-    } catch (error) {
-      toast.error("Invalid or expired code.");
-    } finally {
-      dispatch(setIsUploading(false));
+      navigate("/thank-you", { state: { order: orderData } });
+    } else {
+      
+      toast.error(result.message || "Invalid OTP");
+      setOtpValue("");
     }
-  };
+    
+  } catch (error: any) {
+    const serverMessage = error.response?.data?.message;
+    console.error("Verification failed:", error);
+    toast.error(serverMessage || "Something went wrong on the server.");
+    setOtpValue("");
+  } finally {
+    dispatch(setIsUploading(false));
+  }
+};
   return (
     <Form {...form}>
       <form
@@ -392,7 +405,7 @@ export function CheckoutForm({
           {showOtp && (
             <div className="p-6 border-2 border-main/20 bg-muted/5 rounded-lg flex flex-col items-center gap-6 animate-in fade-in zoom-in duration-300">
               <div className="text-center space-y-1">
-                <h3 className="text-sm font-bold uppercase tracking-widest text-main">
+                <h3 className="text-paragraph font-bold uppercase tracking-widest text-main">
                   Verification Required
                 </h3>
                 <p className="text-[11px] text-muted-foreground uppercase tracking-wider">
@@ -410,19 +423,20 @@ export function CheckoutForm({
                   value={otpValue}
                   pattern={REGEXP_ONLY_DIGITS}
                   onChange={(value) => setOtpValue(value)}
+                  
                 >
-                  <InputOTPGroup className="gap-2">
+                  <InputOTPGroup className="gap-2 ">
                     <InputOTPSlot
                       index={0}
-                      className="rounded-md border-muted-foreground/20 text-lg font-bold w-10 h-12 md:w-12 md:h-14 focus:ring-main"
+                      className="rounded-md shadow-lg border-muted-foreground/20 text-lg font-bold w-10 h-12 md:w-12 md:h-14 focus:ring-main"
                     />
                     <InputOTPSlot
                       index={1}
-                      className="rounded-md border-muted-foreground/20 text-lg font-bold w-10 h-12 md:w-12 md:h-14"
+                      className="rounded-md shadow-lg border-muted-foreground/20 text-lg font-bold w-10 h-12 md:w-12 md:h-14"
                     />
                     <InputOTPSlot
                       index={2}
-                      className="rounded-md border-muted-foreground/20 text-lg font-bold w-10 h-12 md:w-12 md:h-14"
+                      className="rounded-md shadow-lg border-muted-foreground/20 text-lg font-bold w-10 h-12 md:w-12 md:h-14"
                     />
                   </InputOTPGroup>
 
@@ -431,15 +445,15 @@ export function CheckoutForm({
                   <InputOTPGroup className="gap-2">
                     <InputOTPSlot
                       index={3}
-                      className="rounded-md border-muted-foreground/20 text-lg font-bold w-10 h-12 md:w-12 md:h-14"
+                      className="rounded-md shadow-lg border-muted-foreground/20 text-lg font-bold w-10 h-12 md:w-12 md:h-14"
                     />
                     <InputOTPSlot
                       index={4}
-                      className="rounded-md border-muted-foreground/20 text-lg font-bold w-10 h-12 md:w-12 md:h-14"
+                      className="rounded-md shadow-lg border-muted-foreground/20 text-lg font-bold w-10 h-12 md:w-12 md:h-14"
                     />
                     <InputOTPSlot
                       index={5}
-                      className="rounded-md border-muted-foreground/20 text-lg font-bold w-10 h-12 md:w-12 md:h-14"
+                      className="rounded-md shadow-lg border-muted-foreground/20 text-lg font-bold w-10 h-12 md:w-12 md:h-14"
                     />
                   </InputOTPGroup>
                 </InputOTP>

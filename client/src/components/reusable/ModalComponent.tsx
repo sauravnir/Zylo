@@ -16,57 +16,55 @@ import {
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "@/components/ui/dialog"
+} from "@/components/ui/dialog";
 // Importing Custom cursor
 import { Cursor } from "./Cursor";
 import { Price } from "./Price";
 // Importing Redux Toolkits essentials
 import { addItem, setCartOpen, setIsUploading } from "@/store/slices/cartSlice";
-import { useDispatch  } from "react-redux";
-
+import { useDispatch } from "react-redux";
 
 // Scattering the two defined props and all the details from the ProductCardProps Component.
 interface ProductModalProps extends ProductCardProps {
   isOpenModal: boolean;
   isSetOpenModal: (open: boolean) => void;
-  closeModal : ()=>void;
+  closeModal: () => void;
 }
 // Modal Component of product cards
 export function ProductModal({
   isOpenModal,
   isSetOpenModal,
-  closeModal ,
+  closeModal,
   ...props
 }: ProductModalProps) {
-
   return (
     <Dialog open={isOpenModal} onOpenChange={isSetOpenModal}>
-  <DialogContent className="max-w-4xl p-0 border-none rounded-none md:h-[85vh] max-h-[85vh] md:max-h-[700px] overflow-y-auto md:overflow-hidden">
-    
-    
-    <DialogHeader className="sr-only">
-      <DialogTitle>Quick View: {props.title || "Product"}</DialogTitle>
-      <DialogDescription>
-        View product details and add {props.title} to your cart.
-      </DialogDescription>
-    </DialogHeader>
+      <DialogContent className="max-w-4xl p-0 border-none rounded-none md:h-[85vh] max-h-[85vh] md:max-h-[700px] overflow-y-auto md:overflow-hidden">
+        <DialogHeader className="sr-only">
+          <DialogTitle>Quick View: {props.title || "Product"}</DialogTitle>
+          <DialogDescription>
+            View product details and add {props.title} to your cart.
+          </DialogDescription>
+        </DialogHeader>
 
-   
-    <div className="absolute right-2 top-2 md:right-4 md:top-4 z-50 group">
-      <button 
-        onClick={() => isSetOpenModal(false)}
-        className="h-8 w-8 flex items-center justify-center bg-card/80 backdrop-blur-sm text-muted hover:text-main transition-colors"
-      >
-        <X size={24} />
-      </button>
-    </div>
+        <div className="absolute right-2 top-2 md:right-4 md:top-4 z-50 group">
+          <button
+            onClick={() => isSetOpenModal(false)}
+            className="h-8 w-8 flex items-center justify-center bg-card/80 backdrop-blur-sm text-muted hover:text-main transition-colors"
+          >
+            <X size={24} />
+          </button>
+        </div>
 
-    <div className="py-4 md:p-0 w-full h-full">
-      <ProductDetail props={props} closeModal={closeModal} viewMode={"modal"} />
-    </div>
-    
-  </DialogContent>
-</Dialog>
+        <div className="py-4 md:p-0 w-full h-full">
+          <ProductDetail
+            props={props}
+            closeModal={closeModal}
+            viewMode={"modal"}
+          />
+        </div>
+      </DialogContent>
+    </Dialog>
   );
 }
 
@@ -76,11 +74,15 @@ export function ProductModal({
 interface ProductDetailProps {
   viewMode: "modal" | "page";
   props: ProductCardProps;
-  closeModal:()=>void
+  closeModal: () => void;
 }
 
 // Details Component of the Products
-export const ProductDetail = ({ props, viewMode , closeModal }: ProductDetailProps) => {
+export const ProductDetail = ({
+  props,
+  viewMode,
+  closeModal,
+}: ProductDetailProps) => {
   // Handling the carousel images in the modal
   const [currSlide, setCurrSlide] = useState(0);
   // Storing the images in a variable
@@ -274,10 +276,10 @@ export const ProductDetail = ({ props, viewMode , closeModal }: ProductDetailPro
           {/* Title & Price */}
           <div className="flex flex-col gap-1.5">
             <h1 className="text-main uppercase text-modal-title tracking-[0.15em] leading-tight">
-              {props.title} 
+              {props.title}
             </h1>
             <div className="text-base tracking-[0.1em] text-muted font-medium transition-colors ">
-              <Price amount={props.price} /> 
+              <Price amount={props.price} />
             </div>
           </div>
 
@@ -390,7 +392,7 @@ export const ProductDetail = ({ props, viewMode , closeModal }: ProductDetailPro
               <button
                 onClick={decrement}
                 className={`w-10 h-10 flex items-center justify-center ${num === 1 && `cursor-not-allowed bg-muted/50 hover:bg-muted/50`} text-muted hover:text-white transition-all duration-300 hover:bg-main border-r border-border`}
-              > 
+              >
                 <Minus size={16} />
               </button>
               <div className="text-muted w-12 flex items-center justify-center text-sm tabular-nums">
@@ -417,10 +419,10 @@ export const ProductDetail = ({ props, viewMode , closeModal }: ProductDetailPro
               }
               onClick={addCartItems}
             />
-            <PaymentButton
+            {/* <PaymentButton
               isDisabled={true}
               name="Pay with E-sewa"
-            />
+            /> */}
           </div>
 
           {/* Optional Text  */}
