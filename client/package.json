@@ -36,6 +36,7 @@
     "clsx": "^2.1.1",
     "embla-carousel-react": "^8.6.0",
     "html2pdf.js": "^0.14.0",
+    "input-otp": "^1.4.2",
     "libphonenumber-js": "^1.12.36",
     "lucide-react": "^0.562.0",
     "motion": "^12.28.1",

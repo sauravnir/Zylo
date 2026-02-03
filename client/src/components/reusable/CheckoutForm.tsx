@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -31,7 +32,15 @@ import {
 import { PrimaryButton } from "./ButtonComponent";
 import { useNavigate } from "react-router-dom";
 import { DELIVERY_LOCATIONS } from "@/objects/Objects";
-import { requestOtp } from "@/api/authService";
+import { requestOtp, verifyOtp } from "@/api/authService";
+import { toast } from "sonner";
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSeparator,
+  InputOTPSlot,
+} from "@/components/ui/input-otp";
+import { REGEXP_ONLY_DIGITS } from "input-otp";
 
 export function CheckoutForm({
   subTotal,
@@ -50,7 +59,13 @@ export function CheckoutForm({
   const navigate = useNavigate();
   const cartItems = useAppSelector((state: RootState) => state.cart.items);
   const orderNote = useAppSelector((state: RootState) => state.cart.orderNote);
-
+  const isUploading = useAppSelector(
+    (state: RootState) => state.cart.isUploading,
+  );
+  
+  // Creating otp handling states
+  const [showOtp, setShowOtp] = useState(false); //Opening and closing the otp entry field
+  const [otpValue, setOtpValue] = useState(""); //State for managing the otp value
   // Creating a form validation state using zod and react-hook-form
   const form = useForm<CheckoutFormValidation>({
     resolver: zodResolver(checkoutSchema),
@@ -82,39 +97,64 @@ export function CheckoutForm({
     }
   };
 
-  // form submit action logic
+  // SENDING OTP LOGIC
   const onFormSubmit = async (formData: CheckoutFormValidation) => {
     // Calling the startSubmitting state from the Parent Component i.e CheckoutPage to remove the navigation to cart page error
     onStartSubmitting();
     dispatch(setIsUploading(true));
-    // Creating the final order object and passing into the useLocation state
-    const confirmOrder = {
-      customerData: formData,
-      items: cartItems,
-      orderSummary: {
-        subTotal,
-        shippingAmount,
-        totalAmount,
-        symbol,
-        orderNumber: `ZY-${Math.floor(Math.random() * 900) + 1000}`,
-      },
-    };
-    await new Promise((resolve) => setTimeout(resolve, 2000));
+    // handling the otp call from the server
     try {
-      // Requesting the otp from the server 
+      // Reqesting the otp from the backend
       await requestOtp(formData.email);
-      
+      // Opening the otp field
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      setShowOtp(true);
     } catch (error) {
-      
-    }finally {
+      toast.error("Failed to send OTP.");
+    } finally {
       dispatch(setIsUploading(false));
     }
-    
-    navigate("/thank-you", { state: { order: confirmOrder } });
+  };
+
+  // When clicking on the verify otp button.
+  const handleOtpVerification = async () => {
+    if (!otpValue) return toast.error("Please enter the code.");
+    dispatch(setIsUploading(true));
+    try {
+      // Getting the email from the client
+      const email = form.getValues("email");
+      // Verifying the otp
+      const response = await verifyOtp(email, otpValue);
+      // Setting a timer of 2 seconds
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      // If the otp is verified from the backend then sending the values in url state and navigating
+      if (response) {
+        const confirmOrder = {
+          customerData: form.getValues(),
+          items: cartItems,
+          orderSummary: {
+            subTotal,
+            shippingAmount,
+            totalAmount,
+            symbol,
+            orderNumber: `ZY-${Math.floor(Math.random() * 900) + 1000}`,
+          },
+        };
+        navigate("/thank-you", { state: { order: confirmOrder } });
+      }
+    } catch (error) {
+      toast.error("Invalid or expired code.");
+    } finally {
+      dispatch(setIsUploading(false));
+    }
   };
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onFormSubmit)} className="space-y-8" noValidate>
+      <form
+        onSubmit={form.handleSubmit(onFormSubmit)}
+        className="space-y-8"
+        noValidate
+      >
         <div className="space-y-6">
           <h2 className="text-base font-bold uppercase tracking-widest">
             Customer Details
@@ -175,14 +215,18 @@ export function CheckoutForm({
           <FormField
             control={form.control}
             name="phone"
-
             render={({ field }) => (
               <FormItem>
                 <FormLabel className="text-nav uppercase tracking-widest">
                   Phone*
                 </FormLabel>
                 <FormControl>
-                  <Input placeholder="Phone" {...field} type="tel" inputMode="numeric"/>
+                  <Input
+                    placeholder="Phone"
+                    {...field}
+                    type="tel"
+                    inputMode="numeric"
+                  />
                 </FormControl>
                 <FormMessage className="text-red-600 font-medium text-[15px] tracking-wide" />
               </FormItem>
@@ -343,12 +387,83 @@ export function CheckoutForm({
             <span className="text-sm">Cash on delivery (COD) </span>
             <div className="h-4 w-4 rounded-full border-2 border-main bg-main shadow-[inset_0_0_0_2px_white]" />
           </div>
+
+          {/* Conditionally rendering the otp input field */}
+          {showOtp && (
+            <div className="p-6 border-2 border-main/20 bg-muted/5 rounded-lg flex flex-col items-center gap-6 animate-in fade-in zoom-in duration-300">
+              <div className="text-center space-y-1">
+                <h3 className="text-sm font-bold uppercase tracking-widest text-main">
+                  Verification Required
+                </h3>
+                <p className="text-[11px] text-muted-foreground uppercase tracking-wider">
+                  A 6-digit code was sent to -{" "}
+                  <span className="text-main font-semibold lowercase">
+                    {form.getValues("email")}
+                  </span>
+                </p>
+              </div>
+
+              {/* OTP INPUT CONTAINER */}
+              <div className="bg-card p-2 rounded-md shadow-sm border border-muted/30">
+                <InputOTP
+                  maxLength={6}
+                  value={otpValue}
+                  pattern={REGEXP_ONLY_DIGITS}
+                  onChange={(value) => setOtpValue(value)}
+                >
+                  <InputOTPGroup className="gap-2">
+                    <InputOTPSlot
+                      index={0}
+                      className="rounded-md border-muted-foreground/20 text-lg font-bold w-10 h-12 md:w-12 md:h-14 focus:ring-main"
+                    />
+                    <InputOTPSlot
+                      index={1}
+                      className="rounded-md border-muted-foreground/20 text-lg font-bold w-10 h-12 md:w-12 md:h-14"
+                    />
+                    <InputOTPSlot
+                      index={2}
+                      className="rounded-md border-muted-foreground/20 text-lg font-bold w-10 h-12 md:w-12 md:h-14"
+                    />
+                  </InputOTPGroup>
+
+                  <InputOTPSeparator className="mx-1 text-muted" />
+
+                  <InputOTPGroup className="gap-2">
+                    <InputOTPSlot
+                      index={3}
+                      className="rounded-md border-muted-foreground/20 text-lg font-bold w-10 h-12 md:w-12 md:h-14"
+                    />
+                    <InputOTPSlot
+                      index={4}
+                      className="rounded-md border-muted-foreground/20 text-lg font-bold w-10 h-12 md:w-12 md:h-14"
+                    />
+                    <InputOTPSlot
+                      index={5}
+                      className="rounded-md border-muted-foreground/20 text-lg font-bold w-10 h-12 md:w-12 md:h-14"
+                    />
+                  </InputOTPGroup>
+                </InputOTP>
+              </div>
+              <div className="flex flex-row items-center justify-center gap-2">
+                <span className="text-[11px] text-muted-foreground uppercase tracking-wider">Didn't receive any code?</span>
+                <button
+                onClick={()=>onFormSubmit(form.getValues())}
+                className="text-tiny font-bold tracking-normal underline hover:text-muted text-main"
+                >
+                  Resend code
+                </button>
+              </div>
+            </div>
+          )}
+
           {/* Form Submit Button */}
           <PrimaryButton
-            type="submit"
-            isDisabled={false}
-            name="Place Order"
-            onClick={() => onFormSubmit}
+            type="button"
+            isDisabled={isUploading}
+            name={showOtp ? "Verify & Place Order" : "Get Verification Code"}
+            onClick={
+              showOtp ? handleOtpVerification : form.handleSubmit(onFormSubmit)
+            }
           />
         </div>
       </form>

@@ -1,13 +1,13 @@
-import API from "./server";
+import axiosInstance from "./axiosInstance";
 
 // Creating requestOtp method
 export const requestOtp = async (email : string)=>{
-    const response = await API.post('/auth/send-otp' , {email});
+    const response = await axiosInstance.post('/auth/send-otp', {email});
     return response.data;
 }    
 
 // Creating verifyOtp method
-export const verifyOpt= async(email:string , otp:string)=>{
-    const response = await API.post('/auth/verify-otp', {email , otp})
+export const verifyOtp= async(email:string , otp:string)=>{
+    const response = await axiosInstance.post('/auth/verify-otp', {email , otp})
     return response.data;
 }
