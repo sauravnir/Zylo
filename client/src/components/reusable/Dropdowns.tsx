@@ -46,7 +46,7 @@ export const DownCurrencyMenu = ({ item }: { item: any }) => {
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="w-auto mt-6 p-2 border bg-card max-h-[350px] md:max-h-[250px]"
+        className="w-auto mt-6 p-2 border bg-background max-h-[350px] md:max-h-[250px]"
         align="end"
       >
         <motion.div
@@ -94,7 +94,7 @@ export const MobileMenuSheet = () => {
           <Menu size={20} className="text-muted" />
         </SheetTrigger>
 
-        <SheetContent side="left" className="bg-card flex flex-col h-full py-4">
+        <SheetContent side="left" className="bg-background flex flex-col h-full py-4">
           {/* Header */}
           <SheetTitle>
             <div className="flex items-center justify-start py-6 px-2">
@@ -159,7 +159,7 @@ export const DownMenu = ({ item }: { item: any }) => {
     //OnOpenChange Returns Boolean and flips the truthy value
     <DropdownMenu open={open} onOpenChange={isOpen}>
       <DropdownMenuTrigger asChild>
-        <button className="flex items-center gap-1 text-product-title text-muted hover:text-main uppercase">
+        <button className="flex items-center gap-1 text-product-title text-muted font-bold hover:text-main uppercase">
           {item.title}
           <motion.span
             animate={{ rotate: open ? 180 : 0 }}
@@ -170,7 +170,7 @@ export const DownMenu = ({ item }: { item: any }) => {
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="w-[200px] md:w-auto mt-6 p-2 py-4 border bg-card h-auto overflow-y-hidden"
+        className="w-[200px] md:w-auto mt-6 p-2 py-4 border bg-background h-auto overflow-y-hidden"
         align="start"
       >
         <motion.div

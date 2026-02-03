@@ -260,12 +260,12 @@ export function CheckoutForm({
                   defaultValue={field.value || "Nepal"}
                 >
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger className="border border-main">
                       <SelectValue placeholder="Choose item" />
                     </SelectTrigger>
                   </FormControl>
 
-                  <SelectContent className="bg-card">
+                  <SelectContent className="bg-background border">
                     <SelectItem value="Nepal">Nepal</SelectItem>
                   </SelectContent>
                 </Select>
@@ -291,7 +291,7 @@ export function CheckoutForm({
                   defaultValue={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger>
+                    <SelectTrigger className="border border-main">
                       <SelectValue placeholder="Choose a city" />
                     </SelectTrigger>
                   </FormControl>
@@ -349,6 +349,7 @@ export function CheckoutForm({
                       dispatch(addNote({ note: e.target.value })); // Updates Redux Store
                     }}
                     placeholder="Add specific delivery instructions..."
+                    className="border border-main placeholder:text-main/70"
                   />
                 </FormControl>
                 {field.value && (

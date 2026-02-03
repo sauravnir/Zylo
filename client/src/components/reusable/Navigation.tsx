@@ -10,7 +10,7 @@ import { DownMenu } from "./Dropdowns";
 export function NavigationBar() {
   return (
     <div className="fixed w-full z-50">
-      <div className="grid grid-cols-3 items-center h-20 bg-background border px-4 md:px-14">
+      <div className="grid grid-cols-3 items-center h-20 bg-background shadow-lg px-4 md:px-14">
         {/* Logo Component */}
         <div className="hidden md:flex justify-start">
           <Link to="/">
@@ -19,12 +19,12 @@ export function NavigationBar() {
         </div>
 
         {/* Menu Items */}
-        <div className="hidden md:flex justify-center items-center font-body text-product-title  text-muted gap-10">
+        <div className="hidden md:flex justify-center items-center font-body font-semibold text-product-title  text-muted gap-20 ">
           {menuItems.map((item) => (
             <Link
               key={item.title}
               to={item.link}
-              className="uppercase hover:text-main transition-colors duration-400 "
+              className="uppercase hover:text-main transition-colors font-semibold duration-400 "
             >
               {item.title === "Shop" ? (
                 <DownMenu key={item.title} item={item} />
@@ -36,7 +36,7 @@ export function NavigationBar() {
         </div>
 
         {/* CTA Items */}
-        <div className="hidden md:flex justify-end items-center font-body text-product-title text-muted gap-8">
+        <div className="hidden md:flex justify-end items-center font-body font-semibold text-product-title text-muted gap-8">
           {cta.map((item) => {
             // 1. Handle "Cart"
             if (item.title === "Cart") {
@@ -66,7 +66,7 @@ export function NavigationBar() {
         </div>
 
         {/* Mobile Navigation */}
-        <div className="md:hidden lg:hidden col-span-3 grid grid-cols-3 items-center w-full">
+        <div className="md:hidden lg:hidden col-span-3 grid grid-cols-3 bg-background  items-center w-full">
           {/* Left - Menu Button */}
           <div className="flex justify-start">
             <MobileMenuSheet />
@@ -95,7 +95,7 @@ export function NavigationBar() {
 export function CheckoutNav() {
   return (
     <div className=" w-full z-50 sticky top-0">
-      <div className="grid grid-cols-3 items-center h-24 bg-background border px-4 md:px-14">
+      <div className="grid grid-cols-3 items-center h-24 bg-background border border-main px-4 md:px-14">
         {/* Left empty side */}
         <div className="flex justify-center" />
 

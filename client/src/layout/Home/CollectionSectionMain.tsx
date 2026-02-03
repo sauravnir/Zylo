@@ -10,7 +10,7 @@ export function CollectionSectionMain() {
   const collectionItem = PRODUCTS_LIST.filter((item)=>item.collection === "basics")
 
   return (
-    <div className="relative md:px-20 py-40 bg-background border-2 border-b">
+    <div className="relative md:px-20 py-40 bg-background border-2 border-b border-main">
       <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30">
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
@@ -44,7 +44,7 @@ export function CollectionSectionMain() {
           <CarouselContent className="-ml-4">
             {collectionItem.map((items) => (
 
-            <CarouselItem key={items.id} className=" md:p-4 lg:p-8 basis-[85%] md:basis-1/2 lg:basis-1/3">
+            <CarouselItem key={items.id} className=" md:p-4 lg:p-8 basis-[100%] md:basis-1/2 lg:basis-1/3">
                     <motion.div
                 variants={{
                   hidden: { opacity: 0, y: 20 },

@@ -68,6 +68,33 @@ export const cta = [
   // { title: "Login", link: "/" },
   { title: "Cart", link: "#" },
 ];
+
+import PIC1 from "@/assets/products/pixelcut_1 (1).png"
+import PIC2 from "@/assets/products/pixelcut_2 (1).png"
+import PIC3 from "@/assets/products/pixelcut_2.png"
+import PIC4 from "@/assets/products/pixelcut_3 (1).png"
+import PIC5 from "@/assets/products/pixelcut_3.png"
+import PIC6 from "@/assets/products/pixelcut_4 (1).png"
+import PIC7 from "@/assets/products/pixelcut_4.png"
+import PIC8 from "@/assets/products/pixelcut_5 (1).png"
+import PIC9 from "@/assets/products/pixelcut_5.png"
+import PIC10 from "@/assets/products/pixelcut_6 (1).png"
+import PIC11 from "@/assets/products/pixelcut_6.png"
+import PIC12 from "@/assets/products/pixelcut_9.png"
+import PIC13 from "@/assets/products/pixelcut_10.png"
+import PIC14 from "@/assets/products/pixelcut_11.png"
+import PIC15 from "@/assets/products/pixelcut_12.png"
+import PIC16 from "@/assets/products/pixelcut_13.png"
+import PIC17 from "@/assets/products/pixelcut_14.png"
+import PIC18 from "@/assets/products/pixelcut_15.png"
+import PIC19 from "@/assets/products/pixelcut_16.png"
+import PIC20 from "@/assets/products/pixelcut_17.png"
+import PIC21 from "@/assets/products/pixelcut_18.png"
+import PIC22 from "@/assets/products/pixelcut_19.png"
+import PIC23 from "@/assets/products/pixelcut_8.png"
+import PIC24 from "@/assets/products/pixelcut_7.png"
+import PIC25 from "@/assets/products/pixelcut_1.png"
+
 // Product Items Objects 
 export const PRODUCTS_LIST = [
   // --- OUTERWEAR ---
@@ -78,11 +105,9 @@ export const PRODUCTS_LIST = [
     category: "Outerwear",
     collection:"basics",
     price: 320,
-    primaryImage: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=800",
+    primaryImage: PIC1,
     images: [
-      "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?q=80&w=800",
-      "https://images.unsplash.com/photo-1539533113208-f6df8cc8b543?q=80&w=800",
-      "https://images.unsplash.com/photo-1544022613-e87ca75a784a?q=80&w=800"
+     
     ],
     description: "Structured silhouette crafted from waterproof gabardine. Features a hidden button placket and adjustable waist belt.",
     productCare: "Professional dry clean only.",
@@ -96,11 +121,9 @@ export const PRODUCTS_LIST = [
     slug: "technical-windbreaker",
     category: "Outerwear",
     price: 185,
-    primaryImage: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=800",
+    primaryImage: PIC2,
     images: [
-      "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=800",
-      "https://images.unsplash.com/photo-1504198266287-18594d6d9518?q=80&w=800",
-      "https://images.unsplash.com/photo-1520975954732-35dd22299614?q=80&w=800"
+      
     ],
     description: "Ultra-lightweight ripstop nylon with heat-sealed seams and reflective branding.",
     productCare: "Machine wash cold. Do not iron.",
@@ -115,11 +138,9 @@ export const PRODUCTS_LIST = [
     category: "Outerwear",
     collection : "",
     price: 210,
-    primaryImage: "https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=800",
+    primaryImage: PIC3,
     images: [
-      "https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=800",
-      "https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?q=80&w=800",
-      "https://images.unsplash.com/photo-1479064560452-959d74d51622?q=80&w=800"
+      
     ],
     description: "Heavyweight 14oz denim with high-pile faux sherpa lining for winter warmth.",
     productCare: "Wash cold, hang dry.",
@@ -134,11 +155,9 @@ export const PRODUCTS_LIST = [
     category: "Outerwear",
     collection : "",
     price: 240,
-    primaryImage: "https://images.unsplash.com/photo-1592833159155-c62df1b65634?q=80&w=800",
+    primaryImage: PIC4,
     images: [
-      "https://images.unsplash.com/photo-1592833159155-c62df1b65634?q=80&w=800",
-      "https://images.unsplash.com/photo-1598808503742-dd34bd854147?q=80&w=800",
-      "https://images.unsplash.com/photo-1523199455310-87b16c0eda11?q=80&w=800"
+      
     ],
     description: "Rugged canvas shell with a cropped modern fit. Brass hardware details.",
     productCare: "Spot clean only.",
@@ -153,11 +172,9 @@ export const PRODUCTS_LIST = [
     category: "Tops",
     collection:"basics",
     price: 350,
-    primaryImage: "https://images.unsplash.com/photo-1604644401890-0bd678c83788?q=80&w=800",
+    primaryImage: PIC5,
     images: [
-      "https://images.unsplash.com/photo-1604644401890-0bd678c83788?q=80&w=800",
-      "https://images.unsplash.com/photo-1616150638538-ffb0679a3fc4?q=80&w=800",
-      "https://images.unsplash.com/photo-1544441893-675973e31985?q=80&w=800"
+     
     ],
     description: "700-fill power recycled down. Matte nylon water-repellent shell.",
     productCare: "Professional down cleaning.",
@@ -173,11 +190,9 @@ export const PRODUCTS_LIST = [
     slug: "acid-wash-hoodie",
     category: "Tops",
     price: 135,
-    primaryImage: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=800",
+    primaryImage: PIC6,
     images: [
-      "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=800",
-      "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=800",
-      "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?q=80&w=800"
+     
     ],
     description: "Unique mineral wash finish. 400GSM cotton fleece with dropped shoulders.",
     productCare: "Wash inside out. Color may fade over time.",
@@ -192,11 +207,9 @@ export const PRODUCTS_LIST = [
     category: "Tops",
     collection: "",
     price: 95,
-    primaryImage: "https://images.unsplash.com/photo-1509948943821-395709971944?q=80&w=800",
+    primaryImage: PIC7,
     images: [
-      "https://images.unsplash.com/photo-1509948943821-395709971944?q=80&w=800",
-      "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=800",
-      "https://images.unsplash.com/photo-1556821840-3a63f95609a7?q=80&w=800"
+     
     ],
     description: "Premium loopback terry with high-density silicone logo print.",
     productCare: "Machine wash cold. Do not iron print.",
@@ -210,11 +223,9 @@ export const PRODUCTS_LIST = [
     slug: "oversized-flannel-shirt",
     category: "Tops",
     price: 85,
-    primaryImage: "https://images.unsplash.com/photo-1589310243389-96a5483213a8?q=80&w=800",
+    primaryImage: PIC8,
     images: [
-      "https://images.unsplash.com/photo-1589310243389-96a5483213a8?q=80&w=800",
-      "https://images.unsplash.com/photo-1516762689617-e1cffcef479d?q=80&w=800",
-      "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=800"
+    
     ],
     description: "Heavyweight brushed cotton flannel. Features dual chest pockets.",
     productCare: "Tumble dry low.",
@@ -228,11 +239,9 @@ export const PRODUCTS_LIST = [
     slug: "quarter-zip-pullover",
     category: "Tops",
     price: 110,
-    primaryImage: "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=800",
+    primaryImage: PIC9,
     images: [
-      "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=800",
-      "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?q=80&w=800",
-      "https://images.unsplash.com/photo-1509948943821-395709971944?q=80&w=800"
+     
     ],
     description: "Custom steel hardware zipper with high-neck ribbing.",
     productCare: "Machine wash delicate.",
@@ -247,11 +256,9 @@ export const PRODUCTS_LIST = [
     category: "Tops",
     collection: "basics",
     price: 75,
-    primaryImage: "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=800",
+    primaryImage: PIC10,
     images: [
-      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=800",
-      "https://images.unsplash.com/photo-1554568212-3c16f5c75051?q=80&w=800",
-      "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=800"
+      
     ],
     description: "300GSM organic cotton with a structured fit.",
     productCare: "Wash inside out.",
@@ -267,11 +274,9 @@ export const PRODUCTS_LIST = [
     slug: "supima-pocket-tee",
     category: "Essentials",
     price: 45,
-    primaryImage: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800",
+    primaryImage: PIC11,
     images: [
-      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=800",
-      "https://images.unsplash.com/photo-1562157873-818bc0726f68?q=80&w=800",
-      "https://images.unsplash.com/photo-1523381210434-271e8be1f52b?q=80&w=800"
+      
     ],
     description: "Silky-smooth Supima cotton with a reinforced pocket.",
     productCare: "Machine wash warm.",
@@ -285,11 +290,9 @@ export const PRODUCTS_LIST = [
     slug: "vintage-box-tee",
     category: "Essentials",
     price: 50,
-    primaryImage: "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=800",
+    primaryImage: PIC12,
     images: [
-      "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=800",
-      "https://images.unsplash.com/photo-1554568212-3c16f5c75051?q=80&w=800",
-      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?q=80&w=800"
+      
     ],
     description: "Cropped length with an extra-wide chest for a modern silhouette.",
     productCare: "Cold wash only.",
@@ -305,11 +308,9 @@ export const PRODUCTS_LIST = [
     slug: "carpenter-pant",
     category: "Bottoms",
     price: 155,
-    primaryImage: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?q=80&w=800",
+    primaryImage: PIC13,
     images: [
-      "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?q=80&w=800",
-      "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=800",
-      "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?q=80&w=800"
+     
     ],
     description: "12oz cotton duck canvas with hammer loop and utility pockets.",
     productCare: "Machine wash cold.",
@@ -324,11 +325,9 @@ export const PRODUCTS_LIST = [
     category: "Bottoms",
     collection: "basics",
     price: 110,
-    primaryImage: "https://images.unsplash.com/photo-1552664199-fd31f7431a55?q=80&w=800",
+    primaryImage: PIC14,
     images: [
-      "https://images.unsplash.com/photo-1552664199-fd31f7431a55?q=80&w=800",
-      "https://images.unsplash.com/photo-1580487234397-130580d4810a?q=80&w=800",
-      "https://images.unsplash.com/photo-1495364141860-b0d03eaa104c?q=80&w=800"
+      
     ],
     description: "Waterproof crinkle nylon with mesh lining and adjustable bungees.",
     productCare: "Cold wash, air dry.",
@@ -342,11 +341,9 @@ export const PRODUCTS_LIST = [
     slug: "distressed-denim",
     category: "Bottoms",
     price: 195,
-    primaryImage: "https://images.unsplash.com/photo-1542272604-787c3835535d?q=80&w=800",
+    primaryImage: PIC15,
     images: [
-      "https://images.unsplash.com/photo-1542272604-787c3835535d?q=80&w=800",
-      "https://images.unsplash.com/photo-1515434126000-961d90ff09db?q=80&w=800",
-      "https://images.unsplash.com/photo-1552664199-fd31f7431a55?q=80&w=800"
+      
     ],
     description: "Japanese selvedge denim with hand-distressed knees.",
     productCare: "Dry clean only.",
@@ -360,11 +357,9 @@ export const PRODUCTS_LIST = [
     slug: "raw-edge-shorts",
     category: "Bottoms",
     price: 70,
-    primaryImage: "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?q=80&w=800",
+    primaryImage: PIC16,
     images: [
-      "https://images.unsplash.com/photo-1591195853828-11db59a44f6b?q=80&w=800",
-      "https://images.unsplash.com/photo-1565041496146-12fec0b8ce8d?q=80&w=800",
-      "https://images.unsplash.com/photo-1515434126000-961d90ff09db?q=80&w=800"
+     
     ],
     description: "Heavyweight French Terry with a raw, frayed hem finish.",
     productCare: "Machine wash warm.",
@@ -380,11 +375,9 @@ export const PRODUCTS_LIST = [
     slug: "canvas-messenger-bag",
     category: "Accessories",
     price: 140,
-    primaryImage: "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=800",
+    primaryImage:PIC17,
     images: [
-      "https://images.unsplash.com/photo-1544816155-12df9643f363?q=80&w=800",
-      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?q=80&w=800",
-      "https://images.unsplash.com/photo-1473187983345-80033f1baf5f?q=80&w=800"
+      
     ],
     description: "Heavy-duty canvas with leather trim and padded laptop sleeve.",
     productCare: "Spot clean only.",
@@ -398,11 +391,9 @@ export const PRODUCTS_LIST = [
     slug: "wool-cap",
     category: "Accessories",
     price: 55,
-    primaryImage: "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?q=80&w=800",
+    primaryImage: PIC18,
     images: [
-      "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?q=80&w=800",
-      "https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?q=80&w=800",
-      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?q=80&w=800"
+    
     ],
     description: "Melton wool construction with a leather strapback closure.",
     productCare: "Brush clean.",
@@ -416,11 +407,9 @@ export const PRODUCTS_LIST = [
     slug: "embroidered-beanie",
     category: "Accessories",
     price: 40,
-    primaryImage: "https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?q=80&w=800",
+    primaryImage: PIC19,
     images: [
-      "https://images.unsplash.com/photo-1576871337632-b9aef4c17ab9?q=80&w=800",
-      "https://images.unsplash.com/photo-1588850561407-ed78c282e89b?q=80&w=800",
-      "https://images.unsplash.com/photo-1516478177764-9fe5bd7e9717?q=80&w=800"
+     
     ],
     description: "Soft acrylic knit with tonal logo embroidery.",
     productCare: "Hand wash only.",
@@ -436,11 +425,9 @@ export const PRODUCTS_LIST = [
     slug: "mohair-cardigan",
     category: "Knitwear",
     price: 245,
-    primaryImage: "https://images.unsplash.com/photo-1614975058789-41316d0e2e9c?q=80&w=800",
+    primaryImage: PIC20,
     images: [
-      "https://images.unsplash.com/photo-1614975058789-41316d0e2e9c?q=80&w=800",
-      "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=800",
-      "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?q=80&w=800"
+      
     ],
     description: "Hairy mohair blend with a vintage argyle pattern.",
     productCare: "Dry clean only. Store flat.",
@@ -454,11 +441,9 @@ export const PRODUCTS_LIST = [
     slug: "mock-neck-sweater",
     category: "Knitwear",
     price: 160,
-    primaryImage: "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?q=80&w=800",
+    primaryImage: PIC21,
     images: [
-      "https://images.unsplash.com/photo-1618354691373-d851c5c3a990?q=80&w=800",
-      "https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?q=80&w=800",
-      "https://images.unsplash.com/photo-1520975954732-35dd22299614?q=80&w=800"
+     
     ],
     description: "Heavyweight wool-cashmere blend. High-ribbed cuffs.",
     productCare: "Hand wash cold.",
@@ -474,11 +459,9 @@ export const PRODUCTS_LIST = [
     slug: "suede-chelsea-boot",
     category: "Footwear",
     price: 280,
-    primaryImage: "https://images.unsplash.com/photo-1638247025967-b4e38f787b76?q=80&w=800",
+    primaryImage:PIC22,
     images: [
-      "https://images.unsplash.com/photo-1638247025967-b4e38f787b76?q=80&w=800",
-      "https://images.unsplash.com/photo-1605348532760-6753d2c43329?q=80&w=800",
-      "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=800"
+      
     ],
     description: "Italian calf suede with a crepe sole.",
     productCare: "Use suede protector spray.",
@@ -492,11 +475,9 @@ export const PRODUCTS_LIST = [
     slug: "court-sneaker",
     category: "Footwear",
     price: 220,
-    primaryImage: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=800",
+    primaryImage: PIC24,
     images: [
-      "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=800",
-      "https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?q=80&w=800",
-      "https://images.unsplash.com/photo-1605348532760-6753d2c43329?q=80&w=800"
+    
     ],
     description: "Full-grain Nappa leather with a margom rubber cupsole.",
     productCare: "Wipe with damp cloth.",
@@ -512,11 +493,9 @@ export const PRODUCTS_LIST = [
     slug: "linen-trouser",
     category: "Bottoms",
     price: 130,
-    primaryImage: "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=800",
+    primaryImage: PIC25,
     images: [
-      "https://images.unsplash.com/photo-1594633312681-425c7b97ccd1?q=80&w=800",
-      "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?q=80&w=800",
-      "https://images.unsplash.com/photo-1542272604-787c3835535d?q=80&w=800"
+     
     ],
     description: "Breathable linen-cotton blend with a drawstring waist.",
     productCare: "Machine wash cold.",
@@ -530,11 +509,8 @@ export const PRODUCTS_LIST = [
     slug: "puffer-vest",
     category: "Outerwear",
     price: 195,
-    primaryImage: "https://images.unsplash.com/photo-1616150638538-ffb0679a3fc4?q=80&w=800",
+    primaryImage: PIC23,
     images: [
-      "https://images.unsplash.com/photo-1616150638538-ffb0679a3fc4?q=80&w=800",
-      "https://images.unsplash.com/photo-1604644401890-0bd678c83788?q=80&w=800",
-      "https://images.unsplash.com/photo-1544441893-675973e31985?q=80&w=800"
     ],
     description: "Water-repellent nylon shell with recycled down filling.",
     productCare: "Wipe with damp cloth.",

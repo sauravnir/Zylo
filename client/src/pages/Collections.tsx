@@ -104,7 +104,7 @@ export default function Collections() {
             </Breadcrumb>
           </motion.div>
         </div>
-        <div className="max-w-6xl mx-auto flex pt-2 border-t">
+        <div className=" mx-auto flex pt-2 border-t bg-background px-24">
           <ItemFilters />
         </div>
       
@@ -114,11 +114,11 @@ export default function Collections() {
           variants={parentVariants}
           initial="hidden"
           animate="visible"
-          className="w-full pb-40 px-4 py-20 "
+          className="w-full pb-40 px-4 py-20 bg-background"
         >
           <motion.div
             variants={itemVariants}
-            className={`max-w-6xl mx-auto grid grid-cols-2 lg:grid-cols-${filters.gridCols} gap-y-10 gap-x-10 border-l border-r`}
+            className={`max-w-6xl mx-auto grid grid-cols-2 lg:grid-cols-${filters.gridCols} gap-y-10 gap-x-10 border-l border-r border-main`}
           >
             {filteredProducts.map((items) => (
               <ProductCard key={items.id} {...items} isSearchContent={false} />

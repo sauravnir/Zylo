@@ -17,10 +17,10 @@ const gridIcons: Record<number, React.ReactNode> = {
 export const ItemFilters = () => {
   const { filters, setFilters , resetFilters } = useProducts();
   return (
-    <div className="w-full flex flex-row items-center justify-center gap-3 md:justify-between border-b border-t pt-2 pb-2">
+    <div className="w-full flex flex-row items-center justify-center gap-3 md:justify-between border-b border-t border-main pt-2 pb-2">
       {/* 1. Availability Filter */}
       <div className="flex flex-row items-center justify-center gap-10">
-        <div className="flex gap-2">
+        <div className="flex gap-8">
           {["all", "In Stock", "Sold Out"].map((status) => (
             <button
               key={status}
@@ -86,14 +86,14 @@ export const ItemFilters = () => {
         
           {/* Grid Cols Filter */}
         <div className="hidden md:flex flex-col space-y-3 items-end">
-          <div className="flex rounded-sm border overflow-hidden">
+          <div className="flex rounded-sm border border-main overflow-hidden">
             {[3,4,6].map((num) => (
               <button
                 key={num}
                 onClick={() => setFilters({ ...filters, gridCols: num })}
-                className={`px-2 py-1 transition-colors ${
+                className={`px-2 py-1 transition-colors border-r border-main ${
                   filters.gridCols === num
-                    ? "text-main/70 bg-card border-r"
+                    ? "text-main/70 bg-background "
                     : "bg-transparent text-muted/70 hover:bg-muted/10 border-r"
                 } `}
               >

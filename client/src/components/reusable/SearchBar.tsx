@@ -65,7 +65,7 @@ const handleCategoryClick =(category:any) => {
 
       <DropdownMenuContent
         sideOffset={22}
-        className="w-screen rounded-none bg-card py-6 mt-1 shadow-2xl "
+        className="w-screen rounded-none bg-background py-6 mt-1 shadow-2xl "
       >
         <motion.div
           initial={{ opacity: 0, y: -20 }}
@@ -78,7 +78,7 @@ const handleCategoryClick =(category:any) => {
             <Input
               type="text"
               autoFocus
-              className="shadow-none text-base md:text-product-title uppercase placeholder:text-main/50 border-none bg-card focus-visible:ring-0 focus-visible:ring-offset-0 w-full  h-auto"
+              className="shadow-none text-base md:text-product-title uppercase placeholder:text-main/50 border-none bg-background focus-visible:ring-0 focus-visible:ring-offset-0 w-full  h-auto"
               placeholder="Search here"
               value={searchTerm}
               onChange={handleSearch}
@@ -101,7 +101,7 @@ const handleCategoryClick =(category:any) => {
 
         {/* Search Component */}
         {searchTerm.length > 0 && (
-          <div className="absolute top-full left-0 w-full bg-card z-50 shadow-2xl">
+          <div className="absolute top-full left-0 w-full bg-background z-50 shadow-2xl">
             {searchSuggestions.length > 0 ? (
               <div className="md:grid-cols-[0.5fr_2.5fr] min-h-[300px] px-6">
                 <div className="p-4">

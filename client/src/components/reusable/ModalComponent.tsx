@@ -50,7 +50,7 @@ export function ProductModal({
         <div className="absolute right-2 top-2 md:right-4 md:top-4 z-50 group">
           <button
             onClick={() => isSetOpenModal(false)}
-            className="h-8 w-8 flex items-center justify-center bg-card/80 backdrop-blur-sm text-muted hover:text-main transition-colors"
+            className="h-8 w-8 flex items-center justify-center bg-background backdrop-blur-sm text-muted hover:text-main transition-colors"
           >
             <X size={24} />
           </button>
@@ -190,7 +190,7 @@ export const ProductDetail = ({
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
               className="w-full h-full object-cover"
-              // onError={() => setError(true)}
+              
             />
           </AnimatePresence>
 
@@ -369,11 +369,11 @@ export const ProductDetail = ({
                     key={size}
                     type="button" // Prevents accidental form submission
                     onClick={() => setProductSize(size)}
-                    className={`w-10 h-10 border text-nav uppercase transition-all duration-300 flex items-center justify-center
+                    className={`w-10 h-10 border  text-nav uppercase transition-all duration-300 flex items-center justify-center
             ${
               isActive
                 ? "bg-main text-white border-main shadow-sm"
-                : "border-border text-muted hover:text-white hover:bg-main "
+                : "border-main text-muted hover:text-white hover:bg-main "
             }`}
                   >
                     {size}
@@ -388,10 +388,10 @@ export const ProductDetail = ({
             <div className="text-main text-menu uppercase tracking-widest font-medium">
               Quantity:
             </div>
-            <div className="flex items-center border border-border w-fit">
+            <div className="flex items-center border border-main w-fit">
               <button
                 onClick={decrement}
-                className={`w-10 h-10 flex items-center justify-center ${num === 1 && `cursor-not-allowed bg-muted/50 hover:bg-muted/50`} text-muted hover:text-white transition-all duration-300 hover:bg-main border-r border-border`}
+                className={`w-10 h-10 flex items-center justify-center ${num === 1 && `cursor-not-allowed bg-muted/50 hover:bg-muted/50`} text-muted hover:text-white transition-all duration-300 hover:bg-main border-r border-main`}
               >
                 <Minus size={16} />
               </button>
@@ -400,7 +400,7 @@ export const ProductDetail = ({
               </div>
               <button
                 onClick={increment}
-                className="w-10 h-10 flex items-center justify-center transition-all duration-300 text-muted hover:text-white hover:bg-main border-l border-border"
+                className="w-10 h-10 flex items-center justify-center transition-all duration-300 text-muted hover:text-white hover:bg-main border-l border-main"
               >
                 <Plus size={16} />
               </button>
@@ -460,7 +460,7 @@ export const ProductDetail = ({
                       e.stopPropagation();
                       prevSlide();
                     }}
-                    className="group p-2 rounded-full text-primary bg-white transition-colors duration-300 hover:scale-105"
+                    className="group p-2 rounded-full text-primary bg-background transition-colors duration-300 hover:scale-105"
                   >
                     <ChevronLeft
                       size={24}
@@ -484,7 +484,7 @@ export const ProductDetail = ({
                       e.stopPropagation();
                       nextSlide();
                     }} // Fixed to nextSlide
-                    className="group p-2 rounded-full text-primary bg-white transition-colors duration-300 hover:scale-105"
+                    className="group p-2 rounded-full text-primary bg-background transition-colors duration-300 hover:scale-105"
                   >
                     <ChevronRight
                       size={24}

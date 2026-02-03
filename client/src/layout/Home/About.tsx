@@ -1,11 +1,10 @@
 import React from "react";
-
 import {motion} from "motion/react"
 import { PRODUCTS_LIST } from "@/objects/Objects";
 
 export function About() {
   return (
-<div className="relative overflow-hidden bg-background py-20 md:py-40 px-4 border-b">
+<div className="relative overflow-hidden bg-background py-20 md:py-40 px-4 border-b border-main">
   <div className="grid grid-cols-1 md:grid-cols-2 max-w-6xl mx-auto gap-6 md:gap-8">
     
     {/* Image Side */}

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { motion } from "motion/react";
+import { hover, motion } from "motion/react";
 import { Plus } from "lucide-react";
 import { itemVariants } from "@/objects/Animations";
 import {ProductModal} from "./ModalComponent";
@@ -28,7 +28,7 @@ export interface ProductCardProps {
 // Product Card Display Component 
 export function ProductCard({isSearchContent , ...props}:ProductCardProps & {isSearchContent?:boolean}) {
   // Handle Image Hover
-  const hoverImage = props.images && props.images.length > 1 ? props.images[1] : props.primaryImage;
+  const hoverImage = props.images && props.images.length > 1 ? props.images[1] : null;
   const [currImage , setCurrImage] = useState(props.primaryImage);
   const [Error , setError] = useState(false);
 // Handling the modal open prop
@@ -45,7 +45,7 @@ export function ProductCard({isSearchContent , ...props}:ProductCardProps & {isS
         animate="rest"
         className={`cursor-pointer ${isSearchContent ? "flex items-center gap-4 md:block" : ""}`}
     >
-        <Card className={`border-none bg-transparent shadow-none rounded-none overflow-hidden ${
+        <Card className={`border-none group bg-transparent shadow-none rounded-none overflow-hidden ${
             isSearchContent ? "w-20 h-24 md:w-full md:h-auto" : "w-full"
         }`}>
             <CardContent  className={`p-0 relative ${isSearchContent ? "h-full md:aspect-[3/4]" : "aspect-[3/4]"}`}>
@@ -55,8 +55,8 @@ export function ProductCard({isSearchContent , ...props}:ProductCardProps & {isS
                     <img
                         src={Error ? props.primaryImage : currImage}
                         alt={props.title}
-                        className="w-full h-full object-cover hidden md:block"
-                        onMouseEnter={() => setCurrImage(hoverImage)  }
+                        className={`w-full h-full object-cover hidden md:block ${!hoverImage ? 'group-hover:scale-105 transition-transform duration-300':""}`}
+                        onMouseEnter={() =>hoverImage && setCurrImage(hoverImage)  }
                         onMouseLeave={() => setCurrImage(props.primaryImage)}
                         onError={() => setError(true)}
                     />
@@ -77,7 +77,7 @@ export function ProductCard({isSearchContent , ...props}:ProductCardProps & {isS
                         transition={{ duration: 0.3 }}
                         className=" hidden md:flex absolute bottom-2 right-2 z-20 p-2 "
                     >
-                        <Button variant="ghost" className="group w-8 h-8 bg-card rounded-none" onClick={(e)=>{e.stopPropagation(); setIsOpenModal(true)}}>
+                        <Button variant="ghost" className="group w-8 h-8 bg-background rounded-none" onClick={(e)=>{e.stopPropagation(); setIsOpenModal(true)}}>
                             <Plus className="text-main transition-transform duration-300 ease-in-out group-hover:rotate-90" />
                         </Button>
                     </motion.div>
@@ -86,7 +86,7 @@ export function ProductCard({isSearchContent , ...props}:ProductCardProps & {isS
                 {/* Mobile Add to Cart - Hidden if isSearchContent is true to save space */}
                 {props.availability !== "Sold Out" && !isSearchContent && (
                     <div className="md:hidden absolute bottom-2 right-2 z-20 p-2">
-                        <Button variant="ghost" className="w-8 h-8 bg-card rounded-none" onClick={(e)=>{e.stopPropagation(); setIsOpenModal(true)}}>
+                        <Button variant="ghost" className="w-8 h-8 bg-background rounded-none" onClick={(e)=>{e.stopPropagation(); setIsOpenModal(true)}}>
                             <Plus className="text-main" />
                         </Button>
                     </div>

@@ -34,12 +34,12 @@ export default function CheckoutPage() {
   if (totalItems === 0) return null;
 
   return (
-    <div className="min-h-screen bg-muted/5">
+    <div className="min-h-screen bg-background">
       <CheckoutNav />
-      <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-8 py-12 md:py-8 border-l border-r ">
+      <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-8 py-12 md:py-8 border-l border-r border-main">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 ">
           {/* Checkout Form  */}
-          <div className="order-2 lg:order-1 lg:col-span-7 space-y-10 p-4 border-r  ">
+          <div className="order-2 lg:order-1 lg:col-span-7 space-y-10 p-4 border-r border-main ">
             <CheckoutForm
               symbol={symbol}
               shippingAmount={shippingCost}
@@ -67,7 +67,7 @@ export default function CheckoutPage() {
 
           <aside className="order-1 lg:order-1 lg:col-span-5">
             <div className="sticky top-32 space-y-4">
-              <div className="flex items-center justify-between px-0 p-4 border-b rounded-none">
+              <div className="flex items-center justify-between px-0 p-4 border-b border-main rounded-none">
                 <h2 className="text-base font-bold uppercase tracking-widest">
                   Order Summary ({totalItems})
                 </h2>

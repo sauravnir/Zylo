@@ -9,7 +9,7 @@ module.exports = {
         body: ["Helvetica", "Arial", "sans-serif"],
       },
       colors: {
-        background: "#FFFFFF",
+        background: "#e1e1e1",
         muted: "#9b9b9b",
         main: "#2b2b2b",
         border: "#E5E5E5",

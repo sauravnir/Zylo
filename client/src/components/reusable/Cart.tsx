@@ -132,7 +132,7 @@ export const CartSheet = () => {
           </span>
         </Badge>
       </SheetTrigger>
-      <SheetContent className="py-8 px-0 bg-card " side="right" onOpenAutoFocus={(e)=>e.preventDefault()}>
+      <SheetContent className="py-8 px-0 bg-background " side="right" onOpenAutoFocus={(e)=>e.preventDefault()}>
         <SheetHeader>
           <SheetTitle className="flex items-center justify-between px-4">
             <span className="flex text-base text-main gap-2 uppercase font-medium tracking-widest">
