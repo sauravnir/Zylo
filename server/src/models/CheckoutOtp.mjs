@@ -10,3 +10,4 @@ const checkoutOtp = new mongoose.Schema({
 });
 
 export const OTPMODEL = mongoose.model('Otp', checkoutOtp);
+
