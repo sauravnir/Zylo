@@ -149,10 +149,10 @@ export const ProductDetail = ({
   };
   return (
     <div
-      className={`flex flex-col md:flex-row w-full h-full ${viewMode === "page" ? "border-b border-main pb-10 mt-4" : "p-6"}`}
+      className={`flex flex-col md:grid md:grid-cols-3 w-full h-full ${viewMode === "page" ? "border-b border-main pb-10 mt-0" : "p-6"}`}
     >
       <div
-        className={`w-full flex flex-col items-center bg-background group border-b md:border-b-0 
+        className={`w-full flex flex-col md:col-span-2 items-center bg-background group border-b md:border-b-0 
     ${viewMode === "modal" ? "justify-center" : "justify-start py-4 md:py-10"}`}
       >
         {/* Image Section */}
@@ -190,7 +190,6 @@ export const ProductDetail = ({
               exit={{ opacity: 0 }}
               transition={{ duration: 0.2 }}
               className="w-full h-full object-cover"
-              
             />
           </AnimatePresence>
 
@@ -252,13 +251,13 @@ export const ProductDetail = ({
                 <button
                   key={index}
                   onClick={() => setCurrSlide(index)}
-                  className={`relative w-14 h-16 overflow-hidden transition-all duration-300
+                  className={`relative w-20 aspect-[3/4] overflow-hidden transition-all duration-300
             ${isActive ? "ring-1 ring-offset-1 ring-main" : ""}`}
                 >
                   <img
                     src={image}
                     alt={`Product thumbnail ${index + 1}`}
-                    className="w-full h-full object-cover"
+                    className={`w-full h-full object-cover transition-transform duration-500 ${isActive ? "scale-110" : "scale-100"}`}
                     // onError={() => setError(true)}
                   />
                 </button>
@@ -270,7 +269,7 @@ export const ProductDetail = ({
 
       {/* RIGHT SIDE */}
       <div
-        className={`w-full md:max-w-xl flex flex-col my-auto ${viewMode === "modal" ? "p-4" : "pt-8 md:p-8"} md:overflow-y-auto`}
+        className={`w-full md:max-w-xl flex flex-col my-auto ${viewMode === "modal" ? "p-0 pr-4" : "pt-8 md:p-8"} md:overflow-y-auto`}
       >
         <div className="space-y-8 flex-1">
           {/* Title & Price */}
@@ -498,31 +497,32 @@ export const ProductDetail = ({
               <motion.img
                 key={currSlide}
                 src={modalImage[currSlide]}
-                initial={{ scale: 0.9, opacity: 0 }}
-                // Handling the zooming functionality
+                initial={{ scale: 0.95, opacity: 0 }}
                 animate={{
                   opacity: 1,
-                  x: isZoomed ? undefined : 0,
-                  y: isZoomed ? undefined : 0,
-                  scale: isZoomed ? 1.9 : 1,
+                  
+                  scale: isZoomed ? 2.5 : 1,
                   cursor: isZoomed ? "zoom-out" : "zoom-in",
+                 
+                  x: 0,
+                  y: 0,
                 }}
+               
                 drag={isZoomed}
                 dragConstraints={{
-                  left: -100,
-                  right: 300,
-                  top: -400,
-                  bottom: 400,
+                  left: -500, 
+                  right: 500,
+                  top: -600,
+                  bottom: 600,
                 }}
-                dragElastic={0.1}
-                dragTransition={{ bounceStiffness: 600, bounceDamping: 20 }}
-                exit={{ scale: 1, opacity: 0 }}
+                dragElastic={0.15}
+                exit={{ opacity: 0 }}
                 onClick={(e) => {
                   e.stopPropagation();
                   setIsZoomed(!isZoomed);
                 }}
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                className="max-w-[90vw] max-h-[99vh] object-contain "
+                transition={{ type: "spring", stiffness: 250, damping: 25 }}
+                className="w-full h-full max-h-[95vh] object-contain select-none shadow-2xl"
               />
             </motion.div>
           )}

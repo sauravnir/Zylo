@@ -230,7 +230,7 @@ export const CartSheet = () => {
                   type="button"
                 />
 
-                <span className="text-main/45 text-xs text-center leading-tight tracking-normal underline">
+                <span className="text-main/45 text-sm text-center leading-tight tracking-tight underline">
                   Taxes and shipping calculated at checkout
                 </span>
               </div>
@@ -304,7 +304,7 @@ export const CartItem = ({
       <div className="flex flex-1 flex-col justify-between py-1">
         <div className="flex flex-col gap-1.5">
           {/* Title & Quantity Display */}
-          <h3 className="text-main text-product-title tracking-wide uppercase font-medium">
+          <h3 className="text-main text-product-title tracking-wide uppercase font-semibold">
             {item.title}{" "}
             {isReadOnly && (
               <span className="font-bold">x {item.itemCartQuantity}</span>

@@ -53,10 +53,11 @@ const handleCheckout = async () => {
 }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen ">
       <NavigationBar />
       {/* Main Body Section */}
-      <main className="max-w-7xl mx-auto px-4 md:px-20 py-32 md:py-40">
+      <div className="bg-background">
+        <main className="max-w-7xl mx-auto px-4 md:px-20 py-32 md:py-40">
         <h1 className="text-center text-h3 text-main uppercase font-medium tracking-widest mb-12 pb-6">
           {totalItem > 0 && `CART (${totalItem})`}
         </h1>
@@ -196,6 +197,8 @@ const handleCheckout = async () => {
           </div>
         )}
       </main>
+      </div>
+      
       <Footer />
     </div>
   );

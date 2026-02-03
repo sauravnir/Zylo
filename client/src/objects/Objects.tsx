@@ -477,7 +477,7 @@ export const PRODUCTS_LIST = [
     price: 220,
     primaryImage: PIC24,
     images: [
-    
+      PIC24, PIC22 , PIC12
     ],
     description: "Full-grain Nappa leather with a margom rubber cupsole.",
     productCare: "Wipe with damp cloth.",
