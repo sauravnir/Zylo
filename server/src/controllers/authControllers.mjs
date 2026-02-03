@@ -7,6 +7,8 @@ export const sendOtp = async (request, response) => {
     return response.status(400).json({ message: "Email is required." });
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
   try {
+    // Deleting any exisiting otp first if there is one
+    await OTPMODEL.deleteMany({email});
     await OTPMODEL.create({ email: email, code: otp });
     response.status(200).json({ success: true, message: `OTP Created.${otp}` });
   } catch (error) {
@@ -23,13 +25,12 @@ export const verifyOtp = async (request, response) => {
   try {
     const record = await OTPMODEL.findOne({ email, code: otp });
     if (record) {
-      await OTPMODEL.deleteOne({ _id: record._id });
+      await OTPMODEL.deleteOne({ email , code:otp });
       return response.status(200).json({ success: true, message: "OTP Verified" });
     } else {
       return response.status(400).json({ success: false, message: "Invalid or expired OTP" });
     }
   } catch (error) {
-    
     return response.status(500).json({ success: false, message: error.message });
   }
 };

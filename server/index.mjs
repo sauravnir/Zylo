@@ -6,10 +6,11 @@ import authRoutes from "./src/routes/authRoutes.mjs"
 
 // Initializing dotenv file
 dotenv.config();
-// Creating an express app instance
-const app = express();
 // Connecting to the database
 dbConnect();
+// Creating an express app instance
+const app = express();
+
 // Setting up middlewares
 app.use(express.json()); //Parses all the responses into JSON
 app.use(cors({
