@@ -149,7 +149,7 @@ export const ProductDetail = ({
   };
   return (
     <div
-      className={`flex flex-col md:flex-row w-full h-full ${viewMode === "page" ? "border-b pb-10 mt-4" : "p-6"}`}
+      className={`flex flex-col md:flex-row w-full h-full ${viewMode === "page" ? "border-b border-main pb-10 mt-4" : "p-6"}`}
     >
       <div
         className={`w-full flex flex-col items-center bg-background group border-b md:border-b-0 
@@ -157,10 +157,10 @@ export const ProductDetail = ({
       >
         {/* Image Section */}
         <div
-          className={`relative w-full overflow-hidden ${
+          className={`relative w-full overflow-hidden  ${
             viewMode === "modal"
-              ? "max-w-[290px] md:max-w-[350px] aspect-[3/4]"
-              : "max-w-[360px] md:max-w-[400px] aspect-[3/4] cursor-none"
+              ? "max-w-[290px] md:max-w-[350px] aspect-[2/3]"
+              : "max-w-[360px] md:max-w-[500px] aspect-[2/3] cursor-none"
           }`}
           // Zoom image in the page
           onClick={() => viewMode === "page" && isClicked(true)}
@@ -270,7 +270,7 @@ export const ProductDetail = ({
 
       {/* RIGHT SIDE */}
       <div
-        className={`w-full md:max-w-xl flex flex-col ${viewMode === "modal" ? "p-4" : "pt-8 md:p-8"} md:overflow-y-auto`}
+        className={`w-full md:max-w-xl flex flex-col my-auto ${viewMode === "modal" ? "p-4" : "pt-8 md:p-8"} md:overflow-y-auto`}
       >
         <div className="space-y-8 flex-1">
           {/* Title & Price */}
@@ -278,20 +278,20 @@ export const ProductDetail = ({
             <h1 className="text-main uppercase text-modal-title tracking-[0.15em] leading-tight">
               {props.title}
             </h1>
-            <div className="text-base tracking-[0.1em] text-muted font-medium transition-colors ">
+            <div className="text-base tracking-[0.1em]  text-main/50 font-semibold transition-colors ">
               <Price amount={props.price} />
             </div>
           </div>
 
           {/* Conditionally rendering the description , product care and colors in Product Page */}
           {viewMode === "page" && (
-            <div className="flex flex-col space-y-6 border-t">
+            <div className="flex flex-col space-y-6 border-t border-1 border-main">
               <Accordion type="single" collapsible>
                 <AccordionItem value={props.description}>
                   <AccordionTrigger className="text-muted text-nav uppercase tracking-widest font-medium">
                     Description
                   </AccordionTrigger>
-                  <AccordionContent className="">
+                  <AccordionContent className=" ">
                     <ul className="flex flex-col gap-1">
                       {descriptionPoints.map((item) => (
                         <li

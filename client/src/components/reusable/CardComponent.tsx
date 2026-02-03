@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { hover, motion } from "motion/react";
+import {  motion } from "motion/react";
 import { Plus } from "lucide-react";
 import { itemVariants } from "@/objects/Animations";
 import {ProductModal} from "./ModalComponent";
@@ -48,7 +48,7 @@ export function ProductCard({isSearchContent , ...props}:ProductCardProps & {isS
         <Card className={`border-none group bg-transparent shadow-none rounded-none overflow-hidden ${
             isSearchContent ? "w-20 h-24 md:w-full md:h-auto" : "w-full"
         }`}>
-            <CardContent  className={`p-0 relative ${isSearchContent ? "h-full md:aspect-[3/4]" : "aspect-[3/4]"}`}>
+            <CardContent  className={`p-0 relative ${isSearchContent ? "h-full md:aspect-[1/1]" : "aspect-[1/1]"}`}>
                 {/* Routing to Products Page */}
                 <Link to={`/products/${props.slug}`}>
                     {/* Desktop Image Section */}
@@ -94,8 +94,8 @@ export function ProductCard({isSearchContent , ...props}:ProductCardProps & {isS
 
                 {/* Items Availability Badge */}
                 {props.availability === "Sold Out" && (
-                    <div className="absolute top-1 left-2">
-                        <span className="bg-muted text-white text-[8px] md:text-sm uppercase px-1 md:px-2 py-1 font-medium tracking-widest">
+                    <div className="absolute top-4 left-10">
+                        <span className="bg-muted text-white text-[8px] md:text-small uppercase px-1 md:px-2 py-1 font-medium tracking-widest">
                             {props.availability}
                         </span>
                     </div>
@@ -109,12 +109,12 @@ export function ProductCard({isSearchContent , ...props}:ProductCardProps & {isS
             ? "items-start text-left justify-start p-0 md:items-center md:text-center md:p-4" 
             : "items-center text-center justify-center p-4"
         }`}>
-            <h1 className={`font-body text-main uppercase ${
+            <h1 className={`font-body text-main uppercase font-semibold ${
                 isSearchContent ? "text-[10px] md:text-product-title line-clamp-1" : "text-product-title"
             }`}>
                 {props.title}
             </h1>
-            <span className={`text-muted font- uppercase ${
+            <span className={`text-main/70 uppercase ${
                 isSearchContent ? "text-[10px] md:text-product-title" : "text-product-title"
             }`}>
                 <Price amount={props.price} />

@@ -4,7 +4,7 @@ export const TermsandConditions = () => {
   return (
     <div className="min-h-screen">
       <NavigationBar />
-
+    <div className="bg-background">
       <div className="flex flex-col max-w-3xl mx-auto px-4 md:px-6 pt-40 pb-10 gap-4">
         <h1 className="text-h3 text-main uppercase text-center">
           Terms and Conditions
@@ -161,6 +161,8 @@ export const TermsandConditions = () => {
           of the Site constitutes acceptance of the revised Terms.
         </p>
       </div>
+    </div>
+      
 
       <Footer />
     </div>

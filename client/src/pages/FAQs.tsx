@@ -13,8 +13,8 @@ export const FaqPage=()=>{
     return (
         <div className="min-h-screen">
             <NavigationBar />
-
-                <div className="flex flex-col max-w-3xl mx-auto px-4 md:px-6 pt-40 pb-10">
+        <div className="bg-background">
+        <div className="flex flex-col max-w-3xl mx-auto px-4 md:px-6 pt-40 pb-10">
                         <h1 className="text-h3 text-main uppercase text-center">FAQS</h1>
                 
                         <Accordion type="single" collapsible className="w-full mt-12">
@@ -23,7 +23,7 @@ export const FaqPage=()=>{
                                 key={item.id} value={item.id}
                             >
                                 <AccordionTrigger
-                                className="text-[16px] font-medium uppercase tracking-widest border-t"
+                                className="text-[16px] font-medium uppercase tracking-widest "
                                 >
                                     {item.question}
                                 </AccordionTrigger>
@@ -35,6 +35,8 @@ export const FaqPage=()=>{
                         ))}
                         </Accordion>
                       </div>
+        </div>
+                
 
             <Footer/>
         </div>

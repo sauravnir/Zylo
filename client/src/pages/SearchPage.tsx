@@ -41,7 +41,7 @@ export const SearchPage = () => {
     <div className="min-h-screen ">
       <NavigationBar />
 
-      <main className="flex-grow flex flex-col">
+      <main className="flex-grow flex flex-col bg-background">
         {/*  This stays regardless of filter results */}
         {searchTerm !== "" && (
           <div className="w-full px-4 md:px-20 pt-40 pb-10">
@@ -58,7 +58,7 @@ export const SearchPage = () => {
               </p>
             </div>
 
-            <div className="max-w-6xl mx-auto flex pt-12 ">
+            <div className="mx-auto flex pt-12 md:px-24">
               <ItemFilters />
             </div>
           </div>
@@ -92,7 +92,7 @@ export const SearchPage = () => {
             >
               <motion.div
                 variants={itemVariants}
-                className={`max-w-6xl mx-auto border-r border-l grid grid-cols-2 lg:grid-cols-${filters.gridCols} gap-y-10 gap-x-10`}
+                className={`max-w-6xl mx-auto border-r border-l border-main border-1 grid grid-cols-2 lg:grid-cols-${filters.gridCols} gap-y-10 gap-x-10`}
               >
                 {filteredProducts.map((allProd) => (
                   <ProductCard

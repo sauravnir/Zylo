@@ -6,8 +6,8 @@ export const Policy = ()=>{
         <div className="min-h-screen">
             <NavigationBar />
 
-
-                <div className="flex flex-col max-w-3xl mx-auto px-4 md:px-6 pt-40 pb-10 gap-4">
+<div className="bg-background">
+<div className="flex flex-col max-w-3xl mx-auto px-4 md:px-6 pt-40 pb-10 gap-4">
     <h1 className="text-h3 text-main uppercase text-center">
       Privacy Policy
     </h1>
@@ -118,6 +118,8 @@ export const Policy = ()=>{
       of the updated policy.
     </p>
   </div>
+</div>
+                
             <Footer />
         </div>
     )

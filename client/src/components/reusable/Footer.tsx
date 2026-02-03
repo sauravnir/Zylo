@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { Copyright } from "lucide-react";
 export function Footer() {
   return (
-    <div className="relative overflow-hidden bg-muted/15  border border-main">
+    <div className="relative overflow-hidden bg-muted/15  border-1 border-main">
       <div className="grid grid-cols-1 md:grid-cols-4 lg:grid-cols-4 w-full py-6 md:py-14 px-2 md:px-10">
         {/* CTA Section  */}
         <div className="flex flex-col space-y-6 px-4">

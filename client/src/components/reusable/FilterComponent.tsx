@@ -20,7 +20,7 @@ export const ItemFilters = () => {
     <div className="w-full flex flex-row items-center justify-center gap-3 md:justify-between border-b border-t border-main pt-2 pb-2">
       {/* 1. Availability Filter */}
       <div className="flex flex-row items-center justify-center gap-10">
-        <div className="flex gap-8">
+        <div className="flex gap-2 md:gap-8">
           {["all", "In Stock", "Sold Out"].map((status) => (
             <button
               key={status}

@@ -35,7 +35,6 @@ export function ProductMain({
     return sameCategory || sameCollection;
   })
 
-
 // Sorting the filters so that collection comes in first and then category  
     const sortRelatedProducts = relatedProducts.sort((a,b)=>{
         if(a.collection === currentProduct?.collection && b.collection !== currentProduct?.collection){
@@ -47,7 +46,7 @@ export function ProductMain({
     <div className="relative px-4 md:px-20 py-20 bg-background ">
       {currentProduct ? (
         <div>
-          <ProductDetail props={props} viewMode="page" />
+          <ProductDetail props={props} viewMode="page" closeModal={()=>{}}/>
 
           {/* Related products content */}
           <div className="w-full flex flex-col space-y-12 py-20">

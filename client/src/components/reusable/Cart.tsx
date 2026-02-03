@@ -134,7 +134,7 @@ export const CartSheet = () => {
       </SheetTrigger>
       <SheetContent className="py-8 px-0 bg-background " side="right" onOpenAutoFocus={(e)=>e.preventDefault()}>
         <SheetHeader>
-          <SheetTitle className="flex items-center justify-between px-4">
+          <SheetTitle className="flex items-center justify-between px-4 ">
             <span className="flex text-base text-main gap-2 uppercase font-medium tracking-widest">
               Cart <span>({totalItems})</span>
             </span>
@@ -143,7 +143,7 @@ export const CartSheet = () => {
             </SheetClose>
           </SheetTitle>
         </SheetHeader>
-        <Separator className="w-full mt-6" />
+        <Separator className="w-full mt-6 shadow border-main" />
 
         <div className="h-full flex flex-col ">
           {/* Cart Content */}
@@ -170,7 +170,7 @@ export const CartSheet = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.2, ease: "backIn" }}
-              className="mt-auto pt-6 pb-8 px-8  border-t relative"
+              className="mt-auto pt-6 pb-8 px-8  border-t border-main relative"
             >
               <div className="flex flex-col gap-4 pb-2">
                 <AnimatePresence>
@@ -198,7 +198,7 @@ export const CartSheet = () => {
                         value={localNote}
                         onChange={(e) => setLocalNote(e.target.value)}
                         placeholder="How can we help you?"
-                        className="w-full bg-card p-3 text-muted text-sm outline-none resize-none border border-muted/30 rounded-sm h-24 focus:border-main transition-colors duration-300"
+                        className="w-full bg-background p-3 text-muted text-sm outline-none resize-none border border-muted/30 rounded-sm h-24 focus:border-main transition-colors duration-300"
                       />
                     </motion.div>
                   )}
@@ -291,15 +291,15 @@ export const CartItem = ({
   return (
     <div
       key={`${item.slug}-${item.productSize}`}
-      className="flex flex-row gap-6 border-b py-8 first:pt-0 last:border-0"
+      className="flex flex-row gap-6 border-b border-main py-8 first:pt-0 last:border-0"
     >
-      <div className="relative h-36 w-24 flex-shrink-0 overflow-hidden bg-[#f9f9f9]">
-        <img
-          src={item.primaryImage}
-          alt={item.title}
-          className="h-full w-full object-cover"
-        />
-      </div>
+      <div className="relative aspect-[3/4] w-32 flex-shrink-0 overflow-hidden rounded-md bg-[#f9f9f9] ">
+  <img
+    src={item.primaryImage}
+    alt={item.title}
+    className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+  />
+</div>
 
       <div className="flex flex-1 flex-col justify-between py-1">
         <div className="flex flex-col gap-1.5">
@@ -328,21 +328,21 @@ export const CartItem = ({
         {isReadOnly === false && (
           <div className="flex items-center gap-4 mt-4">
             {/* Quantity Selector */}
-            <div className="flex items-center border border-border w-fit">
+            <div className="flex items-center border border-main w-fit">
               <button
                 onClick={handleDecrement}
                 disabled={item.itemCartQuantity < 1 || decDelay}
-                className={`w-8 h-8 flex items-center justify-center text-muted ${item.itemCartQuantity == 1 && `cursor-not-allowed bg-muted/50 hover:bg-muted/50`} hover:text-white transition-all hover:bg-main border-r border-border`}
+                className={`w-8 h-8 flex items-center justify-center text-muted ${item.itemCartQuantity == 1 && `cursor-not-allowed bg-muted/50 hover:bg-muted/50`} hover:text-white transition-all hover:bg-main border-r border-main`}
               >
                 <Minus size={14} />
               </button>
-              <div className="text-muted w-10 flex items-center justify-center text-sm tabular-nums font-medium">
+              <div className="text-muted w-10 flex items-center justify-center text-sm tabular-nums border border-1 font-medium">
                 {item.itemCartQuantity}
               </div>
               <button
                 onClick={handleIncrement}
                 disabled={incDelay}
-                className="w-8 h-8 flex items-center justify-center text-muted hover:text-white transition-all hover:bg-main border-l border-border"
+                className="w-8 h-8 flex items-center justify-center text-muted hover:text-white transition-all hover:bg-main border-l border-main "
               >
                 <Plus size={14} />
               </button>
