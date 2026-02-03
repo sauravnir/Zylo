@@ -47,6 +47,7 @@ export const verifyOtp = async (request, response) => {
   }
 
   try {
+    // Verifying the email and code.
     const record = await OTPMODEL.findOne({ email, code: otp });
 
     if (!record) {
@@ -101,7 +102,7 @@ export const verifyOtp = async (request, response) => {
     }
     // Deleting the otp record.
     await OTPMODEL.deleteOne({ email, code: otp });
-    
+
     return response
       .status(200)
       .json({ success: true, message: "OTP Verified & Order Logged" });

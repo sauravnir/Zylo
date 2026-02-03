@@ -66,6 +66,7 @@ export function CheckoutForm({
   // Creating otp handling states
   const [showOtp, setShowOtp] = useState(false); //Opening and closing the otp entry field
   const [otpValue, setOtpValue] = useState(""); //State for managing the otp value
+
   // Creating a form validation state using zod and react-hook-form
   const form = useForm<CheckoutFormValidation>({
     resolver: zodResolver(checkoutSchema),
@@ -138,23 +139,17 @@ export function CheckoutForm({
       },
     };
 
-    
-    const result = await verifyOtp(email, otpValue, orderData);
-
-    
+    const result = await verifyOtp(email, otpValue, orderData);    
     if (result.success) {
       
       await new Promise((resolve) => setTimeout(resolve, 2000));
       navigate("/thank-you", { state: { order: orderData } });
-    } else {
-      
+    } else { 
       toast.error(result.message || "Invalid OTP");
       setOtpValue("");
     }
-    
   } catch (error: any) {
     const serverMessage = error.response?.data?.message;
-    console.error("Verification failed:", error);
     toast.error(serverMessage || "Something went wrong on the server.");
     setOtpValue("");
   } finally {
