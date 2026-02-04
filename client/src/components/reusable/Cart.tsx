@@ -11,7 +11,7 @@ import { Separator } from "@/components/ui/separator";
 import { Badge } from "@mui/material";
 import { ShoppingCart, X, Minus, Plus } from "lucide-react";
 import { PrimaryButton } from "./ButtonComponent";
-import { CircularProgress } from "@mui/material";
+
 import { useNavigate } from "react-router-dom";
 // Importing the redux components
 
@@ -41,7 +41,7 @@ export const CartSheet = () => {
   const isCartOpen = useSelector((state: RootState) => state.cart.cartOpen);
   const checkoutAmount = useSelector(totalCheckoutAmount);
   const globalNote = useSelector((state: RootState) => state.cart.orderNote);
-  const {  rate, symbol } = useSelector(
+  const { rate , symbol} = useSelector(
     (state: RootState) => state.currency,
   );
   // Handling the cart Open Logic
@@ -291,14 +291,28 @@ export const CartItem = ({
   return (
     <div
       key={`${item.slug}-${item.productSize}`}
-      className="flex flex-row gap-6 border-b border-main py-8 first:pt-0 last:border-0"
+      className="flex flex-row gap-2 md:gap-14 border-b border-main py-8 first:pt-0 last:border-0"
     >
-      <div className="relative aspect-[3/4] w-32 flex-shrink-0 overflow-hidden rounded-md bg-[#f9f9f9] ">
+      <div className="relative aspect-[1/1] w-32 flex-shrink-0 overflow-hidden rounded-md bg-[#f9f9f9]">
   <img
     src={item.primaryImage}
     alt={item.title}
     className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
   />
+  {/* Item remove button */}
+  <button
+    onClick={() => handleRemoveItem({ slug: item.slug, size: item.productSize })}
+    disabled={removed}
+    
+    className={`absolute top-0 right-0 z-10 flex  items-center justify-center 
+      w-6 h-6 rounded-full backdrop-blur-sm transition-all  ${
+        removed
+          ? " text-muted/50 cursor-not-allowed"
+          : " text-main active:scale-90 hover:rotate-90 transition-transform duration-300"
+      }`}
+  >
+    <X size={14} strokeWidth={2.5} />
+  </button>
 </div>
 
       <div className="flex flex-1 flex-col justify-between py-1">
@@ -320,6 +334,9 @@ export const CartItem = ({
           <div className="flex items-center gap-2">
             <span className="text-[10px] uppercase tracking-widest text-neutral-400 font-medium">
               Size: <span className="text-neutral-600">{item.productSize}</span>
+            </span>
+            <span className="text-[10px] uppercase tracking-widest text-neutral-400 font-medium">
+              Color: <span className="text-neutral-600">{item.productColor}</span>
             </span>
           </div>
         </div>
@@ -348,12 +365,13 @@ export const CartItem = ({
               </button>
             </div>
 
-            <button
+{/* Remove Button for Desktop */}
+            {/* <button
               onClick={() =>
                 handleRemoveItem({ slug: item.slug, size: item.productSize })
               }
               disabled={removed}
-              className={`flex items-center gap-2 text-tiny tracking-wide underline underline-offset-4 transition-all ${
+              className={`hidden md:flex items-center gap-2 text-tiny tracking-wide underline underline-offset-4 transition-all ${
                 removed
                   ? "text-muted/50 cursor-not-allowed"
                   : "text-muted hover:text-main"
@@ -367,7 +385,10 @@ export const CartItem = ({
                 />
               )}
               <span>{removed ? "Removing..." : "Remove"}</span>
-            </button>
+            </button> */}
+
+             
+
           </div>
         )}
       </div>

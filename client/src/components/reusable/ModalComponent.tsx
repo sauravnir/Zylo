@@ -137,7 +137,7 @@ export const ProductDetail = ({
     // Making the adding to cart async buy adding a fake delay
     await new Promise((resolve) => setTimeout(resolve, 800));
     // Dispatching the product after the timer
-    dispatch(addItem({ product: props, size: productSize, itemQuantity: num }));
+    dispatch(addItem({ product: props, size: productSize, itemQuantity: num , color : productColor}));
 
     dispatch(setIsUploading(false));
 
@@ -497,32 +497,33 @@ export const ProductDetail = ({
               <motion.img
                 key={currSlide}
                 src={modalImage[currSlide]}
-                initial={{ scale: 0.95, opacity: 0 }}
+                initial={{ scale: 0.9, opacity: 0 }}
+                // Handling the zooming functionality
+
                 animate={{
                   opacity: 1,
-                  
-                  scale: isZoomed ? 2.5 : 1,
+                  x: isZoomed ? undefined : 0,
+                  y: isZoomed ? undefined : 0,
+                  scale: isZoomed ? 1.9 : 1,
                   cursor: isZoomed ? "zoom-out" : "zoom-in",
-                 
-                  x: 0,
-                  y: 0,
                 }}
-               
                 drag={isZoomed}
                 dragConstraints={{
-                  left: -500, 
-                  right: 500,
-                  top: -600,
-                  bottom: 600,
+                  left: -100,
+                  right: 300,
+                  top: -400,
+                  bottom: 400,
                 }}
-                dragElastic={0.15}
-                exit={{ opacity: 0 }}
+                dragElastic={0.1}
+                dragTransition={{ bounceStiffness: 600, bounceDamping: 20 }}
+                exit={{ scale: 1, opacity: 0 }}
                 onClick={(e) => {
                   e.stopPropagation();
+
                   setIsZoomed(!isZoomed);
                 }}
-                transition={{ type: "spring", stiffness: 250, damping: 25 }}
-                className="w-full h-full max-h-[95vh] object-contain select-none shadow-2xl"
+                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                className="max-w-[90vw] max-h-[99vh] object-contain "
               />
             </motion.div>
           )}

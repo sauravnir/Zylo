@@ -124,7 +124,7 @@ export function CheckoutForm({
   
   dispatch(setIsUploading(true));
   const localCartItem = [...cartItems];
-
+  console.log(localCartItem)
   try {
     const email = form.getValues("email");
     const orderData = {
@@ -164,7 +164,7 @@ export function CheckoutForm({
         noValidate
       >
         <div className="space-y-6">
-          <h2 className="text-base font-bold uppercase tracking-widest">
+          <h2 className="text-base font-bold underline uppercase tracking-widest">
             Customer Details
           </h2>
           {/* Email */}
@@ -241,7 +241,7 @@ export function CheckoutForm({
             )}
           />
 
-          <h2 className="text-base font-bold uppercase tracking-widest">
+          <h2 className="text-base font-bold uppercase underline tracking-widest">
             Delivery details
           </h2>
           {/* Country Select */}
@@ -260,7 +260,7 @@ export function CheckoutForm({
                   defaultValue={field.value || "Nepal"}
                 >
                   <FormControl>
-                    <SelectTrigger className="border border-main">
+                    <SelectTrigger className="border border-main shadow-lg">
                       <SelectValue placeholder="Choose item" />
                     </SelectTrigger>
                   </FormControl>
@@ -291,7 +291,7 @@ export function CheckoutForm({
                   defaultValue={field.value}
                 >
                   <FormControl>
-                    <SelectTrigger className="border border-main">
+                    <SelectTrigger className="border border-main shadow-lg">
                       <SelectValue placeholder="Choose a city" />
                     </SelectTrigger>
                   </FormControl>
@@ -336,7 +336,7 @@ export function CheckoutForm({
             render={({ field }) => (
               <FormItem>
                 <div className="flex justify-between items-end">
-                  <FormLabel className="text-nav uppercase tracking-widest">
+                  <FormLabel className="text-nav uppercase  tracking-widest">
                     Order Note
                   </FormLabel>
                   {/* The "Remove" Logic */}
@@ -349,7 +349,7 @@ export function CheckoutForm({
                       dispatch(addNote({ note: e.target.value })); // Updates Redux Store
                     }}
                     placeholder="Add specific delivery instructions..."
-                    className="border border-main placeholder:text-main/70"
+                    className="border border-main placeholder:text-main/70 shadow-lg"
                   />
                 </FormControl>
                 {field.value && (
@@ -388,11 +388,11 @@ export function CheckoutForm({
             )}
           />
 
-          <h2 className="text-base font-bold uppercase tracking-widest">
+          <h2 className="text-base font-bold uppercase underline tracking-widest">
             Payment method
           </h2>
 
-          <div className="p-4 border rounded-sm bg-neutral-50 flex justify-between items-center">
+          <div className="p-4 border rounded-sm bg-neutral-50 flex justify-between items-center shadow-lg">
             <span className="text-sm">Cash on delivery (COD) </span>
             <div className="h-4 w-4 rounded-full border-2 border-main bg-main shadow-[inset_0_0_0_2px_white]" />
           </div>
@@ -467,7 +467,8 @@ export function CheckoutForm({
           )}
 
           {/* Form Submit Button */}
-          <PrimaryButton
+          <div className="shadow-lg">
+             <PrimaryButton
             type="button"
             isDisabled={isUploading}
             name={showOtp ? "Verify & Place Order" : "Get Verification Code"}
@@ -475,6 +476,8 @@ export function CheckoutForm({
               showOtp ? handleOtpVerification : form.handleSubmit(onFormSubmit)
             }
           />
+          </div>
+         
         </div>
       </form>
     </Form>

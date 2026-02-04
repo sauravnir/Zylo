@@ -8,7 +8,7 @@ interface ZyloReceiptProps {
       address: string; city: string; zip: string; country: string; payment_method: string;
     };
     items: Array<{
-      id: string; title: string; itemCartQuantity: number; price: number; productSize: string;
+      id: string; title: string; itemCartQuantity: number; price: number; productSize: string; productColor:string;
     }>;
     orderSummary: {
       orderNumber: string; shippingAmount: number; subTotal: number; symbol: string; totalAmount: number;
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
 
 export const ZyloReceipt = ({ order }: ZyloReceiptProps) => {
   const { customerData, items, orderSummary } = order;
-  
+  console.log(items)
   // Using 'Rs.' as a safe string for the PDF engine
   const safeSymbol = orderSummary.symbol === '₨' ? 'Rs.' : orderSummary.symbol;
 
@@ -106,6 +106,9 @@ export const ZyloReceipt = ({ order }: ZyloReceiptProps) => {
               <Text style={{ fontWeight: 'bold' }}>{item.title}</Text>
               <Text style={{ fontSize: 8, color: '#71717a', marginTop: 2 }}>
                 Size: {item.productSize} | ID: {item.id}
+              </Text>
+              <Text style={{ fontSize: 8, color: '#71717a', marginTop: 2 }}>
+                Color: {item.productColor}
               </Text>
             </View>
             <Text style={styles.colQty}>{item.itemCartQuantity}</Text>

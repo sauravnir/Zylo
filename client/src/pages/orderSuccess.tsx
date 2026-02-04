@@ -59,7 +59,7 @@ export function OrderConfirmation() {
   if (!orderDetails) return null;
 
   return (
-    <div className="min-h-screen bg-muted/5">
+    <div className="min-h-screen bg-background">
       <NavigationBar />
       <main className="max-w-4xl mx-auto px-4 md:px-20 py-32 md:py-40">
         {/* Header Section */}
@@ -108,7 +108,7 @@ export function OrderConfirmation() {
           </div>
         </div>
 
-        <div id="zylo-receipt-download" className="px-4 mt-8 border rounded overflow-hidden bg-card shadow-sm">
+        <div id="zylo-receipt-download" className="px-4 mt-8 border rounded overflow-hidden bg-card shadow-lg">
           <Accordion type="single" defaultValue="Order Details" collapsible>
             {/* Order Details */}
             <AccordionItem value="Order Details">
@@ -124,13 +124,16 @@ export function OrderConfirmation() {
                         {/* Table items */}
                       <TableHeader className="sticky top-0 z-10 shadow-sm">
                         <TableRow className="hover:bg-transparent">
-                          {/* 1. Adjusted width to 50% instead of a fixed 600px to prevent overflow on smaller screens */}
+                          
                           <TableHead className="w-1/2 px-6 py-5 text-menu font-bold uppercase">
                             Product Details
                           </TableHead>
 
                           <TableHead className="px-4 py-5 text-menu font-bold uppercase">
                             Size
+                          </TableHead>
+                           <TableHead className="px-4 py-5 text-menu font-bold uppercase">
+                            Color
                           </TableHead>
 
                           <TableHead className="px-6 py-5 text-menu font-bold uppercase text-center">
@@ -172,6 +175,12 @@ export function OrderConfirmation() {
                               </span>
                             </TableCell>
 
+                             <TableCell className="text-center">
+                              <span className="text-main text-product-title tracking-wide uppercase font-medium">
+                                {item.productColor}
+                              </span>
+                            </TableCell>
+
                             <TableCell className="text-center">
                               <span className="text-main text-product-title tracking-wide uppercase font-medium">
                                 {item.itemCartQuantity}
@@ -189,7 +198,7 @@ export function OrderConfirmation() {
                       {/* Amount  */}
                       <TableFooter className="bg-transparent border-t-2 border-main">
                         {/* Subtotal Row */}
-                        <TableRow className="hover:bg-transparent border-none">
+                        <TableRow className=" hover:bg-transparent border-none ">
                           <TableCell
                             colSpan={3}
                             className="py-2 font-medium text-main/45 text-product-title"

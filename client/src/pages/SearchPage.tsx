@@ -8,6 +8,8 @@ import { Input } from "@/components/ui/input";
 import { ItemFilters } from "@/components/reusable/FilterComponent";
 import { motion } from "motion/react";
 import { itemVariants, parentVariants } from "@/objects/Animations";
+import { ProductPagination } from "@/components/reusable/PaginationComponent";
+import { usePagination } from "@/hooks/usePagination";
 
 export const SearchPage = () => {
   // Fetching the search result from the url
@@ -26,8 +28,6 @@ export const SearchPage = () => {
     }
   };
 
-  // Handling the fileters when user hasnt typed anything yet / ghost state
-
   // Loading the search items on page load
   useEffect(() => {
     setActiveCategory("all");
@@ -37,8 +37,14 @@ export const SearchPage = () => {
     }
   }, [queryFromUrl, setSearchItem , setActiveCategory]);
 
+
+  // Handling the pagination functionality
+  // Calling the usePagination hook and passing the filteredProducts and page number. In the actual products render map , replacing to currentItems as well. 
+const { currentItems, currentPage, setCurrentPage, totalPages } = usePagination(filteredProducts, 16); // 16 items per page 
+
   return (
-    <div className="min-h-screen ">
+    // Setting the key re-renders the page after every search fetching
+    <div className="min-h-screen " key={queryFromUrl}>  
       <NavigationBar />
 
       <main className="flex-grow flex flex-col bg-background">
@@ -94,7 +100,7 @@ export const SearchPage = () => {
                 variants={itemVariants}
                 className={`max-w-6xl mx-auto border-r border-l border-main border-1 grid grid-cols-2 lg:grid-cols-${filters.gridCols} gap-y-10 gap-x-10`}
               >
-                {filteredProducts.map((allProd) => (
+                {currentItems.map((allProd) => (
                   <ProductCard
                     key={allProd.id}
                     {...allProd}
@@ -102,6 +108,12 @@ export const SearchPage = () => {
                   />
                 ))}
               </motion.div>
+                <ProductPagination 
+  totalPages={totalPages} 
+  currentPage={currentPage} 
+  onPageChange={setCurrentPage} 
+/>
+
             </motion.div>
           ) : (
             <div className="max-w-7xl mx-auto py-20 px-4 text-center">

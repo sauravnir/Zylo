@@ -21,12 +21,12 @@ import { TermsandConditions } from "./pages/TermsAndConditions";
 import { Policy } from "./pages/Policy";
 // Scrolling the page on top while new page navigate
 const ScrolltoTop = () => {
-  const location = useLocation();
+  const {pathname} = useLocation();
  
   useEffect(() => {
     const element = document.documentElement || document.body;
     element.scrollTop = 0;
-  }, [location]);
+  }, [pathname]);
 
   return null;
 };
@@ -65,7 +65,7 @@ function App() {
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/thank-you" element={<OrderConfirmation />} />
           <Route path="/search" element={<SearchPage />}/>
-          <Route path="/collections/:category" element={<Collections />}/>
+          <Route path="/collections/:category" element={<Collections key={window.location.pathname} />}/>
           <Route path="/shipping" element={<Shipping />}/>
           <Route path="/returns" element={<Returns />}/>
           <Route path="/faqs" element={<FaqPage />}/>

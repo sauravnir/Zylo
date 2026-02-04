@@ -12,6 +12,7 @@ import {
 import { parentVariants } from "@/objects/Animations";
 import { PRODUCTS_LIST } from "@/objects/Objects";
 
+
 export function ProductMain({
   urlParam,
   ...props
@@ -42,6 +43,7 @@ export function ProductMain({
         }
         return 0;
     })
+
   return (
     <div className="relative px-4 md:px-20 py-20 bg-background ">
       {currentProduct ? (
@@ -76,7 +78,7 @@ export function ProductMain({
                     sortRelatedProducts.map((items) => (
                       <CarouselItem
                         key={items.id}
-                        className=" md:p-4 lg:p-8 basis-[85%] md:basis-1/4 lg:basis-1/4"
+                        className=" md:p-4 lg:p-8 basis-[100%] md:basis-1/4 lg:basis-1/4"
                       >
                         <motion.div
                           variants={{
@@ -99,8 +101,8 @@ export function ProductMain({
                 </CarouselContent>
                 <div className="flex justify-center items-center mt-8 md:mt-4">
                   <div className="relative flex gap-2">
-                    <CarouselPrevious className="rounded-none w-10 h-10 text-muted hover:text-white hover:bg-primary transition-colors duration-400" />
-                    <CarouselNext className="rounded-none w-10 h-10 text-muted hover:text-white hover:bg-primary transition-colors duration-400" />
+                    <CarouselPrevious className="rounded-none w-10 h-10 text-white bg-main hover:bg-primary transition-colors duration-400 :" />
+        <CarouselNext className="rounded-none w-10 h-10 text-white bg-main hover:bg-primary transition-colors duration-400" />
                   </div>
                 </div>
               </Carousel>

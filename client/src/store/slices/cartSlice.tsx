@@ -12,6 +12,8 @@ export interface CartProps extends ProductCardProps {
   itemCartQuantity: number;
   // Size of each product
   productSize: string;
+  // Color of each product
+  productColor : string
 }
 export interface CartState {
   items: CartProps[];
@@ -47,10 +49,11 @@ export const cartSlice = createSlice({
         product: ProductCardProps;
         size: string;
         itemQuantity: number;
+        color: string,
       }>,
     ) => {
       //   Destructing the payloads from the user
-      const { product, size, itemQuantity } = action.payload;
+      const { product, size, itemQuantity , color } = action.payload;
       // Checking if the item is already present in the cart
       const existingItem = state.items.find(
         (item) => item.slug === product.slug && item.productSize === size,
@@ -63,6 +66,7 @@ export const cartSlice = createSlice({
           ...product,
           itemCartQuantity: itemQuantity,
           productSize: size,
+          productColor : color
         });
       }
       // Increasing the global items number

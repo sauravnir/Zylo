@@ -16,7 +16,8 @@ import {
 import { itemVariants, parentVariants } from "@/objects/Animations";
 import ProductCard from "@/components/reusable/CardComponent";
 import { Input } from "@/components/ui/input";
-// import { ProductPagination } from "@/components/reusable/PaginationComponent";
+import { ProductPagination } from "@/components/reusable/PaginationComponent";
+import { usePagination } from "@/hooks/usePagination";
 
 export default function Collections() {
   const { category } = useParams();
@@ -29,7 +30,7 @@ export default function Collections() {
     if (category) {
       setActiveCategory(category.toLowerCase());
     }
-    return () => setActiveCategory("all");
+    return () => setActiveCategory("all"); //fallback
   }, [category, setActiveCategory]);
 
   // Resetting all the initial filters so the user starts fresh
@@ -48,8 +49,11 @@ export default function Collections() {
     }
   };
 
+  // Handling the pagination
+  const { currentItems, currentPage, setCurrentPage, totalPages } = usePagination(filteredProducts, 18);   //items per page
+
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen" key={category}>
       <NavigationBar />
 
       
@@ -120,13 +124,17 @@ export default function Collections() {
             variants={itemVariants}
             className={`max-w-6xl mx-auto grid grid-cols-2 lg:grid-cols-${filters.gridCols} gap-y-10 gap-x-10 border-l border-r border-main`}
           >
-            {filteredProducts.map((items) => (
+            {currentItems.map((items) => (
               <ProductCard key={items.id} {...items} isSearchContent={false} />
             ))}
             {/* <ProductPagination totalPages={2}/> */}
           </motion.div>
-
-          
+{/* Pagination Component */}
+            <ProductPagination 
+              totalPages={totalPages} 
+              currentPage={currentPage} 
+              onPageChange={setCurrentPage} 
+            />
         </motion.div>
       ) : (
         <div className=" max-w-sm mx-auto py-60 px-4 text-center">

@@ -1,66 +1,51 @@
-import { useState } from "react";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationEllipsis,
-  PaginationItem,
-  PaginationLink,
-  PaginationNext,
-  PaginationPrevious,
-} from "@/components/ui/pagination"
+import { Pagination } from "@mui/material";
+import {Stack} from "@mui/material"
 
-export function ProductPagination({totalPages}:{totalPages:number}){
-    const [currentPage , setCurrentPage] = useState(1);
-    return (
-        <Pagination>
-            <PaginationContent>
+interface ProductPaginationProps {
+  totalPages: number;
+  currentPage: number;
+  onPageChange: (page: number) => void;
+}
 
-            {/* Previous button */}
-                <PaginationItem>
-                    <PaginationPrevious
-                    href="#"
-                    onClick={(e)=> {
-                        e.preventDefault();
-                        if(currentPage > 1) setCurrentPage(currentPage -1);
-                    }}
-                    
-                    />
-                </PaginationItem>
+export function ProductPagination({ totalPages, currentPage, onPageChange }: ProductPaginationProps) {
+  if (totalPages <= 1) return null;
 
-                        {[...Array(totalPages)].map((_, index) => {
-          const page = index + 1;
-          // Simple logic: only show current, one before, and one after
-          if (page === 1 || page === totalPages || (page >= currentPage - 1 && page <= currentPage + 1)) {
-            return (
-              <PaginationItem key={page}>
-                <PaginationLink 
-                  href="#"
-                  isActive={currentPage === page}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setCurrentPage(page);
-                  }}
-                  className="rounded-none border-muted/20"
-                >
-                  {page}
-                </PaginationLink>
-              </PaginationItem>
-            );
-          }
-          return null;
-        })}
+  const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
+    event.preventDefault();
+    onPageChange(value);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
-<PaginationItem>
-          <PaginationNext 
-            href="#" 
-            onClick={(e) => {
-              e.preventDefault();
-              if (currentPage < totalPages) setCurrentPage(currentPage + 1);
-            }}
-            className={currentPage === totalPages ? "pointer-events-none opacity-50" : "cursor-pointer"}
-          />
-        </PaginationItem>
-            </PaginationContent>
-        </Pagination>
-    )
+  return (
+    <div className="flex justify-center w-full mt-20 mb-10">
+      <Stack spacing={2}>
+        <Pagination 
+          count={totalPages} 
+          page={currentPage} 
+          onChange={handleChange} 
+          shape="rounded" // or "circular"
+          variant="outlined"
+          size="large"
+          // Customizing the look to match Zylo's minimal vibe
+          sx={{
+            '& .MuiPaginationItem-root': {
+              borderRadius: '0px', // Square corners like your cards
+              fontFamily: 'inherit',
+              fontSize: '11px',
+              textTransform: 'uppercase',
+              borderColor: 'rgba(0,0,0,0.1)',
+            },
+            '& .Mui-selected': {
+              backgroundColor: 'black !important',
+              color: 'white',
+              borderColor: 'black',
+            },
+            '& .MuiPaginationItem-root:hover': {
+              backgroundColor: 'rgba(0,0,0,0.05)',
+            }
+          }}
+        />
+      </Stack>
+    </div>
+  );
 }

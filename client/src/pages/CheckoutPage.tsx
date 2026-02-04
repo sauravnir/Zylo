@@ -48,7 +48,7 @@ export default function CheckoutPage() {
               onStartSubmitting={() => setIsSubmitting(true)}
             />
             {/* Bottom Links */}
-            <div className="border-t flex flex-row items-center justify-center gap-4 p-2 underline pt-4">
+            <div className="border-t border-main border-1 flex flex-row items-center justify-center gap-4 p-2 underline pt-4">
               <Link to="/shipping" className="text-tiny uppercase text-main/80 hover:text-muted transition-colors duration-300">
               Shipping
               </Link>
@@ -76,13 +76,13 @@ export default function CheckoutPage() {
                   className="group rounded-full p- transition-all duration-300"
                 >
                   {/* <Pencil className="group-hover:scale-90 text-white transition-all duration-300" size={16} /> */}
-                  <span className="underline text-main text-tiny uppercase hover:text-muted">
+                  <span className="underline text-main font-semibold text-button uppercase hover:text-muted">
                     Edit
                   </span>
                 </Link>
               </div>
 
-              <div className="max-h-[350px] overflow-y-auto pr-4 scrollbar-thin ">
+              <div className="max-h-[350px] overflow-y-auto pr-4  ">
                 {cartItems.length > 0 &&
                   cartItems.map((items:any) => (
                     <CartItem key={items.id} item={items} isReadOnly={true} />
@@ -112,7 +112,7 @@ export default function CheckoutPage() {
                 </div>
               </div>
               {/* Trust Badges or Help Section */}
-              <div className="flex flex-col space-y-2 px-4 py-4 border border-dashed border-muted bg-muted/10 text-center">
+              <div className="flex flex-col space-y-2 px-4 py-4 border border-dashed border-main bg-muted/10 text-center">
                 <div className="flex justify-between items-center border-black/5 ">
                   <span className="font-medium text-main/45 text-product-title uppercase">
                     Subtotal

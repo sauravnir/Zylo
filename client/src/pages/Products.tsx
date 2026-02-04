@@ -17,7 +17,7 @@ export function ProductPage (){
   }
     
     return (
-        <div className="min-h-screen">
+        <div className="min-h-screen" key={slug}>
             <NavigationBar />
             <ProductMain {...productStore} urlParam={slug} /> 
             <Footer />
