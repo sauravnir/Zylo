@@ -79,7 +79,7 @@ export const verifyOtp = async (request, response) => {
             (item) => `
           <li style="margin-bottom: 10px;">
             <strong>${item.title}</strong><br />
-            Qty: ${item.itemCartQuantity} | Size: ${item.productSize} | Price: ${orderData.orderSummary.symbol}${item.price}
+            Qty: ${item.itemCartQuantity} | Size: ${item.productSize} | Price: ${orderData.orderSummary.symbol}${item.price} | Color: ${item.productColor}
           </li>
         `,
           )
