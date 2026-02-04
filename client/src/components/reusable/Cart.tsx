@@ -27,7 +27,7 @@ import {
 } from "@/store/slices/cartSlice";
 import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
-
+import { CircularProgress } from "@mui/material";
 import { Price } from "./Price";
 
 // Overall Cart Sheet Drawer
@@ -41,12 +41,17 @@ export const CartSheet = () => {
   const isCartOpen = useSelector((state: RootState) => state.cart.cartOpen);
   const checkoutAmount = useSelector(totalCheckoutAmount);
   const globalNote = useSelector((state: RootState) => state.cart.orderNote);
-  const { rate , symbol} = useSelector(
-    (state: RootState) => state.currency,
-  );
-  // Handling the cart Open Logic
+  const { rate, symbol } = useSelector((state: RootState) => state.currency);
+
+
+  // Handling the cart Open Logic : Opening the cart except the cartpage
   const handleCartOpen = (open: boolean) => {
-    dispatch(setCartOpen(open));
+    if ( isOnCartPage){
+      dispatch(setCartOpen(false))
+    } else {
+
+      dispatch(setCartOpen(open));
+    }
   };
   // Handling the OPEN NOTE inside the CART
   const [localNote, setLocalNote] = useState(globalNote);
@@ -132,14 +137,18 @@ export const CartSheet = () => {
           </span>
         </Badge>
       </SheetTrigger>
-      <SheetContent className="py-8 px-0 bg-background " side="right" onOpenAutoFocus={(e)=>e.preventDefault()}>
+      <SheetContent
+        className="py-8 px-0 bg-background "
+        side="right"
+        onOpenAutoFocus={(e) => e.preventDefault()}
+      >
         <SheetHeader>
           <SheetTitle className="flex items-center justify-between px-4 ">
             <span className="flex text-base text-main gap-2 uppercase font-medium tracking-widest">
               Cart <span>({totalItems})</span>
             </span>
             <SheetClose className="flex items-center">
-                <X size={20} className="text-muted hover:text-main" /> 
+              <X size={20} className="text-muted hover:text-main" />
             </SheetClose>
           </SheetTitle>
         </SheetHeader>
@@ -147,7 +156,7 @@ export const CartSheet = () => {
 
         <div className="h-full flex flex-col ">
           {/* Cart Content */}
-          <div className="flex-1 overflow-y-auto pr-2 gap-6 px-8 py-4 flex flex-col">
+          <div className="flex-1 overflow-y-auto pr-2 mx-auto gap-8 px-0 py-4 flex flex-col">
             {storeValue.length > 0 ? (
               storeValue.map((item) => (
                 <CartItem key={item.title} item={item} isReadOnly={false} />
@@ -194,7 +203,6 @@ export const CartSheet = () => {
                       className="overflow-hidden flex flex-col gap-3"
                     >
                       <textarea
-                        
                         value={localNote}
                         onChange={(e) => setLocalNote(e.target.value)}
                         placeholder="How can we help you?"
@@ -294,26 +302,29 @@ export const CartItem = ({
       className="flex flex-row gap-2 md:gap-14 border-b border-main py-8 first:pt-0 last:border-0"
     >
       <div className="relative aspect-[1/1] w-32 flex-shrink-0 overflow-hidden rounded-md bg-[#f9f9f9]">
-  <img
-    src={item.primaryImage}
-    alt={item.title}
-    className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
-  />
-  {/* Item remove button */}
-  <button
-    onClick={() => handleRemoveItem({ slug: item.slug, size: item.productSize })}
-    disabled={removed}
-    
-    className={`absolute top-0 right-0 z-10 flex  items-center justify-center 
+        <img
+          src={item.primaryImage}
+          alt={item.title}
+          className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+        />
+        {/* Item remove button */}
+        {isReadOnly === false && (
+          <button
+            onClick={() =>
+              handleRemoveItem({ slug: item.slug, size: item.productSize })
+            }
+            disabled={removed}
+            className={`absolute top-0 right-0 z-10 flex  items-center justify-center 
       w-6 h-6 rounded-full backdrop-blur-sm transition-all  ${
         removed
           ? " text-muted/50 cursor-not-allowed"
           : " text-main active:scale-90 hover:rotate-90 transition-transform duration-300"
       }`}
-  >
-    <X size={14} strokeWidth={2.5} />
-  </button>
-</div>
+          >
+            <X size={14} strokeWidth={2.5} />
+          </button>
+        )}
+      </div>
 
       <div className="flex flex-1 flex-col justify-between py-1">
         <div className="flex flex-col gap-1.5">
@@ -336,7 +347,8 @@ export const CartItem = ({
               Size: <span className="text-neutral-600">{item.productSize}</span>
             </span>
             <span className="text-[10px] uppercase tracking-widest text-neutral-400 font-medium">
-              Color: <span className="text-neutral-600">{item.productColor}</span>
+              Color:{" "}
+              <span className="text-neutral-600">{item.productColor}</span>
             </span>
           </div>
         </div>
@@ -365,7 +377,7 @@ export const CartItem = ({
               </button>
             </div>
 
-{/* Remove Button for Desktop */}
+            {/* Remove Button for Desktop */}
             {/* <button
               onClick={() =>
                 handleRemoveItem({ slug: item.slug, size: item.productSize })
@@ -386,9 +398,6 @@ export const CartItem = ({
               )}
               <span>{removed ? "Removing..." : "Remove"}</span>
             </button> */}
-
-             
-
           </div>
         )}
       </div>

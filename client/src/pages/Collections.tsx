@@ -137,7 +137,7 @@ export default function Collections() {
             />
         </motion.div>
       ) : (
-        <div className=" max-w-sm mx-auto py-60 px-4 text-center">
+        <div className=" max-w-sm mx-auto py-60 px-4 text-center ">
           <h1 className="text-paragraph text-main font-bold uppercase tracking-widest">
             No items match your filters.
           </h1>

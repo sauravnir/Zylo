@@ -115,7 +115,7 @@ export const MobileMenuSheet = () => {
             {menuItems.map((item) => (
               <motion.div key={item.title} variants={itemVariants}>
                 <Link to={item.link}>
-                  <span className="text-muted hover:text-main text-menu uppercase">
+                  <span className="text-muted hover:text-main text-menu font-extrabold uppercase">
                     {item.title === "Shop" ? (
                       <DownMenu key={item.title} item={item} />
                     ) : (

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -64,13 +64,70 @@ export function CheckoutForm({
   );
 
   // Creating otp handling states
-  const [showOtp, setShowOtp] = useState(false); //Opening and closing the otp entry field
+  //Opening and closing the otp entry field
+  const [showOtp, setShowOtp] = useState<boolean>(()=>{
+    return localStorage.getItem("show_otp") === "true";
+  }); 
   const [otpValue, setOtpValue] = useState(""); //State for managing the otp value
+
+
+  // Handling the resendOtp timer
+  const [timer , setTimer] = useState(0);
+  const [canResend , setCanResend] = useState(false);
+
+  // Retrieving the timer from the localStorage
+  useEffect(()=>{
+    const otpExpiry = localStorage.getItem('otp_expiry');
+    const savedShowOtp = localStorage.getItem('show_otp');
+    if(otpExpiry){
+      const remainingTime = Math.floor((parseInt(otpExpiry) - Date.now()) / 1000); // Calculating the time remaining for the timer
+      if (remainingTime > 0) {
+        setTimer(remainingTime);
+        if (savedShowOtp) setShowOtp(true); //Reopening the otp field
+      } else{
+        localStorage.removeItem("otp_expiry");
+        localStorage.removeItem("show_otp");
+      }
+    }
+  },[])
+
+  // This handles the otptimer sideffect. 
+  useEffect(()=>{
+    let interval :ReturnType<typeof setTimeout>; //setting the type 
+    
+    if(timer > 0){
+      setCanResend(false);
+      interval = setInterval(()=>{
+        setTimer((prev)=> {
+          const nextValue = prev-1 ; 
+          if (nextValue <=0) localStorage.removeItem("otp_expiry");
+          return nextValue;
+        });
+      }, 1000)
+    } else{
+      setCanResend(true);
+    };
+
+    return () => clearInterval(interval);
+  }, [timer])
+
+  // Getting the formData from the local storage 
+  const getSavedFormData = () => {
+    const savedForm = localStorage.getItem("checkout_form");
+    if(savedForm){
+      try{
+        return JSON.parse(savedForm);
+      } catch(error){
+        return null;
+      }
+    }
+    return null;
+  }
 
   // Creating a form validation state using zod and react-hook-form
   const form = useForm<CheckoutFormValidation>({
     resolver: zodResolver(checkoutSchema),
-    defaultValues: {
+    defaultValues: getSavedFormData() || { //Setting the form fields with the data in localStorage
       email: "",
       firstName: "",
       lastName: "",
@@ -83,6 +140,15 @@ export function CheckoutForm({
       payment_method: "Cash on delivery",
     },
   });
+
+// Persisting the form data even if the page refreshes
+const isPersisting = useRef(true);
+useEffect(()=>{
+  if(isPersisting.current){ //fetching the value of isPersisting
+    const formvalue = form.getValues();
+    localStorage.setItem("checkout_form" , JSON.stringify(formvalue) )
+  }
+},[form.watch()]) //same as form.getValues()
 
   // Handling the delivery charge addition logic
   const handleCitySelect = (cityName: string) => {
@@ -100,6 +166,8 @@ export function CheckoutForm({
 
   // SENDING OTP LOGIC
   const onFormSubmit = async (formData: CheckoutFormValidation) => {
+
+    if(!canResend) return; // If canResend = false , the user is unable to click the button.
     // Calling the startSubmitting state from the Parent Component i.e CheckoutPage to remove the navigation to cart page error
     onStartSubmitting();
     dispatch(setIsUploading(true));
@@ -110,8 +178,29 @@ export function CheckoutForm({
       // Opening the otp field
       await new Promise((resolve) => setTimeout(resolve, 2000));
       setShowOtp(true);
-    } catch (error) {
-      toast.error("Failed to send OTP.");
+      // Setting a cooldown of 30 seconds and storing in localStorage
+      const cooldownTime = Date.now() + 30 * 1000;
+      localStorage.setItem("otp_expiry" , cooldownTime.toString());
+      setTimer(1);
+
+      // Setting the showOtp to localStorage
+      localStorage.setItem("show_otp" , showOtp.toString());
+    } catch (error: any) {
+      // Handling rate-limit error.
+      if (error.response?.status === 429) {
+        const msg =
+          typeof error.response.data === "string"
+            ? error.response.data
+            : error.response.data.message;
+
+        toast.error(msg || "Too many attempts.");
+        // Storing the timer in LocalStorage
+        const expiryTime = Date.now() + 300 * 1000;
+        localStorage.setItem("otp_expiry" , expiryTime.toString())
+        setTimer(300); //Setting timer for 5 minutes
+      } else {
+        toast.error("Failed to send OTP.");
+      }
     } finally {
       dispatch(setIsUploading(false));
     }
@@ -119,43 +208,50 @@ export function CheckoutForm({
 
   // When clicking on the verify otp button.
   const handleOtpVerification = async () => {
-  if (!otpValue) return toast.error("Please enter the code.");
-  if (otpValue.length < 6) return toast.error("Please enter the full 6-digit code.");
-  
-  dispatch(setIsUploading(true));
-  const localCartItem = [...cartItems];
-  console.log(localCartItem)
-  try {
-    const email = form.getValues("email");
-    const orderData = {
-      customerData: form.getValues(),
-      items: localCartItem,
-      orderSummary: {
-        subTotal,
-        shippingAmount,
-        totalAmount,
-        symbol,
-        orderNumber: `ZY-${Math.floor(Math.random() * 900) + 1000}`,
-      },
-    };
+    if (!otpValue) return toast.error("Please enter the code.");
+    if (otpValue.length < 6)
+      return toast.error("Please enter the full 6-digit code.");
 
-    const result = await verifyOtp(email, otpValue, orderData);    
-    if (result.success) {
-      
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-      navigate("/thank-you", { state: { order: orderData } });
-    } else { 
-      toast.error(result.message || "Invalid OTP");
+    dispatch(setIsUploading(true));
+    const localCartItem = [...cartItems];
+    try {
+      const email = form.getValues("email");
+      const orderData = {
+        customerData: form.getValues(),
+        items: localCartItem,
+        orderSummary: {
+          subTotal,
+          shippingAmount,
+          totalAmount,
+          symbol,
+          orderNumber: `ZY-${Math.floor(Math.random() * 900) + 1000}`,
+        },
+      };
+
+      const result = await verifyOtp(email, otpValue, orderData);
+      if (result.success) {
+        // Stopping the localStorage form persistance right away
+        isPersisting.current = false;
+        // Removing the localStorage Items
+        localStorage.removeItem("checkout_form");
+        localStorage.removeItem("show_otp");
+        localStorage.removeItem("otp_expiry");
+
+        await new Promise((resolve) => setTimeout(resolve, 2000));
+        navigate("/thank-you", { state: { order: orderData } });
+
+      } else {
+        toast.error(result.message || "Invalid OTP");
+        setOtpValue("");
+      }
+    } catch (error: any) {
+      const serverMessage = error.response?.data?.message;
+      toast.error(serverMessage || "Something went wrong on the server.");  
       setOtpValue("");
+    } finally {
+      dispatch(setIsUploading(false));
     }
-  } catch (error: any) {
-    const serverMessage = error.response?.data?.message;
-    toast.error(serverMessage || "Something went wrong on the server.");
-    setOtpValue("");
-  } finally {
-    dispatch(setIsUploading(false));
-  }
-};
+  };
   return (
     <Form {...form}>
       <form
@@ -356,7 +452,7 @@ export function CheckoutForm({
                   <button
                     type="button"
                     onClick={() => {
-                      field.onChange(""); //clears the fortm
+                      field.onChange(""); //clears the form
                       dispatch(addNote({ note: "" })); // Clears the redux stored note
                     }}
                     className="flex flex-row "
@@ -419,7 +515,6 @@ export function CheckoutForm({
                   value={otpValue}
                   pattern={REGEXP_ONLY_DIGITS}
                   onChange={(value) => setOtpValue(value)}
-                  
                 >
                   <InputOTPGroup className="gap-2 ">
                     <InputOTPSlot
@@ -455,12 +550,17 @@ export function CheckoutForm({
                 </InputOTP>
               </div>
               <div className="flex flex-row items-center justify-center gap-2">
-                <span className="text-[11px] text-muted-foreground uppercase tracking-wider">Didn't receive any code?</span>
+                <span className="text-[11px] text-muted-foreground uppercase tracking-wider">
+                  Didn't receive any code?
+                </span>
                 <button
-                onClick={()=>onFormSubmit(form.getValues())}
-                className="text-tiny font-bold tracking-normal underline hover:text-muted text-main"
+                  onClick={() => onFormSubmit(form.getValues())}
+                  disabled={!canResend}
+                  className={`text-tiny font-bold tracking-normal underline hover:text-muted text-main ${!canResend ? "text-muted hover:none" : ""}`}
                 >
-                  Resend code
+                  {!canResend ? (
+                    `Wait : (${Math.floor(timer / 60)}:${(timer % 60).toString().padStart(2, '0')}) to resend.`
+                  ): "Resend otp"}
                 </button>
               </div>
             </div>
@@ -468,16 +568,17 @@ export function CheckoutForm({
 
           {/* Form Submit Button */}
           <div className="shadow-lg">
-             <PrimaryButton
-            type="button"
-            isDisabled={isUploading}
-            name={showOtp ? "Verify & Place Order" : "Get Verification Code"}
-            onClick={
-              showOtp ? handleOtpVerification : form.handleSubmit(onFormSubmit)
-            }
-          />
+            <PrimaryButton
+              type="button"
+              isDisabled={isUploading}
+              name={showOtp ? "Verify & Place Order" : "Get Verification Code"}
+              onClick={
+                showOtp
+                  ? handleOtpVerification
+                  : form.handleSubmit(onFormSubmit)
+              }
+            />
           </div>
-         
         </div>
       </form>
     </Form>

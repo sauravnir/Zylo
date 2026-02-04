@@ -60,7 +60,6 @@ const styles = StyleSheet.create({
 
 export const ZyloReceipt = ({ order }: ZyloReceiptProps) => {
   const { customerData, items, orderSummary } = order;
-  console.log(items)
   // Using 'Rs.' as a safe string for the PDF engine
   const safeSymbol = orderSummary.symbol === '₨' ? 'Rs.' : orderSummary.symbol;
 

@@ -57,13 +57,13 @@ const handleCheckout = async () => {
       <NavigationBar />
       {/* Main Body Section */}
       <div className="bg-background">
-        <main className="max-w-7xl mx-auto px-4 md:px-20 py-32 md:py-40">
+        <main className="max-w-5xl mx-auto px-4 md:px-20 py-32 md:py-40">
         <h1 className="text-center text-h3 text-main uppercase font-medium tracking-widest mb-12 pb-6">
           {totalItem > 0 && `CART (${totalItem})`}
         </h1>
         {storeValue.length > 0 ? (
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start">
-            <div className="lg:col-span-7 flex flex-col gap-2">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 items-start justify-center">
+            <div className="lg:col-span-6 flex flex-col gap-2">
               {storeValue.map((item:any) => (
                 <CartItem
                   key={`${item.slug}-${item.productSize}`}
@@ -92,7 +92,7 @@ const handleCheckout = async () => {
             </div>
 
             {/* Right Side  */}
-            <aside className="lg:col-span-5 bg-muted/10 p-8 sticky top-32">
+            <aside className="lg:col-span-6 bg-muted/10 p-8 sticky top-32">
               <h2 className="text-menu uppercase tracking-widest text-main mb-8 font-bold">
                 Order Summary
               </h2>
@@ -183,15 +183,15 @@ const handleCheckout = async () => {
             <div className="w-20 h-20 bg-neutral-100 rounded-full flex items-center justify-center mb-6">
               <ShoppingCart size={32} className="text-main/40" />
             </div>
-            <h3 className="text-main text-menu uppercase mb-6">
+            <h3 className="text-main text-[24px] uppercase mb-6">
               Your cart is empty
             </h3>
-            <Link to="/">
+            <Link to="/collections/shop-all">
               <Button
                 variant="ghost"
-                className="rounded-none text-main text-button underline underline-offset-4"
+                className="rounded-none uppercase text-main hover:text-muted transition-colors duration-300 text-button underline underline-offset-4"
               >
-                Continue Shopping
+                Return to Shop
               </Button>
             </Link>
           </div>
