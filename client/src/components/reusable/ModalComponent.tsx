@@ -429,7 +429,7 @@ export const ProductDetail = ({
             {viewMode === "modal" && (
               <div className="text-center">
                 <Link to={`/products/${props.slug}`}>
-                  <span className="text-muted transition-all duration-400 hover:text-main text-xs uppercase underline  ">
+                  <span className="text-main transition-all duration-400 font-bold  hover:text-muted text-sm uppercase underline ">
                     View Details
                   </span>
                 </Link>

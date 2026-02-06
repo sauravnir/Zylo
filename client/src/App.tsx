@@ -19,6 +19,7 @@ import { Returns } from "./pages/Return";
 import { FaqPage } from "./pages/FAQs";
 import { TermsandConditions } from "./pages/TermsAndConditions";
 import { Policy } from "./pages/Policy";
+import { ContactPage } from "./pages/ContactUs";
 // Scrolling the page on top while new page navigate
 const ScrolltoTop = () => {
   const {pathname} = useLocation();
@@ -71,6 +72,7 @@ function App() {
           <Route path="/faqs" element={<FaqPage />}/>
           <Route path="/terms" element={<TermsandConditions />}/>
           <Route path="/policy" element={<Policy />} />
+          <Route path="/contact-us" element={<ContactPage />} />
           {/* Catching all the unknown urls and navigating to 404Error page */}
          <Route path="*" element={<Error404 />} />
         </Routes>

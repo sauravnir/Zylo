@@ -16,7 +16,7 @@ export const Returns = () => {
 <div className="bg-background">
     <div className="flex flex-col max-w-3xl mx-auto px-4 md:px-6 pt-40 pb-10">
         <h1 className="text-h3 text-main uppercase text-center">RETURNS</h1>
-
+       
         <Accordion type="single" collapsible className="w-full mt-12">
         {RETURNFAQS.map((item)=>(
             <AccordionItem

@@ -103,14 +103,12 @@ export const PRODUCTS_LIST = [
     title: "Minimalist Trench Coat",
     slug: "minimalist-trench-coat",
     category: "Outerwear",
-    collection:"basics",
+    collection: "basics",
     price: 320,
     primaryImage: PIC1,
-    images: [
-     
-    ],
-    description: "Structured silhouette crafted from waterproof gabardine. Features a hidden button placket and adjustable waist belt.",
-    productCare: "Professional dry clean only.",
+    images: [],
+    description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
+    productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
     colors: [{ name: "Beige", hex: "#D2B48C" }, { name: "Onyx", hex: "#1A1A1A" }],
     sizes: ["S", "M", "L", "XL"],
     availability: "In Stock"
@@ -122,11 +120,9 @@ export const PRODUCTS_LIST = [
     category: "Outerwear",
     price: 185,
     primaryImage: PIC2,
-    images: [
-      
-    ],
-    description: "Ultra-lightweight ripstop nylon with heat-sealed seams and reflective branding.",
-    productCare: "Machine wash cold. Do not iron.",
+    images: [],
+    description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
+    productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
     colors: [{ name: "Slate", hex: "#708090" }, { name: "Neon", hex: "#CCFF00" }],
     sizes: ["XS", "S", "M", "L", "XL"],
     availability: "In Stock"
@@ -136,14 +132,12 @@ export const PRODUCTS_LIST = [
     title: "Sherpa Lined Denim Jacket",
     slug: "sherpa-denim-jacket",
     category: "Outerwear",
-    collection : "",
+    collection: "",
     price: 210,
     primaryImage: PIC3,
-    images: [
-      
-    ],
-    description: "Heavyweight 14oz denim with high-pile faux sherpa lining for winter warmth.",
-    productCare: "Wash cold, hang dry.",
+    images: [],
+    description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
+    productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
     colors: [{ name: "Vintage Blue", hex: "#5D76A9" }],
     sizes: ["M", "L", "XL"],
     availability: "Limited Release"
@@ -153,37 +147,31 @@ export const PRODUCTS_LIST = [
     title: "Graphite Work Jacket",
     slug: "graphite-work-jacket",
     category: "Outerwear",
-    collection : "",
+    collection: "",
     price: 240,
     primaryImage: PIC4,
-    images: [
-      
-    ],
-    description: "Rugged canvas shell with a cropped modern fit. Brass hardware details.",
-    productCare: "Spot clean only.",
+    images: [],
+    description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
+    productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
     colors: [{ name: "Graphite", hex: "#383838" }],
     sizes: ["S", "M", "L", "XL"],
     availability: "In Stock"
   },
   {
     id: "zy-05",
-    title: "Technical Puffer Jacket",
-    slug: "technical-puffer",
-    category: "Tops",
-    collection:"basics",
-    price: 350,
+    title: "WASTELAND HOODIE BLACK",
+    slug: "wasteland-hoodie-black",
+    category: "Wasteland",
+    collection: "",
+    price: 2500,
     primaryImage: PIC5,
-    images: [
-     
-    ],
-    description: "700-fill power recycled down. Matte nylon water-repellent shell.",
-    productCare: "Professional down cleaning.",
+    images: [],
+    description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
+    productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
     colors: [{ name: "Forest", hex: "#228B22" }, { name: "Onyx", hex: "#1A1A1A" }],
-    sizes: ["M", "L", "XL"],
+    sizes: ["L", "XL"],
     availability: "Limited Release"
   },
-
-  // --- TOPS / HOODIES ---
   {
     id: "zy-06",
     title: "Acid Wash Boxy Hoodie",
@@ -191,11 +179,9 @@ export const PRODUCTS_LIST = [
     category: "Tops",
     price: 135,
     primaryImage: PIC6,
-    images: [
-     
-    ],
-    description: "Unique mineral wash finish. 400GSM cotton fleece with dropped shoulders.",
-    productCare: "Wash inside out. Color may fade over time.",
+    images: [],
+    description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
+    productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
     colors: [{ name: "Charcoal", hex: "#36454F" }, { name: "Stone", hex: "#8E9294" }],
     sizes: ["S", "M", "L", "XL", "XXL"],
     availability: "In Stock"
@@ -208,11 +194,9 @@ export const PRODUCTS_LIST = [
     collection: "",
     price: 95,
     primaryImage: PIC7,
-    images: [
-     
-    ],
-    description: "Premium loopback terry with high-density silicone logo print.",
-    productCare: "Machine wash cold. Do not iron print.",
+    images: [],
+    description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
+    productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
     colors: [{ name: "Navy", hex: "#000080" }, { name: "White", hex: "#FFFFFF" }],
     sizes: ["S", "M", "L", "XL"],
     availability: "In Stock"
@@ -224,11 +208,9 @@ export const PRODUCTS_LIST = [
     category: "Tops",
     price: 85,
     primaryImage: PIC8,
-    images: [
-    
-    ],
-    description: "Heavyweight brushed cotton flannel. Features dual chest pockets.",
-    productCare: "Tumble dry low.",
+    images: [],
+    description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
+    productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
     colors: [{ name: "Grey Plaid", hex: "#A9A9A9" }, { name: "Green Plaid", hex: "#2E8B57" }],
     sizes: ["S", "M", "L", "XL"],
     availability: "In Stock"
@@ -240,11 +222,9 @@ export const PRODUCTS_LIST = [
     category: "Tops",
     price: 110,
     primaryImage: PIC9,
-    images: [
-     
-    ],
-    description: "Custom steel hardware zipper with high-neck ribbing.",
-    productCare: "Machine wash delicate.",
+    images: [],
+    description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
+    productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
     colors: [{ name: "Melange Grey", hex: "#BEBEBE" }],
     sizes: ["S", "M", "L", "XL"],
     availability: "Sold Out"
@@ -257,17 +237,13 @@ export const PRODUCTS_LIST = [
     collection: "basics",
     price: 75,
     primaryImage: PIC10,
-    images: [
-      
-    ],
-    description: "300GSM organic cotton with a structured fit.",
-    productCare: "Wash inside out.",
+    images: [],
+    description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
+    productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
     colors: [{ name: "White", hex: "#FFFFFF" }, { name: "Black", hex: "#000000" }],
     sizes: ["S", "M", "L", "XL"],
     availability: "In Stock"
   },
-
-  // --- ESSENTIALS (TEES) ---
   {
     id: "zy-11",
     title: "Supima Cotton Pocket Tee",
@@ -275,11 +251,9 @@ export const PRODUCTS_LIST = [
     category: "Essentials",
     price: 45,
     primaryImage: PIC11,
-    images: [
-      
-    ],
-    description: "Silky-smooth Supima cotton with a reinforced pocket.",
-    productCare: "Machine wash warm.",
+    images: [],
+    description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
+    productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
     colors: [{ name: "Bone", hex: "#F5F5F0" }, { name: "Black", hex: "#000000" }],
     sizes: ["XS", "S", "M", "L", "XL"],
     availability: "In Stock"
@@ -291,17 +265,13 @@ export const PRODUCTS_LIST = [
     category: "Essentials",
     price: 50,
     primaryImage: PIC12,
-    images: [
-      
-    ],
-    description: "Cropped length with an extra-wide chest for a modern silhouette.",
-    productCare: "Cold wash only.",
+    images: [],
+    description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
+    productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
     colors: [{ name: "Vintage Black", hex: "#2B2B2B" }, { name: "Khaki", hex: "#C3B091" }],
     sizes: ["S", "M", "L"],
     availability: "Limited Release"
   },
-
-  // --- BOTTOMS ---
   {
     id: "zy-13",
     title: "Wide Leg Carpenter Pant",
@@ -309,11 +279,9 @@ export const PRODUCTS_LIST = [
     category: "Bottoms",
     price: 155,
     primaryImage: PIC13,
-    images: [
-     
-    ],
-    description: "12oz cotton duck canvas with hammer loop and utility pockets.",
-    productCare: "Machine wash cold.",
+    images: [],
+    description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
+    productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
     colors: [{ name: "Duck Brown", hex: "#A0522D" }, { name: "Black", hex: "#000000" }],
     sizes: ["30", "32", "34", "36"],
     availability: "In Stock"
@@ -326,11 +294,9 @@ export const PRODUCTS_LIST = [
     collection: "basics",
     price: 110,
     primaryImage: PIC14,
-    images: [
-      
-    ],
-    description: "Waterproof crinkle nylon with mesh lining and adjustable bungees.",
-    productCare: "Cold wash, air dry.",
+    images: [],
+    description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
+    productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
     colors: [{ name: "Olive", hex: "#556B2F" }, { name: "Navy", hex: "#000080" }],
     sizes: ["S", "M", "L", "XL"],
     availability: "Sold Out"
@@ -342,11 +308,9 @@ export const PRODUCTS_LIST = [
     category: "Bottoms",
     price: 195,
     primaryImage: PIC15,
-    images: [
-      
-    ],
-    description: "Japanese selvedge denim with hand-distressed knees.",
-    productCare: "Dry clean only.",
+    images: [],
+    description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
+    productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
     colors: [{ name: "Light Wash", hex: "#ADD8E6" }],
     sizes: ["28", "30", "32", "34", "36"],
     availability: "In Stock"
@@ -358,29 +322,23 @@ export const PRODUCTS_LIST = [
     category: "Bottoms",
     price: 70,
     primaryImage: PIC16,
-    images: [
-     
-    ],
-    description: "Heavyweight French Terry with a raw, frayed hem finish.",
-    productCare: "Machine wash warm.",
+    images: [],
+    description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
+    productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
     colors: [{ name: "Heather Grey", hex: "#D3D3D3" }, { name: "Onyx", hex: "#1A1A1A" }],
     sizes: ["S", "M", "L", "XL"],
     availability: "In Stock"
   },
-
-  // --- ACCESSORIES ---
   {
     id: "zy-17",
     title: "Canvas Messenger Bag",
     slug: "canvas-messenger-bag",
     category: "Accessories",
     price: 140,
-    primaryImage:PIC17,
-    images: [
-      
-    ],
-    description: "Heavy-duty canvas with leather trim and padded laptop sleeve.",
-    productCare: "Spot clean only.",
+    primaryImage: PIC17,
+    images: [],
+    description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
+    productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
     colors: [{ name: "Tan", hex: "#D2B48C" }, { name: "Black", hex: "#000000" }],
     sizes: ["OS"],
     availability: "In Stock"
@@ -392,11 +350,9 @@ export const PRODUCTS_LIST = [
     category: "Accessories",
     price: 55,
     primaryImage: PIC18,
-    images: [
-    
-    ],
-    description: "Melton wool construction with a leather strapback closure.",
-    productCare: "Brush clean.",
+    images: [],
+    description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
+    productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
     colors: [{ name: "Forest Green", hex: "#013220" }, { name: "Navy", hex: "#000080" }],
     sizes: ["OS"],
     availability: "In Stock"
@@ -408,17 +364,13 @@ export const PRODUCTS_LIST = [
     category: "Accessories",
     price: 40,
     primaryImage: PIC19,
-    images: [
-     
-    ],
-    description: "Soft acrylic knit with tonal logo embroidery.",
-    productCare: "Hand wash only.",
+    images: [],
+    description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
+    productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
     colors: [{ name: "Orange", hex: "#FF8C00" }, { name: "Black", hex: "#000000" }],
     sizes: ["OS"],
     availability: "In Stock"
   },
-
-  // --- KNITWEAR ---
   {
     id: "zy-20",
     title: "Mohair Cardigan",
@@ -426,11 +378,9 @@ export const PRODUCTS_LIST = [
     category: "Knitwear",
     price: 245,
     primaryImage: PIC20,
-    images: [
-      
-    ],
-    description: "Hairy mohair blend with a vintage argyle pattern.",
-    productCare: "Dry clean only. Store flat.",
+    images: [],
+    description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
+    productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
     colors: [{ name: "Chocolate", hex: "#3D2B1F" }],
     sizes: ["S", "M", "L"],
     availability: "Limited Release"
@@ -442,29 +392,23 @@ export const PRODUCTS_LIST = [
     category: "Knitwear",
     price: 160,
     primaryImage: PIC21,
-    images: [
-     
-    ],
-    description: "Heavyweight wool-cashmere blend. High-ribbed cuffs.",
-    productCare: "Hand wash cold.",
+    images: [],
+    description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
+    productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
     colors: [{ name: "Cream", hex: "#FFFDD0" }, { name: "Grey", hex: "#808080" }],
     sizes: ["S", "M", "L", "XL"],
     availability: "In Stock"
   },
-
-  // --- FOOTWEAR ---
   {
     id: "zy-22",
     title: "Suede Chelsea Boot",
     slug: "suede-chelsea-boot",
     category: "Footwear",
     price: 280,
-    primaryImage:PIC22,
-    images: [
-      
-    ],
-    description: "Italian calf suede with a crepe sole.",
-    productCare: "Use suede protector spray.",
+    primaryImage: PIC22,
+    images: [],
+    description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
+    productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
     colors: [{ name: "Sand", hex: "#C2B280" }, { name: "Tobacco", hex: "#734A12" }],
     sizes: ["40", "41", "42", "43", "44"],
     availability: "In Stock"
@@ -476,17 +420,13 @@ export const PRODUCTS_LIST = [
     category: "Footwear",
     price: 220,
     primaryImage: PIC24,
-    images: [
-      PIC24, PIC22 , PIC12
-    ],
-    description: "Full-grain Nappa leather with a margom rubber cupsole.",
-    productCare: "Wipe with damp cloth.",
+    images: [PIC24, PIC22, PIC12],
+    description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
+    productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
     colors: [{ name: "White/Gum", hex: "#FFFFFF" }],
     sizes: ["40", "41", "42", "43", "44", "45"],
     availability: "In Stock"
   },
-
-  // --- FINAL ITEMS ---
   {
     id: "zy-24",
     title: "Relaxed Linen Trouser",
@@ -494,11 +434,9 @@ export const PRODUCTS_LIST = [
     category: "Bottoms",
     price: 130,
     primaryImage: PIC25,
-    images: [
-     
-    ],
-    description: "Breathable linen-cotton blend with a drawstring waist.",
-    productCare: "Machine wash cold.",
+    images: [],
+    description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
+    productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
     colors: [{ name: "Natural", hex: "#E3D9C6" }],
     sizes: ["S", "M", "L", "XL"],
     availability: "In Stock"
@@ -510,10 +448,9 @@ export const PRODUCTS_LIST = [
     category: "Outerwear",
     price: 195,
     primaryImage: PIC23,
-    images: [
-    ],
-    description: "Water-repellent nylon shell with recycled down filling.",
-    productCare: "Wipe with damp cloth.",
+    images: [],
+    description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
+    productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
     colors: [{ name: "Onyx", hex: "#1A1A1A" }],
     sizes: ["S", "M", "L", "XL"],
     availability: "In Stock"
@@ -534,7 +471,7 @@ export const FOOTER_LINKS = [
   {
     title: "More",
     links: [
-      { name: "Contact Us", href: "/" },
+      { name: "Contact Us", href: "/contact-us" },
       { name: "New", href: "/collections/new" },
       { name: "Best Seller", href: "/collections/basics" },
       { name: "Shop All", href: "/collections/shop-all" },
@@ -597,56 +534,53 @@ export const DELIVERY_LOCATIONS = [
 export const SHIPPINGFAQS = [
   {
     id: "item-1",
-    question: "Delivery Timeline",
-    answer: "For orders within Kathmandu Valley, we deliver within 24-48 hours. For outside valley orders, please allow 3-5 business days depending on your location."
+    question: "Order Processing",
+    answer: "Orders are processed within 1 business day after payment confirmation. Orders placed on weekends or public holidays will be processed on the next business day."
   },
   {
     id: "item-2",
-    question: "Shipping Rates",
-    answer: "We offer a flat shipping rate of Rs. 150 within Kathmandu. Outside valley shipping is calculated at checkout based on your specific district and package weight."
+    question: "Shipping Time",
+    answer: "Inside valley: 1-2 business days. Outside valley: 2-3 business days. Delivery times may vary depending on location, courier services, or unforeseen delays. "
   },
   {
     id: "item-3",
-    question: "Cash on Delivery (COD) Policy",
-    answer: "We offer COD for all orders. However, for high-value orders or remote locations, our team may call you for a quick verification before dispatching your package."
+    question: "Shipping Charges",
+    answer: "Shipping charges are calculated at checkout based on order size and destination. Free shipping may be offered during special promotions."
   },
   {
     id: "item-4",
     question: "Order Tracking",
-    answer: "Once your order is verified and dispatched, you will receive an SMS with your tracking details. You can use this to check the real-time status of your delivery."
+    answer: "Once your order has been dispatched, a tracking number will be provided if asked by customers."
   },
-  {
-    id: "item-5",
-    question: "Exchange & Returns",
-    answer: "If the fit isn't right, we offer a 7-day exchange policy. Items must be unworn, unwashed, and have the original Zylo tags attached. Delivery charges for exchanges are borne by the customer."
-  }
 ];
 // return
 export const RETURNFAQS = [
   {
     id: "return-1",
-    question: "7-Day Return Policy",
-    answer: "We accept returns and exchanges within 7 days of delivery. The item must be in its original condition: unworn, unwashed, and with all Zylo tags and original packaging intact."
+    question: "Returns",
+    answer: "Returns are accepted within 24 hours days of receiving the product. Items must be unused, unwashed, and in original condition, with tags and packaging intact."
   },
   {
     id: "return-2",
-    question: "How to Initiate a Return",
-    answer: "To start a return, please contact our support team via WhatsApp or Instagram DM with your Order ID and photos of the item. Once approved, you can send the item back to our central hub."
+    question: "Non-Returnable Items",
+    answer: "Discounted or sale items. Gift cards. Customized or made-to-order products"
   },
   {
     id: "return-3",
-    question: "Refund Method",
-    answer: "For Cash on Delivery orders, we offer refunds via eSewa, Khalti, or Bank Transfer within 3-5 business days after we receive and inspect the returned item."
+    question: "Refunds",
+    answer: "After we receive and inspect the returned item, we will notify you of the approval status. Approved refunds will be processed to the original payment method within 5–7 business days."
   },
   {
     id: "return-4",
-    question: "Exchange Shipping Costs",
-    answer: "If you received a defective or wrong item, Zylo covers all shipping costs. For size exchanges or change-of-mind returns, the customer is responsible for the return shipping fee."
+    question: "Exchanges",
+    answer: "Exchanges are only applicable for damaged or defective items. Please notify us within 24 hours of delivery with clear photos or videos."
+
+
   },
   {
     id: "return-5",
-    question: "Non-Returnable Items",
-    answer: "For hygiene reasons, innerwear, socks, and items purchased during 'Final Clearance' sales are not eligible for return or exchange."
+    question: "Return Shipping",
+    answer: "Customers are responsible for return shipping costs unless the item received was damaged or incorrect."
   }
 ];
 // FAQS

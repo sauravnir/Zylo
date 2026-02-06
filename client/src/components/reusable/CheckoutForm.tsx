@@ -146,7 +146,8 @@ const isPersisting = useRef(true);
 useEffect(()=>{
   if(isPersisting.current){ //fetching the value of isPersisting
     const formvalue = form.getValues();
-    localStorage.setItem("checkout_form" , JSON.stringify(formvalue) )
+    const {city , ...restItems} = formvalue; //Not including the city name in the localStorage. 
+    localStorage.setItem("checkout_form" , JSON.stringify(restItems))
   }
 },[form.watch()]) //same as form.getValues()
 
