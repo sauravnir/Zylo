@@ -31,6 +31,13 @@ export function ContactPage() {
     },
   });
 
+
+//  Resume work when connected to backend: 
+// Handle the form submisstion. 
+  const handleFormSubmission = ()=>{
+
+  }
+
   return (
     <div className="min-h-screen">
       <NavigationBar />
@@ -71,7 +78,7 @@ export function ContactPage() {
           </p>
           <div className="space-y-4 mt-8">
             <Form {...form}>
-              <form onSubmit={() => {}} className="space-y-8" noValidate>
+              <form onSubmit={form.handleSubmit(handleFormSubmission)} className="space-y-8" noValidate>
                 {/* Full Name */}
                 <div className="grid grid-cols-2 gap-4 ">
                   <FormField
@@ -144,12 +151,15 @@ export function ContactPage() {
                     </FormItem>
                   )}
                 />
-              </form>
-              <PrimaryButton
-                isDisabled={false}
+
+                <PrimaryButton
+                type="submit"
+                isDisabled={true}
                 name="Submit"
-                onClick={() => {}}
+                onClick={()=>{}}
               />
+              </form>
+              
             </Form>
           </div>
         </main>

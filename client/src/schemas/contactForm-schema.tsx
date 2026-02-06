@@ -44,7 +44,7 @@ export const contactSchema = z.object({
           message:"Email must end with a valid domain (e.g., .com or .com.np)."
         }),
         orderNumber: z.string().min(4, "Order number is required.").startsWith("ZY", "Order number must start with ZY."),
-        message:z.string().max(500 , "Please describe your query.")
+        message:z.string().max(500).min(5,"Please write a message.")
 });
 
 export type ContactFormValidation = z.infer<typeof contactSchema>
