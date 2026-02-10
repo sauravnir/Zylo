@@ -42,6 +42,7 @@ import {
 } from "@/components/ui/input-otp";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 
+
 export function CheckoutForm({
   subTotal,
   shippingAmount,
@@ -62,6 +63,8 @@ export function CheckoutForm({
   const isUploading = useAppSelector(
     (state: RootState) => state.cart.isUploading,
   );
+  // Getting the rates and code from the redux store. Done for converting the currency to NPR in the checkout process.
+    // const {rate , activeCurrency} = useAppSelector((state:RootState)=>state.currency)
 
   // Creating otp handling states
   //Opening and closing the otp entry field
@@ -78,12 +81,11 @@ export function CheckoutForm({
   // Retrieving the timer from the localStorage
   useEffect(()=>{
     const otpExpiry = localStorage.getItem('otp_expiry');
-    const savedShowOtp = localStorage.getItem('show_otp');
     if(otpExpiry){
       const remainingTime = Math.floor((parseInt(otpExpiry) - Date.now()) / 1000); // Calculating the time remaining for the timer
       if (remainingTime > 0) {
         setTimer(remainingTime);
-        if (savedShowOtp) setShowOtp(true); //Reopening the otp field
+        setShowOtp(true); //Reopening the otp field
       } else{
         localStorage.removeItem("otp_expiry");
         localStorage.removeItem("show_otp");
@@ -111,12 +113,22 @@ export function CheckoutForm({
     return () => clearInterval(interval);
   }, [timer])
 
+
   // Getting the formData from the local storage 
   const getSavedFormData = () => {
     const savedForm = localStorage.getItem("checkout_form");
+    const currentTime = Date.now()
     if(savedForm){
       try{
-        return JSON.parse(savedForm);
+        const decodedData = atob(savedForm) //Decoding the encoded data 
+        const parsedData = JSON.parse(decodedData)
+        const {formData ,expiresAt} =parsedData;
+        // Checking if the localStorage items is expired or not
+        if(currentTime > expiresAt){
+          localStorage.removeItem("checkout_form");
+          return null;
+        }
+        return formData;
       } catch(error){
         return null;
       }
@@ -143,13 +155,30 @@ export function CheckoutForm({
 
 // Persisting the form data even if the page refreshes
 const isPersisting = useRef(true);
+const expiryTime = 30*60*1000; // 30mins expiry time 
+
 useEffect(()=>{
-  if(isPersisting.current){ //fetching the value of isPersisting
-    const formvalue = form.getValues();
+  const formvalue = form.getValues();
+  const hasData = Object.values(formvalue).some(value => value != "" && value !=="Nepal");
+  if(isPersisting.current && hasData){ //fetching the value of isPersisting
     const {city , ...restItems} = formvalue; //Not including the city name in the localStorage. 
-    localStorage.setItem("checkout_form" , JSON.stringify(restItems))
+    const formItems ={
+      formData : restItems,
+      expiresAt : Date.now() + expiryTime
+    }
+    localStorage.setItem("checkout_form" , btoa(JSON.stringify(formItems))) //Base64 encoding : btoa
   }
 },[form.watch()]) //same as form.getValues()
+
+// Checking the email form field and if the field is empty then setting the showOtp to false to avoid unnecessary glitches
+const emailValue = form.watch("email") 
+useEffect(()=>{
+  if(emailValue === ""){
+    setShowOtp(false)
+    localStorage.setItem("show_otp" ,"false");
+  }
+},[emailValue])
+
 
   // Handling the delivery charge addition logic
   const handleCitySelect = (cityName: string) => {
@@ -176,16 +205,16 @@ useEffect(()=>{
     try {
       // Reqesting the otp from the backend
       await requestOtp(formData.email);
+      // Setting the showOtp to localStorage
+      setShowOtp(true);
+      localStorage.setItem("show_otp" , "true");
       // Opening the otp field
       await new Promise((resolve) => setTimeout(resolve, 2000));
-      setShowOtp(true);
       // Setting a cooldown of 30 seconds and storing in localStorage
       const cooldownTime = Date.now() + 30 * 1000;
       localStorage.setItem("otp_expiry" , cooldownTime.toString());
-      setTimer(1);
-
-      // Setting the showOtp to localStorage
-      localStorage.setItem("show_otp" , showOtp.toString());
+      setTimer(30); //Setting the cooldown timer to 30 seconds.
+      
     } catch (error: any) {
       // Handling rate-limit error.
       if (error.response?.status === 429) {
@@ -209,12 +238,19 @@ useEffect(()=>{
 
   // When clicking on the verify otp button.
   const handleOtpVerification = async () => {
+    // Handling the form validation logic
+    const isFormValid = await form.trigger()
+    if(!isFormValid){
+      toast.error("Please fill in all the details.");
+      return;
+    }
     if (!otpValue) return toast.error("Please enter the code.");
     if (otpValue.length < 6)
       return toast.error("Please enter the full 6-digit code.");
-
+    
     dispatch(setIsUploading(true));
     const localCartItem = [...cartItems];
+    
     try {
       const email = form.getValues("email");
       const orderData = {

@@ -1,13 +1,12 @@
 import { useState , useEffect } from "react";
 import type { RootState } from "@/store/store";
 import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
 import { CircularProgress } from "@mui/material";
 
 export const Price = ({ amount }: { amount: number }) => {
 
   const [priceMounted , setPriceMounted] = useState(false);
-  const {symbol, rate , status ,activeCurrency} = useSelector((state: RootState) => state.currency);
+  const {symbol, rate , status } = useSelector((state: RootState) => state.currency);
 
   // Mounting the price in the global component
   useEffect(()=> {

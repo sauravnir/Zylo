@@ -5,7 +5,8 @@ export const loadLocalCart = () => {
     try {
         const fetchData = localStorage.getItem(LOCAL_KEY_ITEM);
         if (fetchData === null) return undefined;
-        return JSON.parse(fetchData);
+        const decodedData = JSON.parse(atob(fetchData))
+        return decodedData;
     } catch (error) {
         console.log("Could not load cart", error)
         return undefined; 
@@ -16,7 +17,8 @@ export const loadLocalCart = () => {
 export const storeLocalCart = (state : any) => {
     try {
     const loadData = JSON.stringify(state);
-    localStorage.setItem(LOCAL_KEY_ITEM , loadData);
+    const encodedData = btoa(loadData)
+    localStorage.setItem(LOCAL_KEY_ITEM , encodedData); //Base64 encrypting the cart items
     } catch (error) {
         console.log("Err: Type" , error);
     }

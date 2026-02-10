@@ -343,12 +343,12 @@ export const CartItem = ({
 
           {/* Size */}
           <div className="flex items-center gap-2">
-            <span className="text-[10px] uppercase tracking-widest text-neutral-400 font-medium">
-              Size: <span className="text-neutral-600">{item.productSize}</span>
+            <span className="text-[10px] uppercase tracking-widest text-main font-medium">
+              Size: <span className="text-neutral-600 font-bold underline">{item.productSize}</span>
             </span>
-            <span className="text-[10px] uppercase tracking-widest text-neutral-400 font-medium">
+            <span className="text-[10px] uppercase tracking-widest text-main font-medium">
               Color:{" "}
-              <span className="text-neutral-600">{item.productColor}</span>
+              <span className="text-neutral-600 font-bold underline">{item.productColor}</span>
             </span>
           </div>
         </div>
@@ -361,17 +361,17 @@ export const CartItem = ({
               <button
                 onClick={handleDecrement}
                 disabled={item.itemCartQuantity < 1 || decDelay}
-                className={`w-8 h-8 flex items-center justify-center text-muted ${item.itemCartQuantity == 1 && `cursor-not-allowed bg-muted/50 hover:bg-muted/50`} hover:text-white transition-all hover:bg-main border-r border-main`}
+                className={`w-8 h-8 flex items-center justify-center text-main ${item.itemCartQuantity == 1 && `cursor-not-allowed bg-muted/50 hover:bg-muted/50`} hover:text-white transition-all hover:bg-main border-r border-main`}
               >
                 <Minus size={14} />
               </button>
-              <div className="text-muted w-10 flex items-center justify-center text-sm tabular-nums border border-1 font-medium">
+              <div className="text-main w-10 flex items-center justify-center text-sm tabular-nums border border-1 font-medium">
                 {item.itemCartQuantity}
               </div>
               <button
                 onClick={handleIncrement}
                 disabled={incDelay}
-                className="w-8 h-8 flex items-center justify-center text-muted hover:text-white transition-all hover:bg-main border-l border-main "
+                className="w-8 h-8 flex items-center justify-center text-main hover:text-white transition-all hover:bg-main border-l border-main "
               >
                 <Plus size={14} />
               </button>

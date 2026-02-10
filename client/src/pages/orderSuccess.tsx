@@ -50,7 +50,7 @@ export function OrderConfirmation() {
 
   useEffect(() => {
     if (!orderDetails) {
-      navigation("/");
+      navigation("/checkout");
       return;
     }
     // Clearing the cart after we navigate to this page

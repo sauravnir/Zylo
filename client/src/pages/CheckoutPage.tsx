@@ -4,11 +4,12 @@ import { CheckoutNav } from "@/components/reusable/Navigation";
 import type { RootState } from "@/store/store";
 import { useNavigate } from "react-router-dom";
 import { CheckoutForm } from "@/components/reusable/CheckoutForm";
-import { TicketPercent } from "lucide-react";
+import { TicketPercent, InfoIcon } from "lucide-react";
 import { CartItem } from "@/components/reusable/Cart";
 import { Price } from "@/components/reusable/Price";
 import { subTotalAmount, totalCheckoutAmount } from "@/store/slices/cartSlice";
-import { useAppSelector } from "@/store/hook";
+import { useAppSelector, useAppDispatch } from "@/store/hook";
+import { setCurrency } from "@/store/slices/currencySlice";
 import { Input } from "@/components/ui/input";
 import { PrimaryButton } from "@/components/reusable/ButtonComponent";
 
@@ -18,12 +19,29 @@ export default function CheckoutPage() {
     (state: RootState) => state.cart.totalItems,
   );
   const cartItems = useAppSelector((state: RootState) => state.cart.items);
-  const { symbol } = useAppSelector((state: RootState) => state.currency);
+  const { symbol, activeCurrency } = useAppSelector(
+    (state: RootState) => state.currency,
+  );
   const shippingCost =
     useAppSelector((state: RootState) => state.cart.shippingCost) ?? 0;
   const checkoutAmount = useAppSelector(totalCheckoutAmount);
   const navigate = useNavigate();
   const subTotal = useAppSelector(subTotalAmount);
+
+  const dispatch = useAppDispatch();
+
+  // Automatically switching the global currency to Base NPR for checkout processess
+  useEffect(() => {
+    if (activeCurrency !== "NPR") {
+      dispatch(
+        setCurrency({
+          title: "Nepal",
+          code: "NPR",
+          symbol: "Rs",
+        }),
+      );
+    }
+  }, []);
 
   //   If there are no cart items and if the isSubmitting state is not true then the user cannot navigate to the page
   useEffect(() => {
@@ -49,24 +67,35 @@ export default function CheckoutPage() {
             />
             {/* Bottom Links */}
             <div className="border-t border-main border-1 flex flex-row items-center justify-center gap-4 p-2 underline pt-4">
-              <Link to="/shipping" className="text-tiny uppercase text-main/80 hover:text-muted transition-colors duration-300">
-              Shipping
+              <Link
+                to="/shipping"
+                className="text-tiny uppercase text-main/80 hover:text-muted transition-colors duration-300"
+              >
+                Shipping
               </Link>
-              <Link to="/returns" className="text-tiny uppercase text-main/80 hover:text-muted transition-colors duration-300">
-              Returns
+              <Link
+                to="/returns"
+                className="text-tiny uppercase text-main/80 hover:text-muted transition-colors duration-300"
+              >
+                Returns
               </Link>
-              <Link to="/policy" className="text-tiny uppercase text-main/80 hover:text-muted transition-colors duration-300">
-              Policy
+              <Link
+                to="/policy"
+                className="text-tiny uppercase text-main/80 hover:text-muted transition-colors duration-300"
+              >
+                Policy
               </Link>
-              <Link to="/terms" className="text-tiny uppercase text-main/80 hover:text-muted transition-colors duration-300">
-              Terms
+              <Link
+                to="/terms"
+                className="text-tiny uppercase text-main/80 hover:text-muted transition-colors duration-300"
+              >
+                Terms
               </Link>
             </div>
           </div>
-            
 
           <aside className="order-1 lg:order-1 lg:col-span-5">
-            <div className="sticky top-32 space-y-4">
+            <div className="sticky top-2 space-y-4">
               <div className="flex items-center justify-between px-0 p-4 border-b border-main rounded-none">
                 <h2 className="text-base font-bold uppercase tracking-widest">
                   Order Summary ({totalItems})
@@ -84,7 +113,7 @@ export default function CheckoutPage() {
 
               <div className="max-h-[350px] overflow-y-auto pr-4  ">
                 {cartItems.length > 0 &&
-                  cartItems.map((items:any) => (
+                  cartItems.map((items: any) => (
                     <CartItem key={items.id} item={items} isReadOnly={true} />
                   ))}
               </div>
@@ -136,6 +165,18 @@ export default function CheckoutPage() {
                   <span className="text-main uppercase tracking-wide font-semibold   pt-2">
                     <Price amount={checkoutAmount} />
                   </span>
+                </div>
+              </div>
+
+              <div className="bg-muted/50 p-3 rounded-md mt-4  border-2 border-main shadow-lg">
+                <div className="flex gap-2 items-start">
+                  <InfoIcon className="w-4 h-4 shrink-0" />
+                  <p className="text-sm text-main leading-snug">
+                    <strong>Currency Note:</strong> We are currently only
+                    accepting payments in
+                    <strong> NPR (Rs.)</strong>. The total has been converted
+                    automatically to ensure smooth local payment processing.
+                  </p>
                 </div>
               </div>
             </div>

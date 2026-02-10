@@ -79,7 +79,7 @@ const handleCheckout = async () => {
                 className={`items-center flex gap-2 text-menu tracking-wide underline underline-offset-4 transition-all ${
                   cleared
                     ? "text-muted/50 cursor-not-allowed"
-                    : "text-muted hover:text-main"
+                    : "text-main hover:text-muted"
                 }`}
               >
                 {cleared && (
