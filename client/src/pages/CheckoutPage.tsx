@@ -13,6 +13,14 @@ import { setCurrency } from "@/store/slices/currencySlice";
 import { Input } from "@/components/ui/input";
 import { PrimaryButton } from "@/components/reusable/ButtonComponent";
 
+
+const LINKS = [
+  { title: "Shipping", href: "/shipping" },
+  { title: "Returns", href: "/returns" },
+  { title: "Policy", href: "/policy" },
+  { title: "Terms", href: "/terms" },
+];
+
 export default function CheckoutPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const totalItems = useAppSelector(
@@ -43,7 +51,7 @@ export default function CheckoutPage() {
     }
   }, []);
 
-  //   If there are no cart items and if the isSubmitting state is not true then the user cannot navigate to the page
+  // If there are no cart items and if the isSubmitting state is not true then the user cannot navigate to the page
   useEffect(() => {
     if (totalItems < 1 && !isSubmitting) {
       navigate("/cart");
@@ -67,30 +75,16 @@ export default function CheckoutPage() {
             />
             {/* Bottom Links */}
             <div className="border-t border-main border-1 flex flex-row items-center justify-center gap-4 p-2 underline pt-4">
+             {LINKS.map((item)=>(
               <Link
-                to="/shipping"
+                key={item.href}
+                to={item.href}
                 className="text-tiny uppercase text-main/80 hover:text-muted transition-colors duration-300"
               >
-                Shipping
+                {item.title}
               </Link>
-              <Link
-                to="/returns"
-                className="text-tiny uppercase text-main/80 hover:text-muted transition-colors duration-300"
-              >
-                Returns
-              </Link>
-              <Link
-                to="/policy"
-                className="text-tiny uppercase text-main/80 hover:text-muted transition-colors duration-300"
-              >
-                Policy
-              </Link>
-              <Link
-                to="/terms"
-                className="text-tiny uppercase text-main/80 hover:text-muted transition-colors duration-300"
-              >
-                Terms
-              </Link>
+             ))}
+             
             </div>
           </div>
 
@@ -168,7 +162,7 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
-              <div className="bg-yellow-100/20 p-3 rounded-md mt-4 border-2 border-main shadow-lg">
+              <div className="bg-yellow-100/15 p-3 rounded-md mt-4 border-2 border-main shadow-lg">
                 <div className="flex gap-2 items-start">
                   <InfoIcon className="w-4 h-4 shrink-0" />
                   <p className="text-sm text-main leading-snug">
