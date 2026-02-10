@@ -40,8 +40,8 @@ export const DownSearch = ({ title }: { title: string }) => {
 
 const handleCategoryClick =(category:any) => {
   setSearchItem("");
-  setActiveCategory(category.toLowerCase())
-  navigate(`/collections/${category.toLowerCase().replace(/\s+/g, '-')}`)
+  setActiveCategory(category)
+  navigate(`/collections/${category}`)
   
 } 
 
@@ -142,7 +142,7 @@ const handleCategoryClick =(category:any) => {
                     {/* Product tabs */}
                     <TabsContent value="products" className="mt-2">
                       <div className="flex flex-col h-[250px] md:h-[380px] overflow-x-hidden md:grid md:grid-cols-6 lg:grid-cols-6 gap-6 mt-4 ">
-                        {/* Only displaying a maximum of 5 cards in the search bar */}
+                        {/* Only displaying a maximum of 6 cards in the search bar */}
                         {searchSuggestions.slice(0, 6).map((product) => (
                           // Re-using the Product card component to display the products
                           // using the conditional isSearchContent to conditionally remove the render of add to cart popup button at the bottom-right

@@ -1,14 +1,27 @@
 import { useState } from "react";
-import { DropdownMenu , DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuItem} from "@/components/ui/dropdown-menu";
+import {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuLabel,
+  DropdownMenuItem,
+} from "@/components/ui/dropdown-menu";
 import type { RootState } from "@/store/store";
 import { useDispatch, useSelector } from "react-redux";
 import { setCurrency } from "@/store/slices/currencySlice";
-import {motion} from "motion/react"
+import { motion } from "motion/react";
 import { ChevronDown, Menu, User, X } from "lucide-react";
 import { itemVariants, parentVariants } from "@/objects/Animations";
-import { Sheet, SheetClose, SheetContent, SheetFooter, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetFooter,
+  SheetTitle,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { cta, menuItems } from "@/objects/Objects";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
 
 // Dropdown for currency selection
@@ -49,35 +62,31 @@ export const DownCurrencyMenu = ({ item }: { item: any }) => {
         className="w-auto mt-6 p-2 border bg-background max-h-[350px] md:max-h-[250px]"
         align="end"
       >
-        <motion.div
-          
-          initial="hidden"
-          animate="visible"
-        >
-          <DropdownMenuLabel className="text-tiny text-muted/60 font-normal uppercase">
+        <motion.div initial="hidden" animate="visible">
+          <DropdownMenuLabel className="text-tiny text-main font-bold uppercase">
             {item.title}
           </DropdownMenuLabel>
 
           {item.children.map((child: any) => {
             const isActive = activeCurrency === child.code;
             return (
-              <motion.div  key={child.code} >
-              <DropdownMenuItem
-               
-                onClick={() => handleCurrencySelection(child)}
-                className={`flex text-muted hover:text-main items-center gap-1 mt-1 cursor-pointer active:text-main
-                   ${isActive ? "text-main font-medium" :""}
+              <motion.div key={child.code}>
+                <DropdownMenuItem
+                  onClick={() => handleCurrencySelection(child)}
+                  className={`flex text-muted hover:text-main items-center gap-1 mt-1 cursor-pointer active:text-main
+                   ${isActive ? "text-main font-medium" : ""}
                   `}
-              >
-                {isActive && <div className="h-1 w-1 rounded-full bg-main mr-1"/>}
-                <span className="text-menu font-body">{child.title}</span>
-                <span className="text-menu uppercase">
-                  ({child.code} {child.symbol})
-                </span>
-                
-              </DropdownMenuItem>
-            </motion.div>
-            )
+                >
+                  {isActive && (
+                    <div className="h-1 w-1 rounded-full bg-main mr-1" />
+                  )}
+                  <span className="text-menu font-body">{child.title}</span>
+                  <span className="text-menu uppercase">
+                    ({child.code} {child.symbol})
+                  </span>
+                </DropdownMenuItem>
+              </motion.div>
+            );
           })}
         </motion.div>
       </DropdownMenuContent>
@@ -94,16 +103,19 @@ export const MobileMenuSheet = () => {
           <Menu size={20} className="text-muted" />
         </SheetTrigger>
 
-        <SheetContent side="left" className="bg-background flex flex-col h-full py-4">
+        <SheetContent
+          side="left"
+          className="bg-background flex flex-col h-full py-4"
+        >
           {/* Header */}
           <SheetTitle>
             <div className="flex items-center justify-start py-6 px-2">
-            <SheetClose>
-              <X size={24} className="text-muted hover:text-main" />
-            </SheetClose>
-          </div>
+              <SheetClose>
+                <X size={24} className="text-muted hover:text-main" />
+              </SheetClose>
+            </div>
           </SheetTitle>
-          
+
           {/* Menu  */}
           <motion.div
             variants={parentVariants}
@@ -113,8 +125,8 @@ export const MobileMenuSheet = () => {
           >
             {/* Mapping the menu items */}
             {menuItems.map((item) => (
-              <motion.div key={item.title} variants={itemVariants}>
-                <Link to={item.link}>
+              <motion.div key={item.title} variants={itemVariants} className="">
+                <Link to={item.link} >
                   <span className="text-muted hover:text-main text-menu font-extrabold uppercase">
                     {item.title === "Shop" ? (
                       <DownMenu key={item.title} item={item} />
@@ -123,7 +135,7 @@ export const MobileMenuSheet = () => {
                     )}
                   </span>
                 </Link>
-                <Separator className="mt-4" />
+                {/* <Separator className="mt-4 bg-main" /> */}
               </motion.div>
             ))}
           </motion.div>
@@ -134,7 +146,9 @@ export const MobileMenuSheet = () => {
               {/* Mapping through the CTA object and rendering Pricing Menu Component */}
               {cta.map(
                 (item: any) =>
-                  item.children && <DownCurrencyMenu key={item.title} item={item} />,
+                  item.children && (
+                    <DownCurrencyMenu key={item.title} item={item} />
+                  ),
               )}
 
               {/* Accesing the item directly */}
@@ -170,7 +184,7 @@ export const DownMenu = ({ item }: { item: any }) => {
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="w-[200px] md:w-auto mt-6 p-2 py-4 border bg-background h-auto overflow-y-hidden"
+        className="w-[200px] md:w-auto mt-6 p-2 py-4 border border-main shadow-lg bg-background h-auto overflow-y-hidden"
         align="start"
       >
         <motion.div
@@ -178,19 +192,31 @@ export const DownMenu = ({ item }: { item: any }) => {
           initial="hidden"
           animate="visible"
         >
-          <DropdownMenuLabel className="text-tiny text-muted/60 font-normal uppercase">
+          <DropdownMenuLabel className="text-tiny text-main font-bold uppercase">
             {item.title}
           </DropdownMenuLabel>
 
           {item.children.map((child: any) => (
-            <motion.div variants={itemVariants}>
-              <DropdownMenuItem
-                key={child.title}
-                className="flex text-muted hover:text-main items-center gap-1 mt-1 cursor-pointer"
-              >
-                <Link to={child.link}>
-                  <span className="text-menu font-body">{child.title}</span>
-                </Link>
+            <motion.div variants={itemVariants} key={child.title}>
+              <DropdownMenuItem className="p-0">
+                
+          
+                <NavLink
+                  to={child.link}
+                  className={({ isActive }) =>
+                    `flex text-main hover:text-muted transition-colors duration-300 items-center gap-1 mt-1 cursor-pointer w-full p-2
+           ${isActive ? "text-main font-bold" : ""}`
+                  }
+                >
+                  {({ isActive }) => (
+                    <>
+                      {isActive && (
+                        <div className="h-1 w-1 rounded-full bg-main" />
+                      )}
+                      <span className="text-menu font-body">{child.title}</span>
+                    </>
+                  )}
+                </NavLink>
               </DropdownMenuItem>
             </motion.div>
           ))}

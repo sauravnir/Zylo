@@ -1,4 +1,7 @@
-import { ProductCard, type ProductCardProps } from "@/components/reusable/CardComponent";
+import {
+  ProductCard,
+  type ProductCardProps,
+} from "@/components/reusable/CardComponent";
 import { ProductDetail } from "@/components/reusable/ModalComponent";
 import { motion } from "motion/react";
 import {
@@ -11,7 +14,7 @@ import {
 
 import { parentVariants } from "@/objects/Animations";
 import { PRODUCTS_LIST } from "@/objects/Objects";
-
+import { shuffleArray } from "@/utils/shuffle";
 
 export function ProductMain({
   urlParam,
@@ -19,12 +22,12 @@ export function ProductMain({
 }: ProductCardProps & { urlParam: any }) {
   // Accessing the current product
   const currentProduct = PRODUCTS_LIST.find((item) => item.slug === urlParam);
-  
-    // Filtering the collections and categories
-  const relatedProducts = PRODUCTS_LIST.filter((item) => {
-   // If the current product doesn't exist, don't filter anything
+
+  // Filtering the collections and categories
+  let relatedProducts = PRODUCTS_LIST.filter((item) => {
+    // If the current product doesn't exist, don't filter anything
     if (!currentProduct) return false;
-   // Exclude the product currently being viewed
+    // Exclude the product currently being viewed
     if (item.slug === urlParam) return false;
 
     //Checking for the same category
@@ -34,27 +37,37 @@ export function ProductMain({
       currentProduct.collection &&
       item.collection === currentProduct.collection;
     return sameCategory || sameCollection;
-  })
+  });
 
-// Sorting the filters so that collection comes in first and then category  
-    const sortRelatedProducts = relatedProducts.sort((a,b)=>{
-        if(a.collection === currentProduct?.collection && b.collection !== currentProduct?.collection){
-            return -1;
-        }
-        return 0;
-    })
+  // If Related Products is empty then populating with other items in the object
+  const isFallback = relatedProducts.length === 0;
+  if (isFallback) {
+    const remaining = PRODUCTS_LIST.filter((item) => item.slug !== urlParam);
+    relatedProducts = shuffleArray(remaining).slice(0, 8); //Picking random 8 items
+  } else {
+    // Sorting the filters so that collection comes in first and then category
+    relatedProducts.sort((a, b) => {
+      if (
+        a.collection === currentProduct?.collection &&
+        b.collection !== currentProduct?.collection
+      ) {
+        return -1;
+      }
+      return 0;
+    });
+  }
 
   return (
-    <div className="relative px-4 md:px-20 py-20 bg-background ">
+    <div className="relative px-4 md:px-20 py-0 bg-background ">
       {currentProduct ? (
         <div>
-          <ProductDetail props={props} viewMode="page" closeModal={()=>{}}/>
+          <ProductDetail props={props} viewMode="page" closeModal={() => {}} />
 
           {/* Related products content */}
           <div className="w-full flex flex-col space-y-12 py-20">
             <div className="text-center">
               <h1 className="text-main text-h3 uppercase tracking-normal">
-                Related Products
+                {isFallback ? "You might also like" : "Related Products"}
               </h1>
             </div>
 
@@ -74,8 +87,8 @@ export function ProductMain({
                 className="w-full relative"
               >
                 <CarouselContent className="-ml-2">
-                  {sortRelatedProducts.length > 0 ? (
-                    sortRelatedProducts.map((items) => (
+                  {relatedProducts.length > 0 &&
+                    relatedProducts.map((items) => (
                       <CarouselItem
                         key={items.id}
                         className=" md:p-4 lg:p-8 basis-[100%] md:basis-1/4 lg:basis-1/4"
@@ -90,19 +103,12 @@ export function ProductMain({
                           <ProductCard key={items.id} {...items} />
                         </motion.div>
                       </CarouselItem>
-                    ))
-                  ) : (
-                    <div className="p-20 text-center flex flex-col items-center justify-center">
-                      <h1 className="text-base uppercase tracking-widest text-main font-bold">
-                        No results found
-                      </h1>
-                    </div>
-                  )}
+                    ))}
                 </CarouselContent>
                 <div className="flex justify-center items-center mt-8 md:mt-4">
                   <div className="relative flex gap-2">
                     <CarouselPrevious className="rounded-none w-10 h-10 text-white bg-main hover:bg-primary transition-colors duration-400 :" />
-        <CarouselNext className="rounded-none w-10 h-10 text-white bg-main hover:bg-primary transition-colors duration-400" />
+                    <CarouselNext className="rounded-none w-10 h-10 text-white bg-main hover:bg-primary transition-colors duration-400" />
                   </div>
                 </div>
               </Carousel>

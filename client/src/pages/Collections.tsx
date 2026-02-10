@@ -50,7 +50,7 @@ export default function Collections() {
   };
 
   // Handling the pagination
-  const { currentItems, currentPage, setCurrentPage, totalPages } = usePagination(filteredProducts, 18);   //items per page
+  const { currentItems, currentPage, setCurrentPage, totalPages } = usePagination(filteredProducts, 20);   //items per page
 
   return (
     <div className="min-h-screen" key={category}>
@@ -137,23 +137,26 @@ export default function Collections() {
             />
         </motion.div>
       ) : (
-        <div className=" max-w-sm mx-auto py-60 px-4 text-center ">
+        <div className="bg-background">
+             <div className=" max-w-sm mx-auto py-60 px-4 text-center ">
           <h1 className="text-paragraph text-main font-bold uppercase tracking-widest">
             No items match your filters.
           </h1>
-          <p className="text-muted text-sm mt-2">
+          <p className="text-main/60 text-sm mt-2">
             Try searching for exising category items.
           </p>
           <Input
             type="text"
             autoFocus
-            className="mt-12 h-auto border-0 border-b border-muted/30 bg-transparent px-0 pb-4 pt-0 text-2xl md:text-2xl uppercase tracking-tighter shadow-none rounded-none placeholder:text-muted/40 focus-visible:ring-0 focus-visible:border-main transition-colors duration-300"
+            className="mt-12 h-auto border-0 border-b border-main/50 bg-transparent px-0 pb-4 pt-0 text-2xl md:text-2xl uppercase tracking-tighter shadow-none rounded-none placeholder:text-main/50  focus-visible:ring-0 focus-visible:border-main  transition-colors duration-300"
             placeholder="Search for collections..."
             value={categorySearch}
             onChange={(e) => setCategorySearch(e.target.value)}
             onKeyDown={handleEnter}
           />
         </div>
+        </div>
+       
       )}
 
       <Footer />

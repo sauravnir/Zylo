@@ -168,7 +168,7 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
-              <div className="bg-muted/50 p-3 rounded-md mt-4  border-2 border-main shadow-lg">
+              <div className="bg-yellow-100/20 p-3 rounded-md mt-4 border-2 border-main shadow-lg">
                 <div className="flex gap-2 items-start">
                   <InfoIcon className="w-4 h-4 shrink-0" />
                   <p className="text-sm text-main leading-snug">

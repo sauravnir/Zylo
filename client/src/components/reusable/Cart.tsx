@@ -27,7 +27,6 @@ import {
 } from "@/store/slices/cartSlice";
 import { useLocation } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
-import { CircularProgress } from "@mui/material";
 import { Price } from "./Price";
 
 // Overall Cart Sheet Drawer
@@ -326,7 +325,7 @@ export const CartItem = ({
         )}
       </div>
 
-      <div className="flex flex-1 flex-col justify-between py-1">
+      <div className="flex flex-1 flex-col justify-center py-1">
         <div className="flex flex-col gap-1.5">
           {/* Title & Quantity Display */}
           <h3 className="text-main text-product-title tracking-wide uppercase font-semibold">
@@ -365,7 +364,7 @@ export const CartItem = ({
               >
                 <Minus size={14} />
               </button>
-              <div className="text-main w-10 flex items-center justify-center text-sm tabular-nums border border-1 font-medium">
+              <div className="text-main w-10 flex items-center justify-center text-sm tabular-nums font-medium">
                 {item.itemCartQuantity}
               </div>
               <button

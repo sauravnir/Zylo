@@ -269,12 +269,12 @@ export const ProductDetail = ({
 
       {/* RIGHT SIDE */}
       <div
-        className={`w-full md:max-w-xl flex flex-col my-auto ${viewMode === "modal" ? "p-0 pr-4" : "pt-8 md:p-8"} md:overflow-y-auto`}
+        className={`w-full md:max-w-xl flex flex-col justify-start ${viewMode === "modal" ? "p-0 pr-4 my-auto" : "pt-8 md:p-8 md:mt-20 "}  md:overflow-y-auto`}
       >
         <div className="space-y-8 flex-1">
           {/* Title & Price */}
           <div className="flex flex-col gap-1.5">
-            <h1 className="text-main uppercase text-modal-title tracking-[0.15em] leading-tight">
+            <h1 className="text-main uppercase text-modal-title font-bold tracking-[0.15em] leading-tight">
               {props.title}
             </h1>
             <div className="text-base tracking-[0.1em]  text-main/50 font-semibold transition-colors ">
@@ -295,7 +295,7 @@ export const ProductDetail = ({
                       {descriptionPoints.map((item) => (
                         <li
                           key={item}
-                          className="flex text-muted text-base items-center gap-1 "
+                          className="flex text-main/60 text-base items-center gap-1 "
                         >
                           <Dot />
                           {item}
@@ -313,7 +313,7 @@ export const ProductDetail = ({
                       {productCarePoints.map((item) => (
                         <li
                           key={item}
-                          className="flex text-muted text-base items-center gap-1"
+                          className="flex text-main/60 text-base items-center gap-1"
                         >
                           <Dot />
                           {item}
@@ -325,8 +325,8 @@ export const ProductDetail = ({
               </Accordion>
               <div className="space-y-4">
                 <div className="text-main text-menu uppercase font-medium">
-                  Colors:{" "}
-                  <span className="text-muted ml-1">{productColor}</span>
+                  Color/s:{" "}
+                  <span className="text-main font-bold ml-1">{productColor}</span>
                 </div>
 
                 <div className="flex flex-wrap gap-3">
@@ -356,7 +356,7 @@ export const ProductDetail = ({
           {/* Size Selection */}
           <div className="space-y-4">
             <div className="text-main text-menu uppercase font-medium">
-              Size: <span className="text-muted ml-1">{productSize}</span>
+              Size: <span className="text-main font-bold ml-1">{productSize}</span>
             </div>
 
             <div className="flex flex-wrap gap-2">
@@ -394,7 +394,7 @@ export const ProductDetail = ({
               >
                 <Minus size={16} />
               </button>
-              <div className="text-muted w-12 flex items-center justify-center text-sm tabular-nums">
+              <div className="text-main font-bold w-12 flex items-center justify-center text-sm tabular-nums">
                 {num}
               </div>
               <button
