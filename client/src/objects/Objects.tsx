@@ -161,7 +161,7 @@ export const PRODUCTS_LIST = [
     id: "zy-05",
     title: "WASTELAND HOODIE BLACK",
     slug: "wasteland-hoodie-black",
-    category: "",
+    category: "Wasteland",
     collection: "",
     price: 3500,
     primaryImage: PIC5,
