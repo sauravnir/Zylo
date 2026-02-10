@@ -63,10 +63,13 @@ export function Footer() {
         ))}
       </div>
       {/* Bottom Section */}
-      <div className="flex flex-row items-center md:items-start px-12 mt-2 pb-4 ">
+      <div className="flex flex-row items-center md:items-start justify-between px-12 mt-2 pb-4 ">
         <span className="flex gap-2 text-menu items-center text-muted uppercase ">
           <Copyright size={12} />
-          {new Date().getFullYear()} - zylo{" "}
+          {new Date().getFullYear()} - zylo{" "} 
+        </span>
+        <span className="flex gap-2 text-menu items-center text-muted uppercase ">
+           Powered by <Link to="https://www.instagram.com/sauravvn/" target="_blank" className="underline hover:text-main transition-colors duration-300">SauravvN</Link>
         </span>
       </div>
     </div>

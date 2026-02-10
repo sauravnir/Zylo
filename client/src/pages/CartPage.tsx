@@ -31,7 +31,7 @@ export default function CartPage() {
   const totalItem = useAppSelector((state: RootState) => state.cart.totalItems);
   const globalNote = useAppSelector((state: RootState) => state.cart.orderNote);
   const subCheckoutAmount = useAppSelector(subTotalAmount);
-  
+
   const dispatch = useDispatch();
   // Handling the OPEN NOTE inside the CART
   const [localNote, setLocalNote] = useState(globalNote);
@@ -64,14 +64,16 @@ export default function CartPage() {
   };
 
   // Storing the slugs in a const
-  const slugItems = storeValue.map((item)=>item.slug);
+  const slugItems = storeValue.map((item) => item.slug);
 
-  const suggestionItems = useMemo(()=>{
+  const suggestionItems = useMemo(() => {
     // Filtering the suggested items array
-    const availableItems = PRODUCTS_LIST.filter((item)=> item.availability !== "Sold Out" && !slugItems.includes(item.slug));
+    const availableItems = PRODUCTS_LIST.filter(
+      (item) =>
+        item.availability !== "Sold Out" && !slugItems.includes(item.slug),
+    );
     return shuffleArray(availableItems).slice(0, 10); //Finding random items from the list
-
-  },[storeValue.length]) //Only re-shuffling if the cart items change. 
+  }, [storeValue.length]); //Only re-shuffling if the cart items change.
 
   return (
     <div className="min-h-screen">
@@ -225,57 +227,58 @@ export default function CartPage() {
         </main>
 
         {/* Suggestion Section */}
+        {storeValue.length > 0 && (
+          <div className="w-full flex flex-col space-y-12 py-20">
+            <div className="text-center">
+              <h1 className="text-main text-h3 uppercase tracking-normal">
+                Suggested Items
+              </h1>
+            </div>
 
-        <div className="w-full flex flex-col space-y-12 py-20">
-          <div className="text-center">
-            <h1 className="text-main text-h3 uppercase tracking-normal">
-              Suggested Items
-            </h1>
-          </div>
-
-          <motion.div
-            variants={parentVariants}
-            initial="hidden"
-            whileInView={"visible"}
-            viewport={{ once: true }}
-            id="collectioncard"
-            className="w-full md:px-4 mt-40"
-          >
-            <Carousel
-              opts={{
-                align: "start",
-                loop: false,
-              }}
-              className="w-full relative"
+            <motion.div
+              variants={parentVariants}
+              initial="hidden"
+              whileInView={"visible"}
+              viewport={{ once: true }}
+              id="collectioncard"
+              className="w-full md:px-4 mt-40"
             >
-              <CarouselContent className="-ml-2">
-                {suggestionItems.length > 0 &&
-                  suggestionItems.map((items) => (
-                    <CarouselItem
-                      key={items.id}
-                      className=" md:p-4 lg:p-8 basis-[100%] md:basis-1/4 lg:basis-1/4"
-                    >
-                      <motion.div
-                        variants={{
-                          hidden: { opacity: 0, y: 20 },
-                          visible: { opacity: 1, y: 0 },
-                        }}
-                        transition={{ duration: 0.6, ease: "easeOut" }}
+              <Carousel
+                opts={{
+                  align: "start",
+                  loop: false,
+                }}
+                className="w-full relative"
+              >
+                <CarouselContent className="-ml-2">
+                  {suggestionItems.length > 0 &&
+                    suggestionItems.map((items) => (
+                      <CarouselItem
+                        key={items.id}
+                        className=" md:p-4 lg:p-8 basis-[100%] md:basis-1/4 lg:basis-1/4"
                       >
-                        <ProductCard key={items.id} {...items} />
-                      </motion.div>
-                    </CarouselItem>
-                  ))}
-              </CarouselContent>
-              <div className="flex justify-center items-center mt-8 md:mt-4">
-                <div className="relative flex gap-2">
-                  <CarouselPrevious className="rounded-none w-10 h-10 text-white bg-main hover:bg-primary transition-colors duration-400 :" />
-                  <CarouselNext className="rounded-none w-10 h-10 text-white bg-main hover:bg-primary transition-colors duration-400" />
+                        <motion.div
+                          variants={{
+                            hidden: { opacity: 0, y: 20 },
+                            visible: { opacity: 1, y: 0 },
+                          }}
+                          transition={{ duration: 0.6, ease: "easeOut" }}
+                        >
+                          <ProductCard key={items.id} {...items} />
+                        </motion.div>
+                      </CarouselItem>
+                    ))}
+                </CarouselContent>
+                <div className="flex justify-center items-center mt-8 md:mt-4">
+                  <div className="relative flex gap-2">
+                    <CarouselPrevious className="rounded-none w-10 h-10 text-white bg-main hover:bg-primary transition-colors duration-400 :" />
+                    <CarouselNext className="rounded-none w-10 h-10 text-white bg-main hover:bg-primary transition-colors duration-400" />
+                  </div>
                 </div>
-              </div>
-            </Carousel>
-          </motion.div>
-        </div>
+              </Carousel>
+            </motion.div>
+          </div>
+        )}
       </div>
 
       <Footer />

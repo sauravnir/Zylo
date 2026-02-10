@@ -55,7 +55,7 @@ function App() {
   }, [dispatch]);
   return (
     <>
-      {showLoader && <CustomLoader onFinish={handleLoaderFinish} />}
+      {/* {showLoader && <CustomLoader onFinish={handleLoaderFinish} />} */}
       <Toaster richColors position="top-center"/>
       <HashRouter >
         <ScrolltoTop />
