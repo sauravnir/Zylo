@@ -418,10 +418,10 @@ export const ProductDetail = ({
               }
               onClick={addCartItems}
             />
-            {/* <PaymentButton
+            <PaymentButton
               isDisabled={true}
-              name="Pay with E-sewa"
-            /> */}
+              name="Pay online"
+            />
           </div>
 
           {/* Optional Text  */}
