@@ -11,7 +11,7 @@ export const Price = ({ amount }: { amount: number }) => {
   // Mounting the price in the global component
   useEffect(()=> {
     const initPrice = async () => {
-      await new Promise((resolve)=> setTimeout(resolve , 700))
+      await new Promise((resolve)=> setTimeout(resolve , 400))
       setPriceMounted(true);
     };
     initPrice();
