@@ -159,7 +159,7 @@ export const ProductDetail = ({
         <div
           className={`relative w-full overflow-hidden  ${
             viewMode === "modal"
-              ? "max-w-[290px] md:max-w-[350px] aspect-[2/3]"
+              ? "max-w-[290px] md:max-w-[400px] aspect-[2/3]"
               : "max-w-[360px] md:max-w-[500px] aspect-[2/3] cursor-none"
           }`}
           // Zoom image in the page
@@ -269,9 +269,9 @@ export const ProductDetail = ({
 
       {/* RIGHT SIDE */}
       <div
-        className={`w-full md:max-w-xl flex flex-col justify-start ${viewMode === "modal" ? "p-0 pr-4 my-auto" : "pt-8 md:p-8 md:mt-20 "}  md:overflow-y-auto`}
+        className={`w-full md:max-w-xl md:col-span-1 flex flex-col justify-start ${viewMode === "modal" ? "p-0 pr-4 my-auto" : "pt-8 md:p-8 md:mt-20 lg:mt-40 "}  md:overflow-y-auto`}
       >
-        <div className="space-y-8 flex-1">
+        <div className="space-y-10 flex-1">
           {/* Title & Price */}
           <div className="flex flex-col gap-1.5">
             <h1 className="text-main uppercase text-modal-title font-bold tracking-[0.15em] leading-tight">

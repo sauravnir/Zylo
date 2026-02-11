@@ -94,7 +94,7 @@ export default function Collections() {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem className="text-white font-bold uppercase text-[12px] tracking-wider">
-                  <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                  <Link to="/">Home</Link>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="text-white font-bold uppercase text-[12px] tracking-wider" />
                 <BreadcrumbItem className="text-white font-bold uppercase text-[12px] tracking-wider">
