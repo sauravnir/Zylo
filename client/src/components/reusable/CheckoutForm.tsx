@@ -273,6 +273,7 @@ useEffect(()=>{
         localStorage.removeItem("checkout_form");
         localStorage.removeItem("show_otp");
         localStorage.removeItem("otp_expiry");
+        localStorage.removeItem("original_price_details")
 
         await new Promise((resolve) => setTimeout(resolve, 2000));
         navigate("/thank-you", { state: { order: orderData } });
@@ -494,7 +495,7 @@ useEffect(()=>{
                     }}
                     className="flex flex-row "
                   >
-                    <span className="text-center text-tiny tracking-wide text-muted hover:text-main hover:underline">
+                    <span className="text-center text-nav tracking-wide text-main/90 hover:text-muted underline">
                       Remove Note
                     </span>
                   </button>

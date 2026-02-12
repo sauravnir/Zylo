@@ -287,7 +287,7 @@ export const ProductDetail = ({
             <div className="flex flex-col space-y-6 border-t border-1 border-main">
               <Accordion type="single" collapsible>
                 <AccordionItem value={props.description}>
-                  <AccordionTrigger className="text-muted text-nav uppercase tracking-widest font-medium">
+                  <AccordionTrigger className="text-muted text-menu uppercase tracking-widest font-semibold">
                     Description
                   </AccordionTrigger>
                   <AccordionContent className=" ">
@@ -295,7 +295,7 @@ export const ProductDetail = ({
                       {descriptionPoints.map((item) => (
                         <li
                           key={item}
-                          className="flex text-main/60 text-base items-center gap-1 "
+                          className="flex text-main/80 text-base items-center gap-1 "
                         >
                           <Dot />
                           {item}
@@ -305,7 +305,7 @@ export const ProductDetail = ({
                   </AccordionContent>
                 </AccordionItem>
                 <AccordionItem value={props.productCare}>
-                  <AccordionTrigger className="text-muted text-nav uppercase tracking-widest font-medium">
+                  <AccordionTrigger className="text-muted text-menu uppercase tracking-widest font-bold">
                     Product Care
                   </AccordionTrigger>
                   <AccordionContent>
@@ -313,7 +313,7 @@ export const ProductDetail = ({
                       {productCarePoints.map((item) => (
                         <li
                           key={item}
-                          className="flex text-main/60 text-base items-center gap-1"
+                          className="flex text-main/80 text-base items-center gap-1"
                         >
                           <Dot />
                           {item}
@@ -324,9 +324,9 @@ export const ProductDetail = ({
                 </AccordionItem>
               </Accordion>
               <div className="space-y-4">
-                <div className="text-main text-menu uppercase font-medium">
+                <div className="text-main text-menu uppercase font-bold">
                   Color/s:{" "}
-                  <span className="text-main font-bold ml-1">{productColor}</span>
+                  <span className="text-main font-medium ml-1">{productColor}</span>
                 </div>
 
                 <div className="flex flex-wrap gap-3">
@@ -355,8 +355,8 @@ export const ProductDetail = ({
 
           {/* Size Selection */}
           <div className="space-y-4">
-            <div className="text-main text-menu uppercase font-medium">
-              Size: <span className="text-main font-bold ml-1">{productSize}</span>
+            <div className="text-main text-menu uppercase font-bold">
+              Size: <span className="text-main font-medium ml-1">{productSize}</span>
             </div>
 
             <div className="flex flex-wrap gap-2">
@@ -384,7 +384,7 @@ export const ProductDetail = ({
 
           {/* Quantity */}
           <div className="space-y-4 ">
-            <div className="text-main text-menu uppercase tracking-widest font-medium">
+            <div className="text-main text-menu uppercase tracking-widest font-bold">
               Quantity:
             </div>
             <div className="flex items-center border border-main w-fit">
@@ -504,7 +504,7 @@ export const ProductDetail = ({
                   opacity: 1,
                   x: isZoomed ? undefined : 0,
                   y: isZoomed ? undefined : 0,
-                  scale: isZoomed ? 1.9 : 1,
+                  scale: isZoomed ? 2.8 : 1,
                   cursor: isZoomed ? "zoom-out" : "zoom-in",
                 }}
                 drag={isZoomed}

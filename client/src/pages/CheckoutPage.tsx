@@ -7,12 +7,15 @@ import { CheckoutForm } from "@/components/reusable/CheckoutForm";
 import { TicketPercent, InfoIcon } from "lucide-react";
 import { CartItem } from "@/components/reusable/Cart";
 import { Price } from "@/components/reusable/Price";
-import { subTotalAmount, totalCheckoutAmount } from "@/store/slices/cartSlice";
+import {
+  subTotalAmount,
+  totalCheckoutAmount,
+ 
+} from "@/store/slices/cartSlice";
 import { useAppSelector, useAppDispatch } from "@/store/hook";
 import { setCurrency } from "@/store/slices/currencySlice";
 import { Input } from "@/components/ui/input";
 import { PrimaryButton } from "@/components/reusable/ButtonComponent";
-
 
 const LINKS = [
   { title: "Shipping", href: "/shipping" },
@@ -21,13 +24,20 @@ const LINKS = [
   { title: "Terms", href: "/terms" },
 ];
 
+// Creating a type interface for the oldDetails Snapshot 
+interface CheckoutSnapshot {
+  code : string , 
+  symbol: string , 
+  rate : number,
+}
+
 export default function CheckoutPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const totalItems = useAppSelector(
     (state: RootState) => state.cart.totalItems,
   );
   const cartItems = useAppSelector((state: RootState) => state.cart.items);
-  const { symbol, activeCurrency } = useAppSelector(
+  const { symbol, activeCurrency  } = useAppSelector(
     (state: RootState) => state.currency,
   );
   const shippingCost =
@@ -35,11 +45,24 @@ export default function CheckoutPage() {
   const checkoutAmount = useAppSelector(totalCheckoutAmount);
   const navigate = useNavigate();
   const subTotal = useAppSelector(subTotalAmount);
-
   const dispatch = useAppDispatch();
 
+  const [oldParsed , setOldParsed] = useState<CheckoutSnapshot| null>(null);
+  
   // Automatically switching the global currency to Base NPR for checkout processess
   useEffect(() => {
+    // Getting the old_currency_price from the localStorage
+  const oldDetails = localStorage.getItem("original_price_details")
+  if(oldDetails){
+    try {
+      const decoded = atob(oldDetails)
+      const finalData = JSON.parse(decodeURIComponent(decoded))
+      setOldParsed(finalData);
+    } catch (error) {
+      console.error("Failed to decode currency.",error); 
+    }
+  }
+
     if (activeCurrency !== "NPR") {
       dispatch(
         setCurrency({
@@ -51,6 +74,9 @@ export default function CheckoutPage() {
     }
   }, []);
 
+  // Calculating the oldTotal Amount
+  const oldTotalAmount = (checkoutAmount* (oldParsed?.rate || 1)).toFixed(2);
+ 
   // If there are no cart items and if the isSubmitting state is not true then the user cannot navigate to the page
   useEffect(() => {
     if (totalItems < 1 && !isSubmitting) {
@@ -75,16 +101,15 @@ export default function CheckoutPage() {
             />
             {/* Bottom Links */}
             <div className="border-t border-main border-1 flex flex-row items-center justify-center gap-4 p-2 underline pt-4">
-             {LINKS.map((item)=>(
-              <Link
-                key={item.href}
-                to={item.href}
-                className="text-tiny uppercase text-main/80 hover:text-muted transition-colors duration-300"
-              >
-                {item.title}
-              </Link>
-             ))}
-             
+              {LINKS.map((item) => (
+                <Link
+                  key={item.href}
+                  to={item.href}
+                  className="text-tiny uppercase text-main/80 hover:text-muted transition-colors duration-300"
+                >
+                  {item.title}
+                </Link>
+              ))}
             </div>
           </div>
 
@@ -107,8 +132,8 @@ export default function CheckoutPage() {
 
               <div className="max-h-[350px] overflow-y-auto pr-4  ">
                 {cartItems.length > 0 &&
-                  cartItems.map((items: any) => (
-                    <CartItem key={items.id} item={items} isReadOnly={true} />
+                  cartItems.map((items: any , index) => (
+                    <CartItem key={`${items.id}-${index}`} item={items} isReadOnly={true} />
                   ))}
               </div>
 
@@ -120,7 +145,7 @@ export default function CheckoutPage() {
                     size={16}
                   />
                   <Input
-                  disabled={true}
+                    disabled={true}
                     placeholder="Discount code or gift card"
                     className="pl-10 rounded-none border-muted/30 focus-visible:ring-main font-mono placeholder:font-bold placeholder:tracking-tight text-sm h-11"
                   />
@@ -137,42 +162,62 @@ export default function CheckoutPage() {
               {/* Trust Badges or Help Section */}
               <div className="flex flex-col space-y-2 px-4 py-4 border border-dashed border-main bg-muted/10 text-center">
                 <div className="flex justify-between items-center border-black/5 ">
-                  <span className="font-medium text-main/45 text-product-title uppercase">
+                  <span className="font-medium text-main/70 text-product-title uppercase">
                     Subtotal
                   </span>
-                  <span className="font-medium text-main/45 text-product-title">
+                  <span className="font-bold text-main/70  text-product-title">
                     <Price amount={subTotal} />
                   </span>
                 </div>
                 <div className="flex justify-between items-center border-black/5 ">
-                  <span className="font-medium text-main/45 text-product-title uppercase">
+                  <span className="font-medium text-main/70 text-product-title uppercase">
                     Shipping & Handling
                   </span>
-                  <span className="font-medium text-main/45 text-product-title">
+                  <span className="font-bold text-main/70 text-product-title">
                     <Price amount={shippingCost} />
                   </span>
                 </div>
-                <div className="flex justify-between items-baseline border-main/50 border-t">
-                  <span className="text-main uppercase font-bold tracking-widest">
-                    Total
-                  </span>
-                  <span className="text-main uppercase tracking-wide font-semibold   pt-2">
-                    <Price amount={checkoutAmount} />
-                  </span>
+                <div className="flex justify-between items-baseline border-main/50 border-t pt-6">
+                  <div className="my-auto">
+                    <h1 className="font-body text-main font-bold text-[24px] tracking-tight uppercase">
+                      Total
+                    </h1>
+                  </div>
+                  <div className="flex items-center gap-4">
+                    {oldParsed?.code !== "NPR" && <div className="flex flex-col items-center pl-4 md:pl-0 md:items-end  ">
+                      <span className="text-base font-bold text-main/70  tracking-wide">
+                       {oldParsed?.symbol} {oldTotalAmount}
+                      </span>
+                      <span className="text-[12px] uppercase tracking-tighter  ">
+                        Prev : <strong>({oldParsed?.code})</strong> 
+                      </span>
+                    </div>}
+                  
+                    <div className="h-8 w-[1px] bg-main/30" />
+                    <div className="flex flex-col items-end">
+                      <span className="text-2xl font-semibold text-main tracking-tight">
+                        <Price amount={checkoutAmount} />
+                      </span>
+                      <span className="text-[12px] uppercase tracking-tighter font-bold text-main">
+                        Final Payment : ({activeCurrency})
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div className="bg-yellow-100/15 p-3 rounded-md mt-4 border-2 border-main shadow-lg">
+                {oldParsed?.code !== "NPR" && <div className="bg-yellow-100/15 p-3 rounded-md mt-4 border-2 border-main shadow-lg">
                 <div className="flex gap-2 items-start">
                   <InfoIcon className="w-4 h-4 shrink-0" />
                   <p className="text-sm text-main leading-snug">
                     <strong>Currency Note:</strong> We are currently only
                     accepting payments in
-                    <strong> NPR (Rs.)</strong>. The total has been converted
+                    <strong> {activeCurrency}</strong>. The total has been converted
                     automatically to ensure smooth local payment processing.
                   </p>
                 </div>
-              </div>
+              </div>}
+              
             </div>
           </aside>
         </div>

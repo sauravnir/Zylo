@@ -25,6 +25,7 @@ export interface CartState {
   orderNote: string;
   shippingCost : number,
   shippingCity : string,
+ 
 }
 // Setting the initial state null for an empty cart
 const initialState: CartState = {
@@ -35,6 +36,7 @@ const initialState: CartState = {
   orderNote: "",
   shippingCost : 0,
   shippingCity : "",
+
 };
 
 export const cartSlice = createSlice({
@@ -58,6 +60,7 @@ export const cartSlice = createSlice({
       const existingItem = state.items.find(
         (item) => item.slug === product.slug && item.productSize === size,
       );
+
       // if the items exists then increasing the product quantity else creating a new row of product an appending the props
       if (existingItem) {
         existingItem.itemCartQuantity += itemQuantity;
@@ -148,7 +151,8 @@ export const cartSlice = createSlice({
         const {city , cost} = action.payload;
         state.shippingCity = city 
         state.shippingCost = cost
-    }
+    },
+   
   },
 });
 
@@ -176,6 +180,8 @@ export const subTotalAmount = createSelector(
     ), 
 );
 
+// Storing the old total
+
 // Creating Action Creators for each reducer actions
 // Think this as the method for the reducers
 export const {
@@ -186,7 +192,8 @@ export const {
   setCartOpen,
   setIsUploading,
   addNote,
-  updateShipping
+  updateShipping,
+  
 } = cartSlice.actions;
 // Exporting the main reducer object from the slice
 export default cartSlice.reducer;

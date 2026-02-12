@@ -1,5 +1,6 @@
-import { createSlice , createAsyncThunk ,type PayloadAction } from "@reduxjs/toolkit";
+import { createSlice , createAsyncThunk ,type PayloadAction} from "@reduxjs/toolkit";
 import  { BASE_RATE , BASE_SYMBOL  , BASE_CODE , BASE_NAME , fetchCurrencyRates} from "../API/currencyAPI";
+
 
 // Creating the local storage key
 const LOCAL_CURRENCY = 'currency'
@@ -27,6 +28,7 @@ interface CurrencyState {
     rate : number , 
     allRates : Record <string , number> ,
     status : "idle" | 'loading' | 'fulfilled' | 'failed',
+  
   
 }
 // Setting the initial state value
@@ -57,6 +59,8 @@ export const currencySlice = createSlice({
         setCurrency : (state , action : PayloadAction<CurrencyItem>)=>{
             const {title , code , symbol} = action.payload;
             const upperCaseCode = code.toUpperCase()
+          
+           
             // Setting the activeCurrency
             state.activeCurrency = upperCaseCode; 
             state.symbol = symbol;
@@ -93,5 +97,7 @@ export const currencySlice = createSlice({
         })
     }
 })
+
+
 export const {setCurrency } = currencySlice.actions
 export default currencySlice.reducer

@@ -40,7 +40,7 @@ export const CartSheet = () => {
   const isCartOpen = useSelector((state: RootState) => state.cart.cartOpen);
   const checkoutAmount = useSelector(totalCheckoutAmount);
   const globalNote = useSelector((state: RootState) => state.cart.orderNote);
-  const { rate, symbol } = useSelector((state: RootState) => state.currency);
+  const { rate, symbol , activeCurrency } = useSelector((state: RootState) => state.currency);
 
 
   // Handling the cart Open Logic : Opening the cart except the cartpage
@@ -77,6 +77,17 @@ export const CartSheet = () => {
   const navigate = useNavigate();
   const handleCheckout = async () => {
     dispatch(setIsUploading(true));
+    // Storing the Currency Code, Total Amount and Symbol in localStorage for future reference
+    const oldSnapshot = {
+      code : activeCurrency , 
+      symbol:symbol,
+      rate : rate
+    }
+    const encodedData = btoa(encodeURIComponent(JSON.stringify(oldSnapshot)))
+    // Saving in localStorage
+    localStorage.setItem("original_price_details" , encodedData);
+  
+
     await new Promise((resolve) => setTimeout(resolve, 1000));
     dispatch(setIsUploading(false));
     dispatch(setCartOpen(false));
@@ -157,8 +168,8 @@ export const CartSheet = () => {
           {/* Cart Content */}
           <div className="flex-1 overflow-y-auto pr-2 mx-auto gap-8 px-0 py-4 flex flex-col">
             {storeValue.length > 0 ? (
-              storeValue.map((item) => (
-                <CartItem key={item.title} item={item} isReadOnly={false} />
+              storeValue.map((item:any , index) => (
+                <CartItem key={`${item.id}-${index}`} item={item} isReadOnly={false} />
               ))
             ) : (
               <div className="flex h-full flex-col items-center justify-center px-4">
@@ -178,9 +189,12 @@ export const CartSheet = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.4, delay: 0.2, ease: "backIn" }}
-              className="mt-auto pt-6 pb-8 px-8  border-t border-main relative"
+              className="mt-auto pt-6 pb-8 px-8 z-20 shadow-lg  border-t border-main relative bg-muted/15 "
             >
               <div className="flex flex-col gap-4 pb-2">
+
+               
+
                 <AnimatePresence>
                   {noteCart && (
                     <motion.div
@@ -205,26 +219,26 @@ export const CartSheet = () => {
                         value={localNote}
                         onChange={(e) => setLocalNote(e.target.value)}
                         placeholder="How can we help you?"
-                        className="w-full bg-background p-3 text-muted text-sm outline-none resize-none border border-muted/30 rounded-sm h-24 focus:border-main transition-colors duration-300"
+                        className="w-full bg-card p-3  text-main/70 placeholder:text-main/70 text-sm outline-none resize-none border border-main rounded-sm h-24 focus:border-main transition-colors duration-300"
                       />
                     </motion.div>
                   )}
                 </AnimatePresence>
                 <button
-                  className="flex w-32"
+                  className="flex items-center justify-start w-44"
                   onClick={() => setNoteCart(!noteCart)}
                 >
-                  <span className="mb-4 font-medium text-product-title tracking-normal text-main/75 hover:text-main/50 transition-colors duration-300">
-                    {noteCart ? "Close order note" : "Add order note"}
+                  <span className="mb-4 flex items-center gap-2 font-medium uppercase underline underline-offset-4 text-product-title tracking-normal text-main/75 hover:text-main/50 transition-colors duration-300">
+                    {noteCart ? "Close order note" : "Add order note"} <Plus size={18} className={`transition-transform duration-300 ease-in-out ${noteCart ? "rotate-45":"rotate-0"}`}/>
                   </span>
                 </button>
 
-                {/* Subtotal Row */}
+                 {/* Subtotal Row */}
                 <div className="flex justify-between items-center border-black/5 ">
-                  <span className="font-medium text-main/45 text-product-title uppercase">
+                  <span className="font-medium text-main/75 text-product-title uppercase">
                     Subtotal
                   </span>
-                  <span className="font-medium text-main/45 text-product-title">
+                  <span className="font-medium text-main/75 text-product-title">
                     {symbol} {convertedCheckout}
                   </span>
                 </div>
@@ -237,7 +251,7 @@ export const CartSheet = () => {
                   type="button"
                 />
 
-                <span className="text-main/45 text-sm text-center leading-tight tracking-tight underline">
+                <span className="text-main/60 text-base text-center leading-tight tracking-tight underline">
                   Taxes and shipping calculated at checkout
                 </span>
               </div>

@@ -22,7 +22,7 @@ import {
 } from "@/components/ui/sheet";
 import { cta, menuItems } from "@/objects/Objects";
 import { Link, NavLink } from "react-router-dom";
-import { Separator } from "@/components/ui/separator";
+
 
 // Dropdown for currency selection
 export const DownCurrencyMenu = ({ item }: { item: any }) => {
@@ -43,6 +43,13 @@ export const DownCurrencyMenu = ({ item }: { item: any }) => {
     );
     isOpen(false);
   };
+
+  // Creating the sorted list for the currency to prioritize the selected currency to the top of the dropdown
+  const sortedCurr = [...item.children].sort((a,b)=>{
+    if(a.code === activeCurrency) return -1;
+    if(b.code === activeCurrency) return 1;
+    return 0;
+  })
   return (
     //OnOpenChange Returns Boolean and flips the truthy value
     <DropdownMenu open={open} onOpenChange={isOpen}>
@@ -67,11 +74,12 @@ export const DownCurrencyMenu = ({ item }: { item: any }) => {
             {item.title}
           </DropdownMenuLabel>
 
-          {item.children.map((child: any) => {
+          {sortedCurr?.map((child: any) => {
             const isActive = activeCurrency === child.code;
             return (
-              <motion.div key={child.code}>
+              
                 <DropdownMenuItem
+                  key={child.code}
                   onClick={() => handleCurrencySelection(child)}
                   className={`flex text-muted hover:text-main items-center gap-1 mt-1 cursor-pointer active:text-main
                    ${isActive ? "text-main font-medium" : ""}
@@ -85,7 +93,7 @@ export const DownCurrencyMenu = ({ item }: { item: any }) => {
                     ({child.code} {child.symbol})
                   </span>
                 </DropdownMenuItem>
-              </motion.div>
+              
             );
           })}
         </motion.div>
@@ -166,7 +174,7 @@ export const MobileMenuSheet = () => {
   );
 };
 
-// Dropdown menu for MENU ITEM / S
+// Dropdown menu for MENU ITEM / S / Shop Dropdown
 export const DownMenu = ({ item }: { item: any }) => {
   const [open, isOpen] = useState(false);
   return (
@@ -184,23 +192,17 @@ export const DownMenu = ({ item }: { item: any }) => {
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent
-        className="w-[200px] md:w-auto mt-6 p-2 py-4 border border-main shadow-lg bg-background h-auto overflow-y-hidden"
+        className="w-[200px] md:w-auto mt-6 p-2 py-4 border  shadow-lg bg-background h-auto overflow-y-hidden"
         align="start"
       >
-        <motion.div
-          variants={parentVariants}
-          initial="hidden"
-          animate="visible"
-        >
+        
           <DropdownMenuLabel className="text-tiny text-main font-bold uppercase">
             {item.title}
           </DropdownMenuLabel>
 
           {item.children.map((child: any) => (
-            <motion.div variants={itemVariants} key={child.title}>
+            <motion.div  key={child.title}>
               <DropdownMenuItem className="p-0">
-                
-          
                 <NavLink
                   to={child.link}
                   className={({ isActive }) =>
@@ -220,7 +222,7 @@ export const DownMenu = ({ item }: { item: any }) => {
               </DropdownMenuItem>
             </motion.div>
           ))}
-        </motion.div>
+     
       </DropdownMenuContent>
     </DropdownMenu>
   );

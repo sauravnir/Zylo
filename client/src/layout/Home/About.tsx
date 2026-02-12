@@ -40,7 +40,7 @@ export function About() {
       <span className="font-body text-main text-modal-title uppercase font-bold tracking-widest">
         About
       </span>
-      <p className="text-muted text-paragraph text-sm md:text-base ">
+      <p className="text-main/70  text-sm md:text-base tracking-wide leading-tight">
         Zylo is an exploration of form, weight, and silhouette. We operate at the intersection of industrial design and contemporary luxury, stripping away the excess to reveal the structural architecture of the garment. Every piece is engineered with a focus on textile integrity—creating a permanent uniform for the modern minimalist. <br></br><br></br>
         Our process is defined by the pursuit of the "perfect heavy." From our signature 500GSM custom-milled knits to our modular technical outerwear, we prioritize the tactile over the temporary. We believe a garment should be a long-term asset, evolving with the wearer while maintaining its structural silhouette through years of utility. <br></br><br></br>
         In the world of Zylo, quality isn't an option; it's the foundation. We exist for the collective that values the silent details—the specific drop of a shoulder, the tension of a seam, and the gravity of premium cotton. We don't just build clothing; we construct the modern archive.
