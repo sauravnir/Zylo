@@ -147,10 +147,8 @@ export const ProductDetail = ({
     );
 
     dispatch(setIsUploading(false));
-
     // Closing the modal when the add to cart items is clicked
     closeModal();
-
     // Slide the cart open
     dispatch(setCartOpen(true));
   };
@@ -160,7 +158,7 @@ export const ProductDetail = ({
     >
       <div
         className={`w-full flex flex-col md:col-span-2 items-center bg-background group border-b md:border-b-0 
-    ${viewMode === "modal" ? "justify-center" : "justify-start py-4 md:py-10"}`}
+    ${viewMode === "modal" ? "justify-center" : "justify-start py-4"}`}
       >
         <div
           className={`flex flex-col-reverse md:flex-row gap-24 w-full items-center justify-center ${viewMode === "modal" ? " md:flex-col-reverse" : ""}`}
@@ -169,7 +167,7 @@ export const ProductDetail = ({
           {/* Image Carousel Section for Product Page */}
           {viewMode === "page" && modalImage.length > 1 && (
             <div
-              className="hidden md:flex flex-col gap-2 overflow-y-auto max-h-[450px] lg:max-h-[450px] p-2 scroll-smooth"
+              className="hidden md:flex flex-col gap-1 overflow-y-auto max-h-[450px] lg:max-h-[450px] p-2 scroll-smooth"
               style={{
                 scrollbarWidth: "none", // For Firefox
               }}
@@ -181,7 +179,7 @@ export const ProductDetail = ({
                     key={index}
                     onClick={() => setCurrSlide(index)}
                     className={`relative w-20 aspect-[3/4] flex-shrink-0 overflow-hidden transition-all duration-300
-            ${isActive ? "ring-1 ring-offset-1 ring-main" : "opacity-60 hover:opacity-100"}`}
+            ${isActive ? "ring-1 ring-main" : "opacity-60 hover:opacity-100"}`}
                   >
                     <img
                       src={image}
@@ -285,7 +283,7 @@ export const ProductDetail = ({
       <div
         className={`w-full md:max-w-xl md:col-span-1 flex flex-col justify-start ${viewMode === "modal" ? "p-0 pr-4 my-auto" : "pt-8 md:p-8 md:mt-20 lg:mt-20 "}  md:overflow-y-auto`}
       >
-        <div className="space-y-10 flex-1">
+        <div className="space-y-6 flex-1">
           {/* Title & Price */}
           <div className="flex flex-col gap-1.5">
             <h1 className="text-main uppercase text-modal-title font-bold tracking-[0.15em] leading-tight">
