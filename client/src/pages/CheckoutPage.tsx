@@ -78,6 +78,8 @@ export default function CheckoutPage() {
           symbol: "Rs",
         }),
       );
+    } else if(!oldDetails){
+      setOldParsed(null);
     }
   }, [activeCurrency, symbol, rate, dispatch]);
 
@@ -195,7 +197,8 @@ export default function CheckoutPage() {
                     </h1>
                   </div>
                   <div className="flex items-center gap-4">
-                    {oldParsed?.code !== "NPR" && (
+                    
+                    {oldParsed  && oldParsed?.code !== "NPR" && (
                       <div className="flex flex-col items-center pl-4 md:pl-0 md:items-end  ">
                         <span className="text-base font-bold text-main/70  tracking-wide">
                           {oldParsed?.symbol} {oldTotalAmount}
@@ -219,7 +222,7 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
-              {oldParsed?.code !== "NPR" && (
+              {oldParsed && oldParsed?.code !== "NPR" && (
                 <div className="bg-yellow-100/15 p-3 rounded-md mt-4 border-2 border-main shadow-lg">
                   <div className="flex gap-2 items-start">
                     <InfoIcon className="w-4 h-4 shrink-0" />

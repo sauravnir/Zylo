@@ -137,7 +137,14 @@ export const ProductDetail = ({
     // Making the adding to cart async buy adding a fake delay
     await new Promise((resolve) => setTimeout(resolve, 800));
     // Dispatching the product after the timer
-    dispatch(addItem({ product: props, size: productSize, itemQuantity: num , color : productColor}));
+    dispatch(
+      addItem({
+        product: props,
+        size: productSize,
+        itemQuantity: num,
+        color: productColor,
+      }),
+    );
 
     dispatch(setIsUploading(false));
 
@@ -155,77 +162,108 @@ export const ProductDetail = ({
         className={`w-full flex flex-col md:col-span-2 items-center bg-background group border-b md:border-b-0 
     ${viewMode === "modal" ? "justify-center" : "justify-start py-4 md:py-10"}`}
       >
-        {/* Image Section */}
         <div
-          className={`relative w-full overflow-hidden  ${
-            viewMode === "modal"
-              ? "max-w-[290px] md:max-w-[400px] aspect-[2/3]"
-              : "max-w-[360px] md:max-w-[500px] aspect-[2/3] cursor-none"
-          }`}
-          // Zoom image in the page
-          onClick={() => viewMode === "page" && isClicked(true)}
-          // Hide default cursor on Modal
-          onMouseMove={(e) => {
-            if (viewMode === "page") {
-              setMousePos({ x: e.clientX, y: e.clientY });
-            }
-          }}
-          onMouseEnter={() => viewMode === "page" && setIsHovering(true)}
-          onMouseLeave={() => setIsHovering(false)}
+          className={`flex flex-col-reverse md:flex-row gap-24 w-full items-center justify-center ${viewMode === "modal" ? " md:flex-col-reverse" : ""}`}
         >
-          {/* Custom Cursor Overlaying the Div */}
-          <AnimatePresence>
-            {isHovering && viewMode === "page" && (
-              <Cursor x={mousePos.x} y={mousePos.y} />
-            )}
-          </AnimatePresence>
 
-          {/* Images */}
-          <AnimatePresence mode="wait">
-            <motion.img
-              key={currSlide}
-              src={modalImage[currSlide]}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="w-full h-full object-cover"
-            />
-          </AnimatePresence>
-
-          {/* 3. MODAL NAVIGATION */}
-          {viewMode === "modal" && modalImage.length > 1 && (
-            <>
-              <button
-                onClick={(e) => {
-                  e.stopPropagation(); // Prevent the click from bubbling to the parent div
-                  prevSlide();
-                }}
-                className="group absolute left-2 top-1/2 -translate-y-1/2 z-10 text-primary bg-white w-6 h-6 flex items-center justify-center rounded-full opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-400 active:scale-105"
-              >
-                <ChevronLeft
-                  size={14}
-                  className="hover:text-muted active:text-main active:-translate-x-2 transition-all duration-300"
-                />
-              </button>
-
-              <button
-                onClick={(e) => {
-                  e.stopPropagation(); // Prevent the click from bubbling to the parent div
-                  nextSlide();
-                }}
-                className="group absolute right-2 top-1/2 -translate-y-1/2 z-10 text-primary bg-white w-6 h-6 flex items-center justify-center rounded-full opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-400 active:scale-105"
-              >
-                <ChevronRight
-                  size={14}
-                  className="hover:text-muted active:text-main active:translate-x-2 transition-all duration-300"
-                />
-              </button>
-            </>
+          {/* Image Carousel Section for Product Page */}
+          {viewMode === "page" && modalImage.length > 1 && (
+            <div
+              className="hidden md:flex flex-col gap-2 overflow-y-auto max-h-[450px] lg:max-h-[450px] p-2 scroll-smooth"
+              style={{
+                scrollbarWidth: "none", // For Firefox
+              }}
+            >
+              {modalImage.map((image, index) => {
+                const isActive = currSlide === index;
+                return (
+                  <button
+                    key={index}
+                    onClick={() => setCurrSlide(index)}
+                    className={`relative w-20 aspect-[3/4] flex-shrink-0 overflow-hidden transition-all duration-300
+            ${isActive ? "ring-1 ring-offset-1 ring-main" : "opacity-60 hover:opacity-100"}`}
+                  >
+                    <img
+                      src={image}
+                      alt={`Product thumbnail ${index + 1}`}
+                      className={`w-full h-full object-cover transition-transform duration-500 
+              ${isActive ? "scale-110" : "scale-100"}`}
+                    />
+                  </button>
+                );
+              })}
+            </div>
           )}
+
+          {/* Image Section */}
+          <div
+            className={`relative w-full overflow-hidden  ${
+              viewMode === "modal"
+                ? "max-w-[290px] md:max-w-[400px] aspect-[2/3]"
+                : "max-w-[360px] md:max-w-[500px] aspect-[2/3] cursor-none"
+            }`}
+            onClick={() => viewMode === "page" && isClicked(true)}
+            onMouseMove={(e) => {
+              if (viewMode === "page") {
+                setMousePos({ x: e.clientX, y: e.clientY });
+              }
+            }}
+            onMouseEnter={() => viewMode === "page" && setIsHovering(true)}
+            onMouseLeave={() => setIsHovering(false)}
+          >
+            {/* Custom Cursor Overlay */}
+            <AnimatePresence>
+              {isHovering && viewMode === "page" && (
+                <Cursor x={mousePos.x} y={mousePos.y} />
+              )}
+            </AnimatePresence>
+
+            {/* Images */}
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={currSlide}
+                src={modalImage[currSlide]}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="w-full h-full object-cover"
+              />
+            </AnimatePresence>
+
+            {/* MODAL NAVIGATION */}
+            {viewMode === "modal" && modalImage.length > 1 && (
+              <>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    prevSlide();
+                  }}
+                  className="group absolute left-2 top-1/2 -translate-y-1/2 z-10 text-primary bg-white w-6 h-6 flex items-center justify-center rounded-full opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-400 active:scale-105"
+                >
+                  <ChevronLeft
+                    size={14}
+                    className="hover:text-muted active:text-main transition-all duration-300"
+                  />
+                </button>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    nextSlide();
+                  }}
+                  className="group absolute right-2 top-1/2 -translate-y-1/2 z-10 text-primary bg-white w-6 h-6 flex items-center justify-center rounded-full opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-400 active:scale-105"
+                >
+                  <ChevronRight
+                    size={14}
+                    className="hover:text-muted active:text-main transition-all duration-300"
+                  />
+                </button>
+              </>
+            )}
+          </div>
         </div>
 
-        {/* Dots Carousel Navigation */}
+        {/* Mobile Dots - Kept at bottom */}
         {modalImage.length > 1 && (
           <div
             className={`${viewMode === "page" && "block md:hidden"} mt-8 flex gap-1.5 mb-4`}
@@ -241,35 +279,11 @@ export const ProductDetail = ({
             ))}
           </div>
         )}
-
-        {/* Displaying Image Navigation at the bottom of the Carousel in Product Page */}
-        {viewMode === "page" && modalImage.length > 1 && (
-          <div className="hidden md:flex mt-4 flex-wrap gap-2">
-            {modalImage.map((image, index) => {
-              const isActive = currSlide === index;
-              return (
-                <button
-                  key={index}
-                  onClick={() => setCurrSlide(index)}
-                  className={`relative w-20 aspect-[3/4] overflow-hidden transition-all duration-300
-            ${isActive ? "ring-1 ring-offset-1 ring-main" : ""}`}
-                >
-                  <img
-                    src={image}
-                    alt={`Product thumbnail ${index + 1}`}
-                    className={`w-full h-full object-cover transition-transform duration-500 ${isActive ? "scale-110" : "scale-100"}`}
-                    // onError={() => setError(true)}
-                  />
-                </button>
-              );
-            })}
-          </div>
-        )}
       </div>
 
       {/* RIGHT SIDE */}
       <div
-        className={`w-full md:max-w-xl md:col-span-1 flex flex-col justify-start ${viewMode === "modal" ? "p-0 pr-4 my-auto" : "pt-8 md:p-8 md:mt-20 lg:mt-40 "}  md:overflow-y-auto`}
+        className={`w-full md:max-w-xl md:col-span-1 flex flex-col justify-start ${viewMode === "modal" ? "p-0 pr-4 my-auto" : "pt-8 md:p-8 md:mt-20 lg:mt-20 "}  md:overflow-y-auto`}
       >
         <div className="space-y-10 flex-1">
           {/* Title & Price */}
@@ -326,7 +340,9 @@ export const ProductDetail = ({
               <div className="space-y-4">
                 <div className="text-main text-menu uppercase font-bold">
                   Color/s:{" "}
-                  <span className="text-main font-medium ml-1">{productColor}</span>
+                  <span className="text-main font-medium ml-1">
+                    {productColor}
+                  </span>
                 </div>
 
                 <div className="flex flex-wrap gap-3">
@@ -356,7 +372,8 @@ export const ProductDetail = ({
           {/* Size Selection */}
           <div className="space-y-4">
             <div className="text-main text-menu uppercase font-bold">
-              Size: <span className="text-main font-medium ml-1">{productSize}</span>
+              Size:{" "}
+              <span className="text-main font-medium ml-1">{productSize}</span>
             </div>
 
             <div className="flex flex-wrap gap-2">
@@ -418,10 +435,7 @@ export const ProductDetail = ({
               }
               onClick={addCartItems}
             />
-            <PaymentButton
-              isDisabled={true}
-              name="Pay online"
-            />
+            <PaymentButton isDisabled={true} name="Pay online" />
           </div>
 
           {/* Optional Text  */}
@@ -459,7 +473,7 @@ export const ProductDetail = ({
                       e.stopPropagation();
                       prevSlide();
                     }}
-                    className="group p-2 rounded-full text-primary bg-background transition-colors duration-300 hover:scale-105"
+                    className="group p-2 rounded-full text-primary bg-background transition-colors border border-main  duration-300 hover:scale-105"
                   >
                     <ChevronLeft
                       size={24}
@@ -470,7 +484,7 @@ export const ProductDetail = ({
 
                 {/* Close Button */}
                 <button
-                  className="flex items-center justify-center text-main hover:rotate-90 rounded-full bg-background w-14 h-14  transition-transform duration-300"
+                  className="flex items-center justify-center text-main hover:rotate-90 rounded-full bg-background w-14 h-14  border border-main transition-transform duration-300"
                   onClick={() => isClicked(false)}
                 >
                   <Plus size={32} className="rotate-45" />
@@ -483,7 +497,7 @@ export const ProductDetail = ({
                       e.stopPropagation();
                       nextSlide();
                     }} // Fixed to nextSlide
-                    className="group p-2 rounded-full text-primary bg-background transition-colors duration-300 hover:scale-105"
+                    className="group p-2 rounded-full text-primary bg-background transition-colors border border-main duration-300 hover:scale-105"
                   >
                     <ChevronRight
                       size={24}

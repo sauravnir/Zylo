@@ -5,6 +5,7 @@ export const BASE_SYMBOL = "Rs";
 export const BASE_RATE = 1;
 export const BASE_NAME = "Nepal";
 
+
 // Fetching live rates from the API
 export const fetchCurrencyRates = async () => {
   try {

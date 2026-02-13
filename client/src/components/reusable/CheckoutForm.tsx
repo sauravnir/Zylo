@@ -273,7 +273,6 @@ useEffect(()=>{
         localStorage.removeItem("checkout_form");
         localStorage.removeItem("show_otp");
         localStorage.removeItem("otp_expiry");
-        localStorage.removeItem("original_price_details")
 
         await new Promise((resolve) => setTimeout(resolve, 2000));
         navigate("/thank-you", { state: { order: orderData } });

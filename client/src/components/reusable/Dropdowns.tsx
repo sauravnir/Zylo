@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -21,7 +21,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { cta, menuItems } from "@/objects/Objects";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 
 
 // Dropdown for currency selection
@@ -33,6 +33,27 @@ export const DownCurrencyMenu = ({ item }: { item: any }) => {
     (state: RootState) => state.currency,
   );
   const dispatch = useDispatch();
+  const location = useLocation()
+
+  // Loading the currency from the LocalStorage if the user naviogates to other page except checkout
+  useEffect(()=>{
+    // Only working if the user is not in CheckoutPage
+    if (location.pathname !== "/checkout"){
+      const savedCurr = localStorage.getItem("original_price_details");
+      if(savedCurr){
+        const decoded = atob(savedCurr);
+        const parsedData = JSON.parse(decodeURIComponent(decoded));
+        dispatch(setCurrency({
+          title: parsedData.title,
+          code: parsedData.code , 
+          symbol:parsedData.symbol
+        }))
+      }
+      localStorage.removeItem("original_price_details")
+    }
+  },[location.pathname])
+
+  // Handling the currency change when the user selects any currency
   const handleCurrencySelection = (child: any) => {
     dispatch(
       setCurrency({

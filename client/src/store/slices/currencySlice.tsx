@@ -1,5 +1,5 @@
-import { createSlice , createAsyncThunk ,type PayloadAction} from "@reduxjs/toolkit";
-import  { BASE_RATE , BASE_SYMBOL  , BASE_CODE , BASE_NAME , fetchCurrencyRates} from "../API/currencyAPI";
+import { createSlice , createAsyncThunk ,type PayloadAction} from "@reduxjs/toolkit"
+import  { BASE_RATE , BASE_SYMBOL  , BASE_CODE , BASE_NAME , fetchCurrencyRates } from "../API/currencyAPI";
 
 
 // Creating the local storage key
@@ -7,9 +7,16 @@ const LOCAL_CURRENCY = 'currency'
 
 // Loading the initial localStorage item and setting in the default state
 const getStorageCurrency = () => {
-    if(typeof window === "undefined") return null;
+    if (typeof window === "undefined") return null;
     const savedCurrency = localStorage.getItem(LOCAL_CURRENCY);
-    return savedCurrency ? JSON.parse(savedCurrency): null ;
+    if (!savedCurrency) return null;
+    try {
+        const decodedString = decodeURIComponent(atob(savedCurrency));
+        return JSON.parse(decodedString);
+    } catch (error) {
+        console.error("Error restoration currency from storage:", error);
+        return null;
+    }
 }
 const storageCurrency = getStorageCurrency(); 
 
@@ -28,8 +35,6 @@ interface CurrencyState {
     rate : number , 
     allRates : Record <string , number> ,
     status : "idle" | 'loading' | 'fulfilled' | 'failed',
-  
-  
 }
 // Setting the initial state value
 const initialState : CurrencyState = {
@@ -50,6 +55,7 @@ export const fetchLiveRates = createAsyncThunk('fetchLiveRates', async ()=>{
     return liveRates ;
 })
 
+
 // Creating a Currency Slice 
 export const currencySlice = createSlice({
     name : "currency",
@@ -59,8 +65,6 @@ export const currencySlice = createSlice({
         setCurrency : (state , action : PayloadAction<CurrencyItem>)=>{
             const {title , code , symbol} = action.payload;
             const upperCaseCode = code.toUpperCase()
-          
-           
             // Setting the activeCurrency
             state.activeCurrency = upperCaseCode; 
             state.symbol = symbol;
@@ -72,7 +76,9 @@ export const currencySlice = createSlice({
                 state.rate = upperCaseCode ===  BASE_CODE ? BASE_RATE : state.rate ;
             }
             // Saving the data to LocalStorage after the user selects
-            localStorage.setItem(LOCAL_CURRENCY, JSON.stringify(action.payload))
+            const jsonString = JSON.stringify(action.payload)
+            const encoded = btoa(encodeURIComponent(jsonString))
+            localStorage.setItem(LOCAL_CURRENCY, encoded)
         } 
     },
     // Handling the pending , fulfilled and rejected states from the creatAsyncThunk
