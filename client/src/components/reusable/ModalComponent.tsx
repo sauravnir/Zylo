@@ -169,7 +169,7 @@ export const ProductDetail = ({
             <div
               className="hidden md:flex flex-col gap-1 overflow-y-auto max-h-[450px] lg:max-h-[450px] p-2 scroll-smooth"
               style={{
-                scrollbarWidth: "none", // For Firefox
+                scrollbarWidth: "none", 
               }}
             >
               {modalImage.map((image, index) => {
@@ -197,7 +197,7 @@ export const ProductDetail = ({
           <div
             className={`relative w-full overflow-hidden  ${
               viewMode === "modal"
-                ? "max-w-[290px] md:max-w-[400px] aspect-[2/3]"
+                ? "max-w-[290px] md:max-w-[340px] aspect-[2/3]"
                 : "max-w-[360px] md:max-w-[500px] aspect-[2/3] cursor-none"
             }`}
             onClick={() => viewMode === "page" && isClicked(true)}
@@ -281,7 +281,7 @@ export const ProductDetail = ({
 
       {/* RIGHT SIDE */}
       <div
-        className={`w-full md:max-w-xl md:col-span-1 flex flex-col justify-start ${viewMode === "modal" ? "p-0 pr-4 my-auto" : "pt-8 md:p-8 md:mt-20 lg:mt-20 "}  md:overflow-y-auto`}
+        className={`w-full md:max-w-xl md:col-span-1 flex flex-col justify-start ${viewMode === "modal" ? "p-0 my-auto" : "pt-8 md:p-8 md:mt-20 lg:mt-20 "}  md:overflow-y-auto`}
       >
         <div className="space-y-6 flex-1">
           {/* Title & Price */}
@@ -437,11 +437,11 @@ export const ProductDetail = ({
           </div>
 
           {/* Optional Text  */}
-          <div className="flex flex-col md:flex-row justify-center space-y-2 p-0 ">
+          <div className="flex flex-col md:flex-row justify-start space-y-2 p-0 ">
             {viewMode === "modal" && (
               <div className="text-center">
                 <Link to={`/products/${props.slug}`}>
-                  <span className="text-main transition-all duration-400 font-bold  hover:text-muted text-sm uppercase underline ">
+                  <span className="text-main transition-all duration-400 font-normal  hover:text-muted text-sm uppercase underline ">
                     View Details
                   </span>
                 </Link>
