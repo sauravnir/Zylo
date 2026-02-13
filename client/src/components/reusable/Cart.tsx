@@ -40,7 +40,7 @@ export const CartSheet = () => {
   const isCartOpen = useSelector((state: RootState) => state.cart.cartOpen);
   const checkoutAmount = useSelector(totalCheckoutAmount);
   const globalNote = useSelector((state: RootState) => state.cart.orderNote);
-  const { rate, symbol , activeCurrency } = useSelector((state: RootState) => state.currency);
+  const { rate, symbol  } = useSelector((state: RootState) => state.currency);
 
 
   // Handling the cart Open Logic : Opening the cart except the cartpage
@@ -77,17 +77,6 @@ export const CartSheet = () => {
   const navigate = useNavigate();
   const handleCheckout = async () => {
     dispatch(setIsUploading(true));
-    // Storing the Currency Code, Total Amount and Symbol in localStorage for future reference
-    const oldSnapshot = {
-      code : activeCurrency , 
-      symbol:symbol,
-      rate : rate
-    }
-    const encodedData = btoa(encodeURIComponent(JSON.stringify(oldSnapshot)))
-    // Saving in localStorage
-    localStorage.setItem("original_price_details" , encodedData);
-  
-
     await new Promise((resolve) => setTimeout(resolve, 1000));
     dispatch(setIsUploading(false));
     dispatch(setCartOpen(false));
@@ -192,9 +181,6 @@ export const CartSheet = () => {
               className="mt-auto pt-6 pb-8 px-8 z-20 shadow-lg  border-t border-main relative bg-muted/15 "
             >
               <div className="flex flex-col gap-4 pb-2">
-
-               
-
                 <AnimatePresence>
                   {noteCart && (
                     <motion.div

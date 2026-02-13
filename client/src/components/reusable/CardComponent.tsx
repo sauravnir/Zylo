@@ -59,6 +59,7 @@ export function ProductCard({
             <Link to={`/products/${props.slug}`}>
               {/* Desktop Image Section */}
               <img
+                key={props.primaryImage}
                 src={Error ? props.primaryImage : currImage}
                 alt={props.title}
                 className={`w-full h-full object-cover hidden md:block ${!hoverImage ? "group-hover:scale-105 transition-transform duration-300" : ""}`}

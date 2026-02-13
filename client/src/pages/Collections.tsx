@@ -1,7 +1,7 @@
 import { useParams, useNavigate , Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useProducts } from "@/context/ProductContext";
-import { motion } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 // import { PRODUCTS_LIST } from "@/objects/Objects";
 import { NavigationBar } from "@/components/reusable/Navigation";
 import { Footer } from "@/components/reusable/Footer";
@@ -24,19 +24,21 @@ export default function Collections() {
   const [categorySearch, setCategorySearch] = useState("");
   const navigate = useNavigate();
   
-  const { filteredProducts, filters, resetFilters, setActiveCategory } =useProducts();
+  const { filteredProducts, filters, resetFilters, setActiveCategory, setSearchItem } =useProducts();
   // Updating the url automatically according to the filter
   useEffect(() => {
     if (category) {
       setActiveCategory(category.toLowerCase());
     }
-    return () => setActiveCategory("all"); //fallback
-  }, [category, setActiveCategory]);
-
-  // Resetting all the initial filters so the user starts fresh
-  useEffect(() => {
+    // Resetting the searhTerm to reset the component mounting
+    if (typeof setSearchItem === "function"){
+      setSearchItem("");
+    }
+      // Resetting all the initial filters so the user starts fresh
     resetFilters();
-  }, [category]);
+
+    return () => setActiveCategory("all"); //fallback
+  }, [category, setActiveCategory , setSearchItem ]);
 
   // Handling the enter keystroke of the category search button navigate to the category url
   const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -77,11 +79,16 @@ export default function Collections() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.5 }}
-            className="absolute inset-0 z-10 flex items-center justify-center p-6"
+            className="absolute inset-0 z-10 flex flex-col items-center justify-center p-6"
           >
             <h1 className="text-display font-logo text-white  text-center">
               {category}
             </h1>
+            <p className="hidden md:flex text-white text-base underline underline-offset-8 tracking-widest mt-4">
+                <span className="uppercase font-bold">
+                  Total Items: {filteredProducts.length}
+                </span>
+              </p>
           </motion.div>
 
           {/* Breadcrumbs */}
@@ -114,7 +121,8 @@ export default function Collections() {
       
 
       {filteredProducts.length > 0 ? (
-        <motion.div
+        <AnimatePresence mode="wait">
+            <motion.div
           variants={parentVariants}
           initial="hidden"
           animate="visible"
@@ -136,6 +144,8 @@ export default function Collections() {
               onPageChange={setCurrentPage} 
             />
         </motion.div>
+        </AnimatePresence>
+        
       ) : (
         <div className="bg-background">
              <div className=" max-w-sm mx-auto py-60 px-4 text-center ">

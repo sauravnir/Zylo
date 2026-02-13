@@ -32,19 +32,23 @@ export const SearchPage = () => {
   useEffect(() => {
     setActiveCategory("all");
     if (queryFromUrl) {
-      setSearchItem(queryFromUrl);
       setLocalSearch(queryFromUrl);
     }
-  }, [queryFromUrl, setSearchItem , setActiveCategory]);
+    // Only rendering the details if the search doenot matches the url query.
+    if(searchTerm !== queryFromUrl){
+      setSearchItem(queryFromUrl);
+    }
+
+  }, [queryFromUrl]);
 
 
   // Handling the pagination functionality
   // Calling the usePagination hook and passing the filteredProducts and page number. In the actual products render map , replacing to currentItems as well. 
-const { currentItems, currentPage, setCurrentPage, totalPages } = usePagination(filteredProducts, 16); // 16 items per page 
+  const { currentItems, currentPage, setCurrentPage, totalPages } = usePagination(filteredProducts, 16); // 16 items per page 
 
   return (
     // Setting the key re-renders the page after every search fetching
-    <div className="min-h-screen " key={queryFromUrl}>  
+    <div className="min-h-screen " >  
       <NavigationBar />
 
       <main className="flex-grow flex flex-col bg-background">

@@ -19,21 +19,22 @@ export const DownSearch = ({ title }: { title: string }) => {
   const { searchTerm, setSearchItem, searchSuggestions ,setActiveCategory} = useProducts();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
-
+  
   //  Sending the search items in the url to maintain state
   const handleSearch = (e: any) => {
     const value = e.target.value;
-
-    setSearchItem(value);
     // Setting the url to q: searchTerm i.e the search input
     setSearchParams({ q: value }, { replace: true });
   };
 
   // Handle View ALl Products key enter
   const goToSearch = () => {
-    if (searchTerm.trim()) {
+    const query = searchParams.get("q") || "";
+    if (query.trim()) {
+      setSearchItem(query.trim());
+      setOpen(false);
       // .trim removes extra white spaces
-      navigate(`/search?q=${encodeURIComponent(searchTerm.trim())}`);
+      navigate(`/search?q=${encodeURIComponent(query.trim())}`);
     }
   };
 // Handling category items clicking

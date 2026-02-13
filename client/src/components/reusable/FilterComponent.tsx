@@ -64,6 +64,7 @@ export const ItemFilters = () => {
       </div>
 
       <div className="flex flex-row items-center gap-10">
+        
         {/* Grid Cols Filter */}
         <div className="hidden md:flex items-center gap-4">
           {[3, 4, 6].map((num) => (

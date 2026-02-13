@@ -7,11 +7,7 @@ import { CheckoutForm } from "@/components/reusable/CheckoutForm";
 import { TicketPercent, InfoIcon } from "lucide-react";
 import { CartItem } from "@/components/reusable/Cart";
 import { Price } from "@/components/reusable/Price";
-import {
-  subTotalAmount,
-  totalCheckoutAmount,
- 
-} from "@/store/slices/cartSlice";
+import { subTotalAmount, totalCheckoutAmount } from "@/store/slices/cartSlice";
 import { useAppSelector, useAppDispatch } from "@/store/hook";
 import { setCurrency } from "@/store/slices/currencySlice";
 import { Input } from "@/components/ui/input";
@@ -24,11 +20,11 @@ const LINKS = [
   { title: "Terms", href: "/terms" },
 ];
 
-// Creating a type interface for the oldDetails Snapshot 
+// Creating a type interface for the oldDetails Snapshot
 interface CheckoutSnapshot {
-  code : string , 
-  symbol: string , 
-  rate : number,
+  code: string;
+  symbol: string;
+  rate: number;
 }
 
 export default function CheckoutPage() {
@@ -37,7 +33,7 @@ export default function CheckoutPage() {
     (state: RootState) => state.cart.totalItems,
   );
   const cartItems = useAppSelector((state: RootState) => state.cart.items);
-  const { symbol, activeCurrency  } = useAppSelector(
+  const { symbol, activeCurrency, rate } = useAppSelector(
     (state: RootState) => state.currency,
   );
   const shippingCost =
@@ -47,23 +43,34 @@ export default function CheckoutPage() {
   const subTotal = useAppSelector(subTotalAmount);
   const dispatch = useAppDispatch();
 
-  const [oldParsed , setOldParsed] = useState<CheckoutSnapshot| null>(null);
-  
+  const [oldParsed, setOldParsed] = useState<CheckoutSnapshot | null>(null);
+
   // Automatically switching the global currency to Base NPR for checkout processess
   useEffect(() => {
     // Getting the old_currency_price from the localStorage
-  const oldDetails = localStorage.getItem("original_price_details")
-  if(oldDetails){
-    try {
-      const decoded = atob(oldDetails)
-      const finalData = JSON.parse(decodeURIComponent(decoded))
-      setOldParsed(finalData);
-    } catch (error) {
-      console.error("Failed to decode currency.",error); 
+    const oldDetails = localStorage.getItem("original_price_details");
+    if (oldDetails) {
+      try {
+        const decoded = atob(oldDetails);
+        const finalData = JSON.parse(decodeURIComponent(decoded));
+        setOldParsed(finalData);
+      } catch (error) {
+        console.error("Failed to decode currency.", error);
+      }
     }
-  }
-
+    // Auto-saving the oldCurrency in the localStorage
     if (activeCurrency !== "NPR") {
+      // Storing the Currency Code, Total Amount and Symbol in localStorage immediately if the currency is not NPR.
+      const oldSnapshot = {
+        code: activeCurrency,
+        symbol: symbol,
+        rate: rate,
+      };
+      const encodedData = btoa(encodeURIComponent(JSON.stringify(oldSnapshot)));
+      // Saving in localStorage
+      localStorage.setItem("original_price_details", encodedData);
+      setOldParsed(oldSnapshot);
+
       dispatch(
         setCurrency({
           title: "Nepal",
@@ -72,11 +79,11 @@ export default function CheckoutPage() {
         }),
       );
     }
-  }, []);
+  }, [activeCurrency, symbol, rate, dispatch]);
 
   // Calculating the oldTotal Amount
-  const oldTotalAmount = (checkoutAmount* (oldParsed?.rate || 1)).toFixed(2);
- 
+  const oldTotalAmount = (checkoutAmount * (oldParsed?.rate || 1)).toFixed(2);
+
   // If there are no cart items and if the isSubmitting state is not true then the user cannot navigate to the page
   useEffect(() => {
     if (totalItems < 1 && !isSubmitting) {
@@ -132,8 +139,12 @@ export default function CheckoutPage() {
 
               <div className="max-h-[350px] overflow-y-auto pr-4  ">
                 {cartItems.length > 0 &&
-                  cartItems.map((items: any , index) => (
-                    <CartItem key={`${items.id}-${index}`} item={items} isReadOnly={true} />
+                  cartItems.map((items: any, index) => (
+                    <CartItem
+                      key={`${items.id}-${index}`}
+                      item={items}
+                      isReadOnly={true}
+                    />
                   ))}
               </div>
 
@@ -184,15 +195,17 @@ export default function CheckoutPage() {
                     </h1>
                   </div>
                   <div className="flex items-center gap-4">
-                    {oldParsed?.code !== "NPR" && <div className="flex flex-col items-center pl-4 md:pl-0 md:items-end  ">
-                      <span className="text-base font-bold text-main/70  tracking-wide">
-                       {oldParsed?.symbol} {oldTotalAmount}
-                      </span>
-                      <span className="text-[12px] uppercase tracking-tighter  ">
-                        Prev : <strong>({oldParsed?.code})</strong> 
-                      </span>
-                    </div>}
-                  
+                    {oldParsed?.code !== "NPR" && (
+                      <div className="flex flex-col items-center pl-4 md:pl-0 md:items-end  ">
+                        <span className="text-base font-bold text-main/70  tracking-wide">
+                          {oldParsed?.symbol} {oldTotalAmount}
+                        </span>
+                        <span className="text-[12px] uppercase tracking-tighter  ">
+                          Prev : <strong>({oldParsed?.code})</strong>
+                        </span>
+                      </div>
+                    )}
+
                     <div className="h-8 w-[1px] bg-main/30" />
                     <div className="flex flex-col items-end">
                       <span className="text-2xl font-semibold text-main tracking-tight">
@@ -206,18 +219,20 @@ export default function CheckoutPage() {
                 </div>
               </div>
 
-                {oldParsed?.code !== "NPR" && <div className="bg-yellow-100/15 p-3 rounded-md mt-4 border-2 border-main shadow-lg">
-                <div className="flex gap-2 items-start">
-                  <InfoIcon className="w-4 h-4 shrink-0" />
-                  <p className="text-sm text-main leading-snug">
-                    <strong>Currency Note:</strong> We are currently only
-                    accepting payments in
-                    <strong> {activeCurrency}</strong>. The total has been converted
-                    automatically to ensure smooth local payment processing.
-                  </p>
+              {oldParsed?.code !== "NPR" && (
+                <div className="bg-yellow-100/15 p-3 rounded-md mt-4 border-2 border-main shadow-lg">
+                  <div className="flex gap-2 items-start">
+                    <InfoIcon className="w-4 h-4 shrink-0" />
+                    <p className="text-sm text-main leading-snug">
+                      <strong>Currency Note:</strong> We are currently only
+                      accepting payments in
+                      <strong> {activeCurrency}</strong>. The total has been
+                      converted automatically to ensure smooth local payment
+                      processing.
+                    </p>
+                  </div>
                 </div>
-              </div>}
-              
+              )}
             </div>
           </aside>
         </div>

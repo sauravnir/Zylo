@@ -25,7 +25,6 @@ export interface CartState {
   orderNote: string;
   shippingCost : number,
   shippingCity : string,
- 
 }
 // Setting the initial state null for an empty cart
 const initialState: CartState = {
@@ -36,7 +35,6 @@ const initialState: CartState = {
   orderNote: "",
   shippingCost : 0,
   shippingCity : "",
-
 };
 
 export const cartSlice = createSlice({
