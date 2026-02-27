@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
 
-
 interface UsePaginationResult<T> {
   currentPage: number;
   setCurrentPage: (page: number) => void;

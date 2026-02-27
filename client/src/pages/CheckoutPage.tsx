@@ -100,7 +100,7 @@ export default function CheckoutPage() {
       <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-8 py-12 md:py-8 border-l border-r border-main">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 lg:gap-24 ">
           {/* Checkout Form  */}
-          <div className="order-2 lg:order-1 lg:col-span-7 space-y-10 p-4 border-r border-main ">
+          <div className="order-2 lg:order-1 lg:col-span-7 space-y-10 p-4 lg:pr-12 lg:border-r border-t lg:border-t-0 border-main ">
             <CheckoutForm
               symbol={symbol}
               shippingAmount={shippingCost}
@@ -109,12 +109,12 @@ export default function CheckoutPage() {
               onStartSubmitting={() => setIsSubmitting(true)}
             />
             {/* Bottom Links */}
-            <div className="border-t border-main border-1 flex flex-row items-center justify-center gap-4 p-2 underline pt-4">
+            <div className="border-t border-main border-1 flex flex-row items-center justify-center gap-4 p-2 pt-4">
               {LINKS.map((item) => (
                 <Link
                   key={item.href}
                   to={item.href}
-                  className="text-tiny uppercase text-main/80 hover:text-muted transition-colors duration-300"
+                  className="text-tiny uppercase font-bold underline underline-offset-2 text-main/80 hover:text-muted transition-colors duration-300"
                 >
                   {item.title}
                 </Link>
@@ -123,8 +123,8 @@ export default function CheckoutPage() {
           </div>
 
           <aside className="order-1 lg:order-1 lg:col-span-5">
-            <div className="sticky top-2 space-y-4">
-              <div className="flex items-center justify-between px-0 p-4 border-b border-main rounded-none">
+            <div className="sticky top-10 space-y-4 ">
+              <div className="flex items-center justify-between px-0 p-4 underline rounded-none">
                 <h2 className="text-base font-bold uppercase tracking-widest">
                   Order Summary ({totalItems})
                 </h2>
@@ -132,14 +132,14 @@ export default function CheckoutPage() {
                   to="/cart"
                   className="group rounded-full p- transition-all duration-300"
                 >
-                  {/* <Pencil className="group-hover:scale-90 text-white transition-all duration-300" size={16} /> */}
-                  <span className="underline text-main font-semibold text-button uppercase hover:text-muted">
+                  {/* <Pencil className="group-hover:scale-90 text-main  transition-all duration-300" size={16} /> */}
+                  <span className=" text-main font-semibold text-button uppercase hover:text-muted">
                     Edit
                   </span>
                 </Link>
               </div>
 
-              <div className="max-h-[350px] overflow-y-auto pr-4  ">
+              <div className="max-h-[250px] overflow-y-auto pr-4">
                 {cartItems.length > 0 &&
                   cartItems.map((items: any, index) => (
                     <CartItem
@@ -199,7 +199,7 @@ export default function CheckoutPage() {
                   <div className="flex items-center gap-4">
                     
                     {oldParsed  && oldParsed?.code !== "NPR" && (
-                      <div className="flex flex-col items-center pl-4 md:pl-0 md:items-end  ">
+                      <div className="flex flex-col items-center pl-4 md:pl-0 md:items-end mt-2 ">
                         <span className="text-base font-bold text-main/70  tracking-wide">
                           {oldParsed?.symbol} {oldTotalAmount}
                         </span>
