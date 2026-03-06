@@ -152,10 +152,12 @@ export default function Collections() {
           <h1 className="text-paragraph text-main font-bold uppercase tracking-widest">
             No items match your filters.
           </h1>
-          <p className="text-main/60 text-sm mt-2">
+          <p className="text-main/70 text-sm mt-2">
             Try searching for exising category items.
           </p>
-          <Input
+
+          
+          {/* <Input
             type="text"
             autoFocus
             className="mt-12 h-auto border-0 border-b border-main/50 bg-transparent px-0 pb-4 pt-0 text-2xl md:text-2xl uppercase tracking-tighter shadow-none rounded-none placeholder:text-main/50  focus-visible:ring-0 focus-visible:border-main  transition-colors duration-300"
@@ -163,7 +165,7 @@ export default function Collections() {
             value={categorySearch}
             onChange={(e) => setCategorySearch(e.target.value)}
             onKeyDown={handleEnter}
-          />
+          /> */}
         </div>
         </div>
        

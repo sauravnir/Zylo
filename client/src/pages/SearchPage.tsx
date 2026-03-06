@@ -44,7 +44,7 @@ export const SearchPage = () => {
   // Handling the pagination functionality
   // Calling the usePagination hook and passing the filteredProducts and page number. In the actual products render map , replacing to currentItems as well.
   const { currentItems, currentPage, setCurrentPage, totalPages } =
-    usePagination(filteredProducts, 16); // 16 items per page
+    usePagination(filteredProducts, 20); // 16 items per page
 
   return (
     // Setting the key re-renders the page after every search fetching
