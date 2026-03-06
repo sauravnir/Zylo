@@ -71,7 +71,7 @@ export function OrderConfirmation() {
               {orderDetails.customerData.lastName}
             </span>
           </h1>
-          <h2 className="text-base tracking-wide  text-muted">
+          <h2 className="text-base tracking-wide  text-main/70">
             Your order has been received and is getting processed.
           </h2>
           <div className="p-4">

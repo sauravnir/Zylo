@@ -335,6 +335,8 @@ export const ProductDetail = ({
                   </AccordionContent>
                 </AccordionItem>
               </Accordion>
+
+              {/* Colors Section  */}
               <div className="space-y-4">
                 <div className="text-main text-menu uppercase font-bold">
                   Color/s:{" "}

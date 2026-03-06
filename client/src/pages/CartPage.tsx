@@ -5,7 +5,7 @@ import { NavigationBar } from "@/components/reusable/Navigation";
 import { CartItem } from "@/components/reusable/Cart";
 import { useDispatch } from "react-redux";
 import { type RootState } from "@/store/store";
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart , Trash , Plus } from "lucide-react";
 import { PrimaryButton } from "@/components/reusable/ButtonComponent";
 import { Price } from "@/components/reusable/Price";
 import { subTotalAmount } from "@/store/slices/cartSlice";
@@ -95,11 +95,11 @@ export default function CartPage() {
                   />
                 ))}
                 {/* Clear Cart Button */}
-                <div className="flex items-end justify-end">
+                <div className="flex items-end justify-end underline underline-offset-4">
                   <button
                     onClick={handleClearCart}
                     disabled={cleared}
-                    className={`items-center flex gap-2 text-menu tracking-wide underline underline-offset-4 transition-all ${
+                    className={`items-center flex gap-2 text-menu tracking-wide transition-all ${
                       cleared
                         ? "text-muted/50 cursor-not-allowed"
                         : "text-main hover:text-muted"
@@ -113,7 +113,7 @@ export default function CartPage() {
                       />
                     )}
                     <span>
-                      {cleared ? "Clearing the cart..." : "Clear Cart"}
+                      {cleared ? "Clearing cart" : <span className="flex flex-row items-center gap-1 hover:opacity-60"><Trash size={14} className="text-main"/>Clear Cart</span>}
                     </span>
                   </button>
                 </div>
@@ -166,7 +166,7 @@ export default function CartPage() {
                               value={localNote}
                               onChange={(e) => setLocalNote(e.target.value)}
                               placeholder="How can we help you ?"
-                              className="w-full bg-transparent p-3 text-muted text-sm outline-none resize-none border border-muted/30 rounded-sm h-24 focus:border-main transition-colors duration-300"
+                              className="w-full bg-transparent p-3 text-main/70 text-sm outline-none resize-none border border-muted/30 rounded-sm h-24 focus:border-main transition-colors duration-300 "
                             />
                           </motion.div>
                         )}
@@ -178,9 +178,9 @@ export default function CartPage() {
                     className="flex w-full border-b pb-4"
                     onClick={() => setNoteCart(!noteCart)}
                   >
-                    <span className="font-medium text-product-title  tracking-normal text-main/75 hover:text-main/50 hover:underline underline-offset-4 transition-colors duration-300">
-                      {noteCart ? "Close order note" : "Add order note"}
-                    </span>
+                     <span className="flex items-center gap-2 font-medium uppercase text-product-title tracking-normal text-main/75 hover:text-main/50 transition-colors duration-300">
+                    {noteCart ? "Close order note" : "Add order note"} <Plus size={16} className={`transition-transform duration-300 ease-in-out ${noteCart ? "rotate-45":"rotate-0"}`}/>
+                  </span>
                   </button>
                 </div>
 

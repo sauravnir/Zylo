@@ -107,8 +107,8 @@ export function Footer() {
           <Copyright size={12} />
           {new Date().getFullYear()} - zylo{" "}
         </span>
-        <span className="flex gap-2 text-menu items-center text-muted uppercase ">
-          Powered by{" "}
+        <span className="flex gap-2 text-xs items-center text-muted uppercase ">
+            Developed by:{" "}
           <Link
             to="https://www.instagram.com/sauravvn/"
             target="_blank"

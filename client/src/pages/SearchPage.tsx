@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
 import { useProducts } from "@/context/ProductContext";
 import { NavigationBar } from "@/components/reusable/Navigation";
 import { Footer } from "@/components/reusable/Footer";
@@ -13,20 +13,21 @@ import { usePagination } from "@/hooks/usePagination";
 
 export const SearchPage = () => {
   // Fetching the search result from the url
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const queryFromUrl = searchParams.get("q") || "";
 
   // Getting the searching function from global context
-  const { filteredProducts, setSearchItem, searchTerm, filters, resetFilters , setActiveCategory } =
-    useProducts();
+  const {
+    filteredProducts,
+    setSearchItem,
+    searchTerm,
+    filters,
+   
+    setActiveCategory,
+  } = useProducts();
   const [localSearch, setLocalSearch] = useState("");
   // Handling the blank page search button click
-  const handleEnter = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      setSearchItem(localSearch);
-      setSearchParams({ q: localSearch });
-    }
-  };
+  
 
   // Loading the search items on page load
   useEffect(() => {
@@ -35,20 +36,19 @@ export const SearchPage = () => {
       setLocalSearch(queryFromUrl);
     }
     // Only rendering the details if the search doenot matches the url query.
-    if(searchTerm !== queryFromUrl){
+    if (searchTerm !== queryFromUrl) {
       setSearchItem(queryFromUrl);
     }
-
   }, [queryFromUrl]);
 
-
   // Handling the pagination functionality
-  // Calling the usePagination hook and passing the filteredProducts and page number. In the actual products render map , replacing to currentItems as well. 
-  const { currentItems, currentPage, setCurrentPage, totalPages } = usePagination(filteredProducts, 16); // 16 items per page 
+  // Calling the usePagination hook and passing the filteredProducts and page number. In the actual products render map , replacing to currentItems as well.
+  const { currentItems, currentPage, setCurrentPage, totalPages } =
+    usePagination(filteredProducts, 16); // 16 items per page
 
   return (
     // Setting the key re-renders the page after every search fetching
-    <div className="min-h-screen " >  
+    <div className="min-h-screen ">
       <NavigationBar />
 
       <main className="flex-grow flex flex-col bg-background">
@@ -76,22 +76,14 @@ export const SearchPage = () => {
 
         <div className="flex-grow">
           {searchTerm === "" ? (
-            <div className=" max-w-sm mx-auto pt-60 pb-40 px-4 text-center">
-             <h1 className="text-paragraph text-center text-main font-bold uppercase tracking-widest">
-                No items match your filters.
+            <div className="max-w-sm mx-auto pt-60 pb-40 px-4 text-center">
+              <h1 className="text-paragraph text-center text-main font-bold uppercase tracking-widest">
+                What are you looking for?
               </h1>
-                <p className="text-muted text-sm mt-2">
-                  Try searching for exising category items.
-                </p>
-              <Input
-                type="text"
-                autoFocus
-                className="mt-12 h-auto border-0 border-b border-muted/30 bg-transparent px-0 pb-4 pt-0 text-2xl md:text-2xl uppercase tracking-tighter shadow-none rounded-none placeholder:text-muted/40 focus-visible:ring-0 focus-visible:border-main transition-colors duration-300"
-                placeholder="Search here..."
-                value={localSearch}
-                onChange={(e) => setLocalSearch(e.target.value)}
-                onKeyDown={handleEnter}
-              />
+              <p className="text-main/70  text-sm mt-4">
+                Enter a keyword in the search bar above to browse our
+                collection.
+              </p>
             </div>
           ) : filteredProducts.length > 0 ? (
             <motion.div
@@ -112,28 +104,29 @@ export const SearchPage = () => {
                   />
                 ))}
               </motion.div>
-                <ProductPagination 
-  totalPages={totalPages} 
-  currentPage={currentPage} 
-  onPageChange={setCurrentPage} 
-/>
-
+              <ProductPagination
+                totalPages={totalPages}
+                currentPage={currentPage}
+                onPageChange={setCurrentPage}
+              />
             </motion.div>
           ) : (
             <div className="max-w-7xl mx-auto py-20 px-4 text-center">
               <div className="py-20 border border-dashed border-muted/20 rounded-lg">
                 <h2 className="text-main uppercase font-bold tracking-widest">
-                  No items match your filters.
+                  No items match "{queryFromUrl}"
                 </h2>
-                <p className="text-muted text-sm mt-2">
-                  Try adjusting your availability or sorting options.
+                <p className="text-main/70 text-sm mt-2">
+                  Try adjusting your filters or search for something else.
                 </p>
-                <button
-                  onClick={resetFilters}
-                  className="mt-6 text-[11px] uppercase font-bold border-b-2 border-main pb-1 hover:text-muted transition-all"
-                >
-                  Clear All Filters
-                </button>
+                <div className="mt-8 flex flex-col items-center gap-4">
+                  <Link
+                    to="/shop_all"
+                    className="text-[11px] uppercase font-bold border-b-2 border-main pb-1 hover:text-muted transition-all"
+                  >
+                    Browse All Products
+                  </Link>
+                </div>
               </div>
             </div>
           )}

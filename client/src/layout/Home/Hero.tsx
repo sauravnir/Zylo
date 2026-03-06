@@ -19,7 +19,6 @@ export default function Hero() {
       loop 
       muted 
       playsInline 
-     
       className="w-full h-full bg-primary object-cover"
     />
     <div className="absolute inset-0 bg-black/60" />

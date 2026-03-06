@@ -4,7 +4,7 @@ import { CheckoutNav } from "@/components/reusable/Navigation";
 import type { RootState } from "@/store/store";
 import { useNavigate } from "react-router-dom";
 import { CheckoutForm } from "@/components/reusable/CheckoutForm";
-import { TicketPercent, InfoIcon } from "lucide-react";
+import { TicketPercent, InfoIcon , Pencil } from "lucide-react";
 import { CartItem } from "@/components/reusable/Cart";
 import { Price } from "@/components/reusable/Price";
 import { subTotalAmount, totalCheckoutAmount } from "@/store/slices/cartSlice";
@@ -130,16 +130,16 @@ export default function CheckoutPage() {
                 </h2>
                 <Link
                   to="/cart"
-                  className="group rounded-full p- transition-all duration-300"
+                  className="flex flex-row gap-2 group rounded-full p- transition-all duration-300"
                 >
-                  {/* <Pencil className="group-hover:scale-90 text-main  transition-all duration-300" size={16} /> */}
+                  <Pencil className=" text-main  transition-all duration-300" size={14} />
                   <span className=" text-main font-semibold text-button uppercase hover:text-muted">
                     Edit
                   </span>
                 </Link>
               </div>
 
-              <div className="max-h-[250px] overflow-y-auto pr-4">
+              <div className="max-h-[290px] overflow-y-auto pr-4"> 
                 {cartItems.length > 0 &&
                   cartItems.map((items: any, index) => (
                     <CartItem
