@@ -76,7 +76,7 @@ export default function CartPage() {
   }, [storeValue.length]); //Only re-shuffling if the cart items change.
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen" key={totalItem}>
       <NavigationBar />
       {/* Main Body Section */}
       <div className="bg-background">
