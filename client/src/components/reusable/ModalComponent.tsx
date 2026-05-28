@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import type { ProductCardProps } from "./CardComponent";
@@ -112,7 +112,7 @@ export const ProductDetail = ({
     .filter((dot) => dot.trim().length > 0);
 
   // Storing the colors and sizes in a state to render in the front
-  //Setting the default size to the first size index
+  // Setting the default size to the first size index
   const [productSize, setProductSize] = useState(props.sizes[0] || "");
   const [productColor, setProductColor] = useState(
     props.colors ? props.colors[0].name : "",
@@ -130,16 +130,30 @@ export const ProductDetail = ({
   // initializing the useDispatch() function
   const dispatch = useDispatch();
 
+  // Handling the color switching functionality in products page when the users clicks the carousel image then the color names changes
+  useEffect(()=>{
+    const currentImageUrl = modalImage[currSlide];
+    const matchingImageColor = props.colors?.find(color => color.image === currentImageUrl);
+    if(matchingImageColor && matchingImageColor.name !== productColor){
+      setProductColor(matchingImageColor.name);
+    }
+  }, [currSlide,modalImage,props.colors]); 
+
+  
   // Handling the clicking of the button asynchronously
   // Adding items to the store using useDispatch
   const addCartItems = async () => {
     dispatch(setIsUploading(true));
     // Making the adding to cart async buy adding a fake delay
     await new Promise((resolve) => setTimeout(resolve, 800));
+
+    // fetching the current selected product's image 
+    const selectedImage = modalImage[currSlide];
+
     // Dispatching the product after the timer
     dispatch(
       addItem({
-        product: props,
+        product: { ...props , primaryImage:selectedImage },
         size: productSize,
         itemQuantity: num,
         color: productColor,
@@ -152,6 +166,7 @@ export const ProductDetail = ({
     // Slide the cart open
     dispatch(setCartOpen(true));
   };
+
   return (
     <div
       className={`flex flex-col md:grid md:grid-cols-3 w-full h-full ${viewMode === "page" ? "border-b border-main pb-10 mt-0" : "p-6"}`}
@@ -163,13 +178,12 @@ export const ProductDetail = ({
         <div
           className={`flex flex-col-reverse md:flex-row gap-24 w-full items-center justify-center ${viewMode === "modal" ? " md:flex-col-reverse" : ""}`}
         >
-
           {/* Image Carousel Section for Product Page */}
           {viewMode === "page" && modalImage.length > 1 && (
             <div
               className="hidden md:flex flex-col gap-1 overflow-y-auto max-h-[450px] lg:max-h-[450px] p-2 scroll-smooth"
               style={{
-                scrollbarWidth: "none", 
+                scrollbarWidth: "none",
               }}
             >
               {modalImage.map((image, index) => {
@@ -353,7 +367,17 @@ export const ProductDetail = ({
                       <button
                         key={color.name}
                         type="button"
-                        onClick={() => setProductColor(color.name)}
+                        onClick={() => {
+                          setProductColor(color.name);
+                          if (color.image) {
+                            const imageIndex = modalImage.findIndex(
+                              (img) => img === color.image,
+                            );
+                            if (imageIndex !== -1) {
+                              setCurrSlide(imageIndex);
+                            }
+                          }
+                        }}
                         style={{ backgroundColor: color.hex }}
                         className={`w-8 h-8 rounded-full transition-all duration-300 relative shadow-md
             ${

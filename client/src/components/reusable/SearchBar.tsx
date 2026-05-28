@@ -45,12 +45,10 @@ const handleCategoryClick =(category:any) => {
   navigate(`/collections/${category}`)
   
 } 
-
+// Handling the async search functionality when the user types in the search input and also when the url changes
   useEffect(() => {
-    const query = searchParams.get("q");
-    if (query) {
-      setSearchItem(query);
-    }
+    const query = searchParams.get("q") || "";
+    setSearchItem(query);
   }, [searchParams]);
 
   return (

@@ -11,8 +11,9 @@ interface ZyloReceiptProps {
       id: string; title: string; itemCartQuantity: number; price: number; productSize: string; productColor:string;
     }>;
     orderSummary: {
-      orderNumber: string; shippingAmount: number; subTotal: number; symbol: string; totalAmount: number;
+       shippingAmount: number; subTotal: number; symbol: string; totalAmount: number;
     };
+    orderNumber : string;
   };
 }
 
@@ -71,7 +72,7 @@ export const ZyloReceipt = ({ order }: ZyloReceiptProps) => {
           <Text style={styles.brand}>ZYLO</Text>
           <View style={{ textAlign: 'right' }}>
             <Text style={{ fontSize: 14, fontWeight: 'bold' }}>INVOICE</Text>
-            <Text>Order #{orderSummary.orderNumber}</Text>
+            <Text>Order #{order.orderNumber}</Text>
           </View>
         </View>
 
@@ -134,8 +135,8 @@ export const ZyloReceipt = ({ order }: ZyloReceiptProps) => {
         </View>
 
         <Text style={styles.footer}>
-          Thank you for choosing Zylo Streetwear. This is a computer-generated receipt. 
-          For any inquiries contact us at brandzylo@gmail.com
+          Thank you for choosing Zylo Studios. This is a computer-generated receipt. 
+          For any inquiries contact us at pratik@studioszylo.com
         </Text>
       </Page>
     </Document>

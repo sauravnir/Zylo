@@ -151,7 +151,7 @@ export default function CheckoutPage() {
               </div>
 
               {/* Coupon Button */}
-              <div className="flex flex-row items-center gap-4 ">
+              {/* <div className="flex flex-row items-center gap-4 ">
                 <div className="relative flex-1 shadow">
                   <TicketPercent
                     className="absolute left-3 top-1/2 -translate-y-1/2 text-muted"
@@ -169,9 +169,11 @@ export default function CheckoutPage() {
                     name="Apply"
                     isDisabled={true}
                     onClick={() => {}}
-                  />
+                />
                 </div>
-              </div>
+              </div> */}
+
+
               {/* Trust Badges or Help Section */}
               <div className="flex flex-col space-y-2 px-4 py-4 border border-dashed border-main bg-muted/10 text-center">
                 <div className="flex justify-between items-center border-black/5 ">
@@ -226,7 +228,7 @@ export default function CheckoutPage() {
                 <div className="bg-yellow-100/15 p-3 rounded-md mt-4 border-2 border-main shadow-lg">
                   <div className="flex gap-2 items-start">
                     <InfoIcon className="w-4 h-4 shrink-0" />
-                    <p className="text-sm text-main leading-snug">
+                    <p className="text-xs text-main leading-snug">
                       <strong>Currency Note:</strong> We are currently only
                       accepting payments in
                       <strong> {activeCurrency}</strong>. The total has been

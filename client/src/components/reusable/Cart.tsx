@@ -204,7 +204,7 @@ export const CartSheet = () => {
                       <textarea
                         value={localNote}
                         onChange={(e) => setLocalNote(e.target.value)}
-                        placeholder="How can we help you?"
+                        placeholder="How can we help you ?"
                         className="w-full bg-card p-3  text-main/70 placeholder:text-main/70 text-sm outline-none resize-none border border-main rounded-sm h-24 focus:border-main transition-colors duration-300"
                       />
                     </motion.div>
@@ -267,13 +267,15 @@ export const CartItem = ({
   const handleRemoveItem = async ({
     slug,
     size,
+    color
   }: {
     slug: string;
     size: string;
+    color:string;
   }) => {
     setRemoved(true);
     await new Promise((resolve) => setTimeout(resolve, 500));
-    dispatch(removeItem({ slug, size }));
+    dispatch(removeItem({ slug, size , color }));
     setRemoved(false);
   };
 
@@ -310,7 +312,7 @@ export const CartItem = ({
         {isReadOnly === false && (
           <button
             onClick={() =>
-              handleRemoveItem({ slug: item.slug, size: item.productSize })
+              handleRemoveItem({ slug: item.slug, size: item.productSize , color:item.productColor })
             }
             disabled={removed}
             className={`absolute top-0 right-0 z-10 flex  items-center justify-center 

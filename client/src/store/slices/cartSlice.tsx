@@ -54,9 +54,10 @@ export const cartSlice = createSlice({
     ) => {
       //   Destructing the payloads from the user
       const { product, size, itemQuantity , color } = action.payload;
+
       // Checking if the item is already present in the cart
       const existingItem = state.items.find(
-        (item) => item.slug === product.slug && item.productSize === size,
+        (item) => item.slug === product.slug && item.productSize === size && item.productColor === color,
       );
 
       // if the items exists then increasing the product quantity else creating a new row of product an appending the props
@@ -78,20 +79,20 @@ export const cartSlice = createSlice({
     // Removing cart items
     removeItem: (
       state,
-      action: PayloadAction<{ slug: string; size: string }>,
+      action: PayloadAction<{ slug: string; size: string , color: string }>,
     ) => {
       // Destructuring the payloads from the user
-      const { slug, size } = action.payload;
+      const { slug, size , color } = action.payload;
       // Checking if the items exists in the store or not
       const existingItem = state.items.find(
-        (item) => item.slug === slug && item.productSize === size,
+        (item) => item.slug === slug && item.productSize === size && item.productColor === color,
       );
       
       if (existingItem) {
         //  Clearing the item quantity
         state.totalItems -= existingItem.itemCartQuantity;
         state.items = state.items.filter(
-          (item) => !(item.slug === slug && item.productSize === size),
+          (item) => !(item.slug === slug && item.productSize === size && item.productColor === color ),
         );
       }
       // Removing the OrderNote if the cart is empty and setting the totalItems value to 0 for safety and also removing the shipping cost

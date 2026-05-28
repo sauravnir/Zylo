@@ -108,8 +108,8 @@ export const PRODUCTS_LIST = [
     images: [],
     description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
     productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
-    colors: [{ name: "Black", hex: "#000000" }],
-    sizes: [ "M", "L", "XL"],
+    colors: [{ name: "Black", hex: "#000000", image: PIC1 }],
+    sizes: ["M", "L", "XL"],
     availability: "In Stock"
   },
   {
@@ -122,7 +122,7 @@ export const PRODUCTS_LIST = [
     images: [],
     description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
     productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
-    colors:  [{ name: "Black", hex: "#000000" }],
+    colors: [{ name: "Black", hex: "#000000", image: PIC2 }],
     sizes: ["M", "L", "XL"],
     availability: "In Stock"
   },
@@ -134,10 +134,13 @@ export const PRODUCTS_LIST = [
     collection: "",
     price: 1800,
     primaryImage: PIC3,
-    images: [PIC3, PIC17 ],
+    images: [PIC3, PIC17],
     description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
     productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
-    colors: [{ name: "Vivid", hex: "#875D4C" },{ name: "Static", hex: "#6E6E6E" } ],
+    colors: [
+      { name: "Vivid", hex: "#875D4C", image: PIC3 },
+      { name: "Static", hex: "#6E6E6E", image: PIC17 }
+    ],
     sizes: ["M", "L", "XL"],
     availability: "In Stock"
   },
@@ -149,10 +152,13 @@ export const PRODUCTS_LIST = [
     collection: "",
     price: 1500,
     primaryImage: PIC4,
-    images: [PIC4 ,PIC26],
+    images: [PIC4, PIC26],
     description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
     productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
-    colors: [{ name: "Black", hex: "#000000"} , {name:"White", hex:"#ffffff"}],
+    colors: [
+      { name: "Black", hex: "#000000", image: PIC4 },
+      { name: "White", hex: "#ffffff", image: PIC26 }
+    ],
     sizes: ["M", "L", "XL"],
     availability: "In Stock"
   },
@@ -167,7 +173,7 @@ export const PRODUCTS_LIST = [
     images: [],
     description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
     productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
-    colors: [{ name: "Black", hex: "#000000" }],
+    colors: [{ name: "Black", hex: "#000000", image: PIC5 }],
     sizes: ["L", "XL"],
     availability: "Limited Release"
   },
@@ -178,10 +184,13 @@ export const PRODUCTS_LIST = [
     category: "Graphic Tees",
     price: 1500,
     primaryImage: PIC6,
-    images: [PIC6 ,PIC8],
+    images: [PIC6, PIC8],
     description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
     productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
-    colors: [{ name: "Black", hex: "#000000"} , {name:"White", hex:"#ffffff"}],
+    colors: [
+      { name: "Black", hex: "#000000", image: PIC6 },
+      { name: "White", hex: "#ffffff", image: PIC8 }
+    ],
     sizes: ["M", "L", "XL"],
     availability: "In Stock"
   },
@@ -196,7 +205,7 @@ export const PRODUCTS_LIST = [
     images: [],
     description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
     productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
-    colors: [{ name: "Black", hex: "#000000"}],
+    colors: [{ name: "Black", hex: "#000000", image: PIC7 }],
     sizes: ["M", "L", "XL"],
     availability: "In Stock"
   },
@@ -210,7 +219,7 @@ export const PRODUCTS_LIST = [
     images: [],
     description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
     productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
-    colors:[{ name: "Black", hex: "#000000"}],
+    colors: [{ name: "Black", hex: "#000000", image: PIC9 }],
     sizes: ["M", "L", "XL"],
     availability: "In Stock"
   },
@@ -225,7 +234,7 @@ export const PRODUCTS_LIST = [
     images: [],
     description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
     productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
-    colors: [{ name: "Black", hex: "#000000" }],
+    colors: [{ name: "Black", hex: "#000000", image: PIC10 }],
     sizes: ["M", "L", "XL"],
     availability: "In Stock"
   },
@@ -234,13 +243,13 @@ export const PRODUCTS_LIST = [
     title: "Sonder",
     slug: "sonder",
     category: "Graphic Tees",
-    collection:"",
+    collection: "",
     price: 1500,
     primaryImage: PIC11,
     images: [],
     description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
     productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
-    colors: [{ name: "White", hex: "#ffffff" }],
+    colors: [{ name: "White", hex: "#ffffff", image: PIC11 }],
     sizes: ["M", "L", "XL"],
     availability: "In Stock"
   },
@@ -251,11 +260,14 @@ export const PRODUCTS_LIST = [
     category: "Essentials",
     price: 1500,
     primaryImage: PIC12,
-    images: [PIC12,PIC13],
+    images: [PIC12, PIC13],
     description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
     productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
-    colors: [{ name: "Black", hex: "#000000" }, { name: "White", hex: "#ffffff" }],
-    sizes: ["M", "L" , "XL"],
+    colors: [
+      { name: "Black", hex: "#000000", image: PIC12 },
+      { name: "White", hex: "#ffffff", image: PIC13 }
+    ],
+    sizes: ["M", "L", "XL"],
     availability: "Limited Release"
   },
   {
@@ -266,11 +278,14 @@ export const PRODUCTS_LIST = [
     collection: "",
     price: 1800,
     primaryImage: PIC14,
-    images: [PIC14,PIC15],
+    images: [PIC14, PIC15],
     description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
     productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
-    colors: [ { name: "White", hex: "#ffffff" },{ name: "Black", hex: "#000000" }],
-    sizes: [ "M", "L", "XL"],
+    colors: [
+      { name: "White", hex: "#ffffff", image: PIC14 },
+      { name: "Black", hex: "#000000", image: PIC15 }
+    ],
+    sizes: ["M", "L", "XL"],
     availability: "In Stock"
   },
   {
@@ -280,10 +295,13 @@ export const PRODUCTS_LIST = [
     category: "Graphic Tees",
     price: 2000,
     primaryImage: PIC19,
-    images: [PIC19,PIC18],
+    images: [PIC19, PIC18],
     description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
     productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
-    colors: [{ name: "Maroon", hex: "#9A1319" }, { name: "White", hex: "#ffffff" }],
+    colors: [
+      { name: "Maroon", hex: "#9A1319", image: PIC19 },
+      { name: "White", hex: "#ffffff", image: PIC18 }
+    ],
     sizes: ["M", "L", "XL"],
     availability: "In Stock"
   },
@@ -297,7 +315,7 @@ export const PRODUCTS_LIST = [
     images: [],
     description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
     productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
-    colors: [{ name: "White", hex: "#ffffff" }],
+    colors: [{ name: "White", hex: "#ffffff", image: PIC20 }],
     sizes: ["M", "L", "XL"],
     availability: "In Stock"
   },
@@ -311,7 +329,10 @@ export const PRODUCTS_LIST = [
     images: [PIC21, PIC22],
     description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
     productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
-    colors: [{ name: "White", hex: "#ffffff" }, { name: "Black", hex: "#000000" }],
+    colors: [
+      { name: "White", hex: "#ffffff", image: PIC21 },
+      { name: "Black", hex: "#000000", image: PIC22 }
+    ],
     sizes: ["M", "L", "XL"],
     availability: "In Stock"
   },
@@ -325,8 +346,8 @@ export const PRODUCTS_LIST = [
     images: [],
     description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
     productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
-    colors: [{ name: "Black", hex: "#000000" }],
-    sizes: [ "M", "L", "XL"],
+    colors: [{ name: "Black", hex: "#000000", image: PIC25 }],
+    sizes: ["M", "L", "XL"],
     availability: "In Stock"
   },
   {
@@ -336,10 +357,13 @@ export const PRODUCTS_LIST = [
     category: "Graphic Tees",
     price: 1800,
     primaryImage: PIC23,
-    images: [PIC23,PIC24],
+    images: [PIC23, PIC24],
     description: "100% Heavyweight Cotton.Pre-shrunk garment.Tonal embroidery.Boxy, Cropped, Oversized Fit.Made in Nepal | Designed by Zylo Studios.",
     productCare: "Hand wash or machine wash on cold.Hang dry inside or a cool place.Do not use tumble dryer or any type of heat/sun drying.Do not bleach",
-    colors: [{ name: "Vivid", hex: "#875D4C" },{ name: "Static", hex: "#6E6E6E" } ],
+    colors: [
+      { name: "Vivid", hex: "#875D4C", image: PIC23 },
+      { name: "Static", hex: "#6E6E6E", image: PIC24 }
+    ],
     sizes: ["M", "L", "XL"],
     availability: "In Stock"
   }

@@ -18,7 +18,7 @@ export interface ProductCardProps {
   images: string[];
   description: string;
   productCare: string;
-  colors?: { name: string; hex: string }[];
+  colors?: { name: string; hex: string ; image:string}[];
   sizes: string[];
   availability: string;
   slug: string;

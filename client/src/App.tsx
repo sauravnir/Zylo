@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { HashRouter, Routes, Route, useLocation } from "react-router-dom";
+import { HashRouter, Routes, Route, useLocation , BrowserRouter } from "react-router-dom";
 import "./index.css";
 import HomePage from "./pages/Home";
 import { ProductPage } from "./pages/Products";
@@ -57,14 +57,14 @@ function App() {
     <>
       {/* {showLoader && <CustomLoader onFinish={handleLoaderFinish} />} */}
       <Toaster richColors position="top-center"/>
-      <HashRouter >
+      <BrowserRouter> 
         <ScrolltoTop />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/products/:slug" element={<ProductPage />} />
           <Route path="/cart" element={<CartPage />} />
           <Route path="/checkout" element={<CheckoutPage />} />
-          <Route path="/thank-you" element={<OrderConfirmation />} />
+          <Route path="/thank-you/:token" element={<OrderConfirmation />} />
           <Route path="/search" element={<SearchPage />}/>
           <Route path="/collections/:category" element={<Collections key={window.location.pathname} />}/>
           <Route path="/shipping" element={<Shipping />}/>
@@ -76,7 +76,7 @@ function App() {
           {/* Catching all the unknown urls and navigating to 404Error page */}
          <Route path="*" element={<Error404 />} />
         </Routes>
-      </HashRouter>
+      </BrowserRouter>
     </>
   );
 }

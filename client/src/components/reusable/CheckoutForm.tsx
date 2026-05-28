@@ -261,7 +261,6 @@ useEffect(()=>{
           shippingAmount,
           totalAmount,
           symbol,
-          orderNumber: `ZY-${Math.floor(Math.random() * 900) + 1000}`,
         },
       };
 
@@ -275,7 +274,8 @@ useEffect(()=>{
         localStorage.removeItem("otp_expiry");
 
         await new Promise((resolve) => setTimeout(resolve, 2000));
-        navigate("/thank-you", { state: { order: orderData } });
+        // Sending the orderToken in the url
+        navigate(`/thank-you/${result.orderToken}`);
 
       } else {
         toast.error(result.message || "Invalid OTP");
