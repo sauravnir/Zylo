@@ -7,7 +7,7 @@ export const handleOTPLimit = rateLimit({
     standardHeaders: true,
     legacyHeaders:true,
     message:{
-        staus:429,
+        status:429,
         message:"Too many code request attempts. Please try again after 5 minutes."
     }
 });

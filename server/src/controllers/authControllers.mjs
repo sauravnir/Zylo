@@ -1,22 +1,27 @@
 import { OTPMODEL } from "../models/CheckoutOtp.mjs";
+import {ORDERSMODEL} from "../models/Order.mjs";
 import { Resend } from "resend";
+import nodemailer from "nodemailer";
+import transporter from "../config/transporter.mjs";
+import {v4 as uuidv4} from "uuid";
+
+// Initializing Resend to send mails
+const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Send OTP Controller
 export const sendOtp = async (request, response) => {
   const { email } = request.body;
-  // Creating a resend email instance
-  const resend = new Resend(process.env.RESEND_API_KEY);
-  if (!email)
-    return response.status(400).json({ message: "Email is required." });
+
   // Creating a otp
   const otp = Math.floor(100000 + Math.random() * 900000).toString();
   try {
     // Deleting any exisiting otp first if there is one
     await OTPMODEL.deleteMany({ email });
     await OTPMODEL.create({ email: email, code: otp });
+
     // Sending the otp to the client's email Id
     const { data, error } = await resend.emails.send({
-      from: "Zylo <onboarding@resend.dev>",
+      from: "Zylo Studios <no-reply@info.studioszylo.com>",
       to: email,
       subject: "Your Zylo Verification Code",
       html: `
@@ -29,13 +34,13 @@ export const sendOtp = async (request, response) => {
         `,
     });
 
+    
     if (error) {
-      console.error("Resend API Error:", error);
+      return response.status(400).json({ error });
     }
-    console.log("Email sent successfully:", data.id);
     response.status(200).json({ success: true, message: `OTP Created` });
   } catch (error) {
-    response.status(200).json({ message: error.message });
+    response.status(500).json({ message: error.message });
   }
 };
 
@@ -45,7 +50,6 @@ export const verifyOtp = async (request, response) => {
   if (!email || !otp) {
     return response.status(400).json({ message: "Missing fields" });
   }
-
   try {
     // Verifying the email and code.
     const record = await OTPMODEL.findOne({ email, code: otp });
@@ -56,13 +60,26 @@ export const verifyOtp = async (request, response) => {
         .json({ success: false, message: "Invalid or expired OTP" });
     }
 
-    // Initialing resend
-    const resend = new Resend(process.env.RESEND_API_KEY);
-    // Sending emails
+    // Generating a secure token for the order
+    const newToken = uuidv4();
+    
+    // Saving the details in the database with the payload received
+    const newOrder = new ORDERSMODEL({
+      orderToken : newToken,
+      customerData : orderData.customerData,
+      items : orderData.items,
+      orderSummary : orderData.orderSummary,
+    });
+    
+    // Fetch the orderNumbe from the saved data 
+    const savedData = await newOrder.save();
+    const savedOrderNumber = savedData.orderNumber ;
+
+    // Sending emails through resend
     const { data, error } = await resend.emails.send({
-      from: "Zylo Orders <onboarding@resend.dev>",
-      to: "niraulasaurav2@gmail.com",
-      subject: `New Order! ${orderData.orderSummary.orderNumber}`,
+      from: "Zylo Studios Order <orders@info.studioszylo.com>", 
+      to: process.env.EMAIL_USER, 
+      subject: `New Order! ${savedOrderNumber}`,
       html: `
     <div style="font-family: sans-serif; color: #333;">
       <h2>New Order Received from Zylo.</h2>
@@ -96,19 +113,21 @@ export const verifyOtp = async (request, response) => {
     });
 
     if (error) {
-      console.log("Email sending Errors", error);
+      console.error("Resend error:", error);
     } else {
-      console.log("Resend Success data:", data);
+      console.log("Order email sent successfully:", data.id);
     }
+
     // Deleting the otp record.
     await OTPMODEL.deleteOne({ email, code: otp });
 
     return response
       .status(200)
-      .json({ success: true, message: "OTP Verified & Order Logged" });
+      .json({ success: true, message: "OTP Verified & Order Logged" , orderToken : newToken});
   } catch (error) {
+    console.error("Email sending error:", error);
     return response
       .status(500)
-      .json({ success: false, message: error.message });
+      .json({ success: false, message: error.message, stack: error.stack });
   }
 };
