@@ -42,11 +42,15 @@ export const checkoutSchema = z.object({
       {
         message: "Please use a permanent email address (not a temporary one).",
       },
-    ).refine((val)=>{
-      return /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,6}$/.test(val);
-    },{
-      message:"Email must end with a valid domain (e.g., .com or .com.np)."
-    }),
+    )
+    .refine(
+      (val) => {
+        return /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,6}$/.test(val);
+      },
+      {
+        message: "Email must end with a valid domain (e.g., .com or .com.np).",
+      },
+    ),
   firstName: z.string().min(3, "First Name is required."),
   lastName: z.string().min(3, "Last Name is required."),
   phone: z
@@ -66,9 +70,17 @@ export const checkoutSchema = z.object({
     }),
   orderNote: z.string().max(500).optional().or(z.literal("")),
   country: z.string().min(1, "Please select your country."),
-  city:z.string().min(1, "Please select a city from the list").refine((value)=>DELIVERY_LOCATIONS.some(loc => loc.city === value),{
-    message:"The selected city is not in our delivery range."
-  }),
+  city: z
+    .preprocess(
+      (val) => (val === undefined || val === null ? "" : String(val)),
+      z.string(),
+    )
+    .refine((value) => value.trim().length > 0, {
+      message: "Please select a city from the list",
+    })
+    .refine((value) => DELIVERY_LOCATIONS.some((loc) => loc.city === value), {
+      message: "The selected city is not in our delivery range.",
+    }),
   address: z.string().min(10, "Please provide detailed address."),
   zip: z
     .string()

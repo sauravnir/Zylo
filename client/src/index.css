@@ -86,3 +86,22 @@ body {
   color: transparent;
   transition: background-position 0.6s ease;
 }
+
+
+/* Custom Toaster color theme */
+@layer base{
+    :root{
+    --toast-bg: #fafbfc;     /* card */
+    --toast-border: #E5E5E5; /* border */
+    --toast-text: #0c0c0c;   /* primary */
+    --toast-muted: #9b9b9b;  /* muted */
+    }
+}
+
+[data-sonner-toast][data-type="error"] [data-icon] {
+  color: #ff4d4d !important;
+}
+
+[data-sonner-toast][data-type="success"] [data-icon] {
+  color: #029a0a !important;
+}

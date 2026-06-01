@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { CheckoutNav } from "@/components/reusable/Navigation";
 import type { RootState } from "@/store/store";
-import { useNavigate } from "react-router-dom";
+import { useNavigate , useLocation} from "react-router-dom";
 import { CheckoutForm } from "@/components/reusable/CheckoutForm";
 import { TicketPercent, InfoIcon , Pencil } from "lucide-react";
 import { CartItem } from "@/components/reusable/Cart";
@@ -28,23 +28,34 @@ interface CheckoutSnapshot {
 }
 
 export default function CheckoutPage() {
+
+  const location = useLocation();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const totalItems = useAppSelector(
     (state: RootState) => state.cart.totalItems,
   );
   const cartItems = useAppSelector((state: RootState) => state.cart.items);
+  const buyNowItem = useAppSelector((state: RootState) => state.cart.buyNowItem);
   const { symbol, activeCurrency, rate } = useAppSelector(
     (state: RootState) => state.currency,
   );
   const shippingCost =
     useAppSelector((state: RootState) => state.cart.shippingCost) ?? 0;
-  const checkoutAmount = useAppSelector(totalCheckoutAmount);
+  // const checkoutAmount = useAppSelector(totalCheckoutAmount);
   const navigate = useNavigate();
-  const subTotal = useAppSelector(subTotalAmount);
   const dispatch = useAppDispatch();
-
+  
   const [oldParsed, setOldParsed] = useState<CheckoutSnapshot | null>(null);
+  
+  // Checking if the user has clicked the Buy Now button
+  const isBuyNowClicked = location.state?.isBuyNow || buyNowItem.length > 0;
 
+  // Rendering which items to show
+  const itemsToShow = isBuyNowClicked ? buyNowItem : cartItems;
+  // Conditionally rendering the total amount 
+  const subTotal = isBuyNowClicked ? buyNowItem[0].price * buyNowItem[0].itemCartQuantity : useAppSelector(subTotalAmount);
+  // Calculating the total checkout amount 
+  const checkoutAmount = subTotal + shippingCost;
   // Automatically switching the global currency to Base NPR for checkout processess
   useEffect(() => {
     // Getting the old_currency_price from the localStorage
@@ -84,16 +95,21 @@ export default function CheckoutPage() {
   }, [activeCurrency, symbol, rate, dispatch]);
 
   // Calculating the oldTotal Amount
-  const oldTotalAmount = (checkoutAmount * (oldParsed?.rate || 1)).toFixed(2);
+const oldTotalAmount = (checkoutAmount * (oldParsed?.rate || 1)).toFixed(2);
+
+// Calculating dynamic total items from both the carts 
+const totalItemsCount = isBuyNowClicked ? (buyNowItem[0]?.itemCartQuantity || 0 ) : totalItems;
 
   // If there are no cart items and if the isSubmitting state is not true then the user cannot navigate to the page
   useEffect(() => {
-    if (totalItems < 1 && !isSubmitting) {
+    if (totalItemsCount < 1 && !isSubmitting) {
       navigate("/cart");
     }
-  }, [totalItems, navigate, isSubmitting]);
-  if (totalItems === 0) return null;
+  }, [totalItemsCount, navigate, isSubmitting]);
+  if (totalItemsCount === 0) return null;
 
+  // Clearing the single item cart when the user exits from the checkout page 
+  
   return (
     <div className="min-h-screen bg-background">
       <CheckoutNav />
@@ -126,22 +142,24 @@ export default function CheckoutPage() {
             <div className="sticky top-10 space-y-4 ">
               <div className="flex items-center justify-between px-0 p-4 underline rounded-none">
                 <h2 className="text-base font-bold uppercase tracking-widest">
-                  Order Summary ({totalItems})
+                  Order Summary ({totalItemsCount})
                 </h2>
-                <Link
+                {!isBuyNowClicked && (
+                  <Link
                   to="/cart"
                   className="flex flex-row gap-2 group rounded-full p- transition-all duration-300"
                 >
                   <Pencil className=" text-main  transition-all duration-300" size={14} />
                   <span className=" text-main font-semibold text-button uppercase hover:text-muted">
-                    Edit
+                    Edit 
                   </span>
                 </Link>
+                )}
               </div>
 
               <div className="max-h-[290px] overflow-y-auto pr-4"> 
-                {cartItems.length > 0 &&
-                  cartItems.map((items: any, index) => (
+                {itemsToShow.length > 0 &&
+                  itemsToShow.map((items: any, index) => (
                     <CartItem
                       key={`${items.id}-${index}`}
                       item={items}

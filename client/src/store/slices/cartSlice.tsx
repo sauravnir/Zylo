@@ -25,6 +25,8 @@ export interface CartState {
   orderNote: string;
   shippingCost : number,
   shippingCity : string,
+  // defining type for only a single BuyNow item
+  buyNowItem: CartProps[];
 }
 // Setting the initial state null for an empty cart
 const initialState: CartState = {
@@ -35,6 +37,7 @@ const initialState: CartState = {
   orderNote: "",
   shippingCost : 0,
   shippingCity : "",
+  buyNowItem: [],
 };
 
 export const cartSlice = createSlice({
@@ -73,9 +76,28 @@ export const cartSlice = createSlice({
       }
       // Increasing the global items number
       state.totalItems += itemQuantity;
-      // Setting the global cart open state
-      state.cartOpen = true;
     },
+    // Adding a single buyNow item to the cart
+    addBuyNowItem: (state,  action: PayloadAction<{
+        product: ProductCardProps;
+        size: string;
+        itemQuantity: number;
+        color: string,
+      }>,)=>{
+        const {product , size , itemQuantity , color} = action.payload;
+
+        // Overwriting the array completely 
+         state.buyNowItem = [{
+          ...product,
+          itemCartQuantity: itemQuantity,
+          productSize: size,
+          productColor : color
+         }]
+      },
+      // Clearing the BuyNow cart 
+      clearBuyNowItem : (state)=>{
+        state.buyNowItem = [];
+      },
     // Removing cart items
     removeItem: (
       state,
@@ -151,7 +173,6 @@ export const cartSlice = createSlice({
         state.shippingCity = city 
         state.shippingCost = cost
     },
-   
   },
 });
 
@@ -192,7 +213,8 @@ export const {
   setIsUploading,
   addNote,
   updateShipping,
-  
+  addBuyNowItem,
+  clearBuyNowItem
 } = cartSlice.actions;
 // Exporting the main reducer object from the slice
 export default cartSlice.reducer;

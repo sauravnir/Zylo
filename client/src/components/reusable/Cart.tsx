@@ -45,10 +45,9 @@ export const CartSheet = () => {
 
   // Handling the cart Open Logic : Opening the cart except the cartpage
   const handleCartOpen = (open: boolean) => {
-    if ( isOnCartPage){
+    if (isOnCartPage){
       dispatch(setCartOpen(false))
     } else {
-
       dispatch(setCartOpen(open));
     }
   };

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
 import type { ProductCardProps } from "./CardComponent";
 import { X, ChevronLeft, ChevronRight, Plus, Minus, Dot } from "lucide-react";
@@ -21,8 +21,9 @@ import {
 import { Cursor } from "./Cursor";
 import { Price } from "./Price";
 // Importing Redux Toolkits essentials
-import { addItem, setCartOpen, setIsUploading } from "@/store/slices/cartSlice";
+import { addItem, setCartOpen, setIsUploading , addBuyNowItem , clearBuyNowItem } from "@/store/slices/cartSlice";
 import { useDispatch } from "react-redux";
+
 
 // Scattering the two defined props and all the details from the ProductCardProps Component.
 interface ProductModalProps extends ProductCardProps {
@@ -83,6 +84,9 @@ export const ProductDetail = ({
   viewMode,
   closeModal,
 }: ProductDetailProps) => {
+
+  // Initializing navigate
+  const navigation = useNavigate();
   // Handling the carousel images in the modal
   const [currSlide, setCurrSlide] = useState(0);
   // Storing the images in a variable
@@ -143,6 +147,8 @@ export const ProductDetail = ({
   // Handling the clicking of the button asynchronously
   // Adding items to the store using useDispatch
   const addCartItems = async () => {
+    // Clearing any existing cart items from BuyNow button
+    dispatch(clearBuyNowItem());
     dispatch(setIsUploading(true));
     // Making the adding to cart async buy adding a fake delay
     await new Promise((resolve) => setTimeout(resolve, 800));
@@ -166,6 +172,25 @@ export const ProductDetail = ({
     // Slide the cart open
     dispatch(setCartOpen(true));
   };
+
+  // Handling the Buy Now button functionality
+  const buyNow = async () => {
+    dispatch(setIsUploading(true));
+    // Making the adding to cart async buy adding a fake delay
+    await new Promise((resolve) => setTimeout(resolve, 800));
+    const selectedImage = modalImage[currSlide];
+
+    // Dispatching the product in the cart immediately 
+    dispatch(addBuyNowItem({
+      product: { ...props , primaryImage:selectedImage },
+      size: productSize,
+      itemQuantity: num,
+      color: productColor,
+    }));
+    dispatch(setIsUploading(false));
+    // Sending a state in the url location. 
+    navigation("/checkout" , {state:{isBuyNow: true}});
+  }
 
   return (
     <div
@@ -459,7 +484,7 @@ export const ProductDetail = ({
               }
               onClick={addCartItems}
             />
-            <PaymentButton isDisabled={true} name="Pay online" />
+            <PaymentButton isDisabled={false} name="Buy Now" onClick= {buyNow}/>
           </div>
 
           {/* Optional Text  */}

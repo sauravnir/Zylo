@@ -42,7 +42,6 @@ import {
 } from "@/components/ui/input-otp";
 import { REGEXP_ONLY_DIGITS } from "input-otp";
 
-
 export function CheckoutForm({
   subTotal,
   shippingAmount,
@@ -60,86 +59,90 @@ export function CheckoutForm({
   const navigate = useNavigate();
   const cartItems = useAppSelector((state: RootState) => state.cart.items);
   const orderNote = useAppSelector((state: RootState) => state.cart.orderNote);
+  const buyNowItem = useAppSelector(
+    (state: RootState) => state.cart.buyNowItem,
+  );
   const isUploading = useAppSelector(
     (state: RootState) => state.cart.isUploading,
   );
   // Getting the rates and code from the redux store. Done for converting the currency to NPR in the checkout process.
-    // const {rate , activeCurrency} = useAppSelector((state:RootState)=>state.currency)
+  // const {rate , activeCurrency} = useAppSelector((state:RootState)=>state.currency)
 
   // Creating otp handling states
   //Opening and closing the otp entry field
-  const [showOtp, setShowOtp] = useState<boolean>(()=>{
+  const [showOtp, setShowOtp] = useState<boolean>(() => {
     return localStorage.getItem("show_otp") === "true";
-  }); 
+  });
   const [otpValue, setOtpValue] = useState(""); //State for managing the otp value
 
-
   // Handling the resendOtp timer
-  const [timer , setTimer] = useState(0);
-  const [canResend , setCanResend] = useState(false);
+  const [timer, setTimer] = useState(0);
+  const [canResend, setCanResend] = useState(false);
 
   // Retrieving the timer from the localStorage
-  useEffect(()=>{
-    const otpExpiry = localStorage.getItem('otp_expiry');
-    if(otpExpiry){
-      const remainingTime = Math.floor((parseInt(otpExpiry) - Date.now()) / 1000); // Calculating the time remaining for the timer
+  useEffect(() => {
+    const otpExpiry = localStorage.getItem("otp_expiry");
+    if (otpExpiry) {
+      const remainingTime = Math.floor(
+        (parseInt(otpExpiry) - Date.now()) / 1000,
+      ); // Calculating the time remaining for the timer
       if (remainingTime > 0) {
         setTimer(remainingTime);
         setShowOtp(true); //Reopening the otp field
-      } else{
+      } else {
         localStorage.removeItem("otp_expiry");
         localStorage.removeItem("show_otp");
       }
     }
-  },[])
+  }, []);
 
-  // This handles the otptimer sideffect. 
-  useEffect(()=>{
-    let interval :ReturnType<typeof setTimeout>; //setting the type 
-    
-    if(timer > 0){
+  // This handles the otptimer sideffect.
+  useEffect(() => {
+    let interval: ReturnType<typeof setTimeout>; //setting the type
+
+    if (timer > 0) {
       setCanResend(false);
-      interval = setInterval(()=>{
-        setTimer((prev)=> {
-          const nextValue = prev-1 ; 
-          if (nextValue <=0) localStorage.removeItem("otp_expiry");
+      interval = setInterval(() => {
+        setTimer((prev) => {
+          const nextValue = prev - 1;
+          if (nextValue <= 0) localStorage.removeItem("otp_expiry");
           return nextValue;
         });
-      }, 1000)
-    } else{
+      }, 1000);
+    } else {
       setCanResend(true);
-    };
+    }
 
     return () => clearInterval(interval);
-  }, [timer])
+  }, [timer]);
 
-
-  // Getting the formData from the local storage 
+  // Getting the formData from the local storage
   const getSavedFormData = () => {
     const savedForm = localStorage.getItem("checkout_form");
-    const currentTime = Date.now()
-    if(savedForm){
-      try{
-        const decodedData = atob(savedForm) //Decoding the encoded data 
-        const parsedData = JSON.parse(decodedData)
-        const {formData ,expiresAt} =parsedData;
+    const currentTime = Date.now();
+    if (savedForm) {
+      try {
+        const decodedData = atob(savedForm); //Decoding the encoded data
+        const parsedData = JSON.parse(decodedData);
+        const { formData, expiresAt } = parsedData;
         // Checking if the localStorage items is expired or not
-        if(currentTime > expiresAt){
+        if (currentTime > expiresAt) {
           localStorage.removeItem("checkout_form");
           return null;
         }
         return formData;
-      } catch(error){
+      } catch (error) {
         return null;
       }
     }
     return null;
-  }
+  };
 
   // Creating a form validation state using zod and react-hook-form
   const form = useForm<CheckoutFormValidation>({
     resolver: zodResolver(checkoutSchema),
-    defaultValues: getSavedFormData() || { //Setting the form fields with the data in localStorage
+    defaultValues: getSavedFormData() || {
+      //Setting the form fields with the data in localStorage
       email: "",
       firstName: "",
       lastName: "",
@@ -153,32 +156,34 @@ export function CheckoutForm({
     },
   });
 
-// Persisting the form data even if the page refreshes
-const isPersisting = useRef(true);
-const expiryTime = 30*60*1000; // 30mins expiry time 
+  // Persisting the form data even if the page refreshes
+  const isPersisting = useRef(true);
+  const expiryTime = 30 * 60 * 1000; // 30mins expiry time
 
-useEffect(()=>{
-  const formvalue = form.getValues();
-  const hasData = Object.values(formvalue).some(value => value != "" && value !=="Nepal");
-  if(isPersisting.current && hasData){ //fetching the value of isPersisting
-    const {city , ...restItems} = formvalue; //Not including the city name in the localStorage. 
-    const formItems ={
-      formData : restItems,
-      expiresAt : Date.now() + expiryTime
+  useEffect(() => {
+    const formvalue = form.getValues();
+    const hasData = Object.values(formvalue).some(
+      (value) => value != "" && value !== "Nepal",
+    );
+    if (isPersisting.current && hasData) {
+      //fetching the value of isPersisting
+      const { city, ...restItems } = formvalue; //Not including the city name in the localStorage.
+      const formItems = {
+        formData: restItems,
+        expiresAt: Date.now() + expiryTime,
+      };
+      localStorage.setItem("checkout_form", btoa(JSON.stringify(formItems))); //Base64 encoding : btoa
     }
-    localStorage.setItem("checkout_form" , btoa(JSON.stringify(formItems))) //Base64 encoding : btoa
-  }
-},[form.watch()]) //same as form.getValues()
+  }, [form.watch()]); //same as form.getValues()
 
-// Checking the email form field and if the field is empty then setting the showOtp to false to avoid unnecessary glitches
-const emailValue = form.watch("email") 
-useEffect(()=>{
-  if(emailValue === ""){
-    setShowOtp(false)
-    localStorage.setItem("show_otp" ,"false");
-  }
-},[emailValue])
-
+  // Checking the email form field and if the field is empty then setting the showOtp to false to avoid unnecessary glitches
+  const emailValue = form.watch("email");
+  useEffect(() => {
+    if (emailValue === "") {
+      setShowOtp(false);
+      localStorage.setItem("show_otp", "false");
+    }
+  }, [emailValue]);
 
   // Handling the delivery charge addition logic
   const handleCitySelect = (cityName: string) => {
@@ -196,8 +201,7 @@ useEffect(()=>{
 
   // SENDING OTP LOGIC
   const onFormSubmit = async (formData: CheckoutFormValidation) => {
-
-    if(!canResend) return; // If canResend = false , the user is unable to click the button.
+    if (!canResend) return; // If canResend = false , the user is unable to click the button.
     // Calling the startSubmitting state from the Parent Component i.e CheckoutPage to remove the navigation to cart page error
     onStartSubmitting();
     dispatch(setIsUploading(true));
@@ -207,14 +211,14 @@ useEffect(()=>{
       await requestOtp(formData.email);
       // Setting the showOtp to localStorage
       setShowOtp(true);
-      localStorage.setItem("show_otp" , "true");
+      localStorage.setItem("show_otp", "true");
       // Opening the otp field
       await new Promise((resolve) => setTimeout(resolve, 2000));
       // Setting a cooldown of 30 seconds and storing in localStorage
       const cooldownTime = Date.now() + 30 * 1000;
-      localStorage.setItem("otp_expiry" , cooldownTime.toString());
+      localStorage.setItem("otp_expiry", cooldownTime.toString());
+      toast.success("OTP sent successfully. Please check your email.");
       setTimer(30); //Setting the cooldown timer to 30 seconds.
-      
     } catch (error: any) {
       // Handling rate-limit error.
       if (error.response?.status === 429) {
@@ -226,7 +230,7 @@ useEffect(()=>{
         toast.error(msg || "Too many attempts.");
         // Storing the timer in LocalStorage
         const expiryTime = Date.now() + 300 * 1000;
-        localStorage.setItem("otp_expiry" , expiryTime.toString())
+        localStorage.setItem("otp_expiry", expiryTime.toString());
         setTimer(300); //Setting timer for 5 minutes
       } else {
         toast.error("Failed to send OTP.");
@@ -239,18 +243,20 @@ useEffect(()=>{
   // When clicking on the verify otp button.
   const handleOtpVerification = async () => {
     // Handling the form validation logic
-    const isFormValid = await form.trigger()
-    if(!isFormValid){
+    const isFormValid = await form.trigger();
+    if (!isFormValid) {
       toast.error("Please fill in all the details.");
       return;
     }
     if (!otpValue) return toast.error("Please enter the code.");
     if (otpValue.length < 6)
       return toast.error("Please enter the full 6-digit code.");
-    
+
     dispatch(setIsUploading(true));
-    const localCartItem = [...cartItems];
-    
+
+    // Conditionally adding the BuyNow item to the orderData if the user has clicked the BuyNow button
+    const itemsForOrder = buyNowItem.length > 0 ? buyNowItem : cartItems;
+    const localCartItem = [...itemsForOrder];
     try {
       const email = form.getValues("email");
       const orderData = {
@@ -276,14 +282,13 @@ useEffect(()=>{
         await new Promise((resolve) => setTimeout(resolve, 2000));
         // Sending the orderToken in the url
         navigate(`/thank-you/${result.orderToken}`);
-
       } else {
         toast.error(result.message || "Invalid OTP");
         setOtpValue("");
       }
     } catch (error: any) {
       const serverMessage = error.response?.data?.message;
-      toast.error(serverMessage || "Something went wrong on the server.");  
+      toast.error(serverMessage || "Something went wrong on the server.");
       setOtpValue("");
     } finally {
       dispatch(setIsUploading(false));
@@ -421,7 +426,7 @@ useEffect(()=>{
                     field.onChange(value);
                     handleCitySelect(value);
                   }}
-                  defaultValue={field.value}
+                  value={field.value || ""} 
                 >
                   <FormControl>
                     <SelectTrigger className="border border-main shadow-lg">
@@ -435,9 +440,7 @@ useEffect(()=>{
                         value={loc.city}
                         className="hover:bg-muted/5 cursor-pointer"
                       >
-                        <div className="flex justify-between w-full gap-20">
-                          <span>{loc.city}</span>
-                        </div>
+                          <span className="text-sm font-medium">{loc.city}</span>
                       </SelectItem>
                     ))}
                   </SelectContent>
@@ -525,9 +528,44 @@ useEffect(()=>{
             Payment method
           </h2>
 
-          <div className="p-4 border rounded-sm bg-neutral-50 flex justify-between items-center shadow-lg">
-            <span className="text-sm">Cash on delivery (COD) </span>
-            <div className="h-4 w-4 rounded-full border-2 border-main bg-main shadow-[inset_0_0_0_2px_white]" />
+          <div className="p-5 border border-primary  rounded-xl bg-background flex justify-between items-center shadow-sm hover:shadow-md transition-shadow cursor-pointer group">
+            <div className="flex flex-col gap-0.5">
+              <span className="text-sm font-medium text-neutral-800">
+                Cash on delivery (COD)
+              </span>
+              <span className="text-xs text-neutral-500">
+                Pay when you receive your package
+              </span>
+            </div>
+
+            <div className="relative flex items-center justify-center">
+              {/* Outer Ring */}
+              <div className="h-6 w-6 rounded-full border-2 border-main transition-colors group-hover:border-main/80" />
+              {/* Inner Circle (Selected State) */}
+              <div className="absolute h-3 w-3 rounded-full bg-main" />
+            </div>
+          </div>
+          <div className="p-5 border border-primary rounded-xl bg-background flex justify-between items-center opacity-60 cursor-not-allowed relative overflow-hidden select-none">
+            {/* Content Layout */}
+            <div className="flex flex-col gap-0.5">
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-medium text-primary/50">
+                  Online Payment (Fonepay / Cards)
+                </span>
+                {/* Dynamic Future Upgrade Badge */}
+                <span className="text-[10px] font-bold uppercase tracking-wider bg-main/10 text-main px-1.5 py-0.5 rounded-md">
+                  Coming Soon
+                </span>
+              </div>
+              <span className="text-xs text-primary/50">
+                Secure online payments will be supported in a future update
+              </span>
+            </div>
+
+            {/* Disabled Radio Indicator */}
+            <div className="relative flex items-center justify-center">
+              <div className="h-6 w-6 rounded-full border-2 border-neutral-300" />
+            </div>
           </div>
 
           {/* Conditionally rendering the otp input field */}
@@ -595,9 +633,9 @@ useEffect(()=>{
                   disabled={!canResend}
                   className={`text-tiny font-bold tracking-normal underline hover:text-muted text-main ${!canResend ? "text-muted hover:none" : ""}`}
                 >
-                  {!canResend ? (
-                    `Wait : (${Math.floor(timer / 60)}:${(timer % 60).toString().padStart(2, '0')}) to resend.`
-                  ): "Resend otp"}
+                  {!canResend
+                    ? `Wait : (${Math.floor(timer / 60)}:${(timer % 60).toString().padStart(2, "0")}) to resend.`
+                    : "Resend otp"}
                 </button>
               </div>
             </div>

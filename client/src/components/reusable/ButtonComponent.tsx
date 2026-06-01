@@ -122,17 +122,35 @@ export const PrimaryButton = ({
 interface PaymentButtonProps {
   name: string;
   isDisabled: boolean;
+  onClick: () => void;
 }
 
-export const PaymentButton = ({ name, isDisabled }: PaymentButtonProps) => {
+export const PaymentButton = ({ name, isDisabled , onClick }: PaymentButtonProps) => {
+  const uploadingItems = useSelector(
+    (state: RootState) => state.cart.isUploading,
+  );
   return (
     <Button
       variant={"default"}
       className="relative overflow-hidden rounded-none p-0 group border border-secondary w-full bg-secondary/90 hover:bg-secondary"
       disabled={isDisabled}
+      onClick={onClick}
       size={"lg"}
     >
-      <span className="text-button uppercase text-background ">{name}</span>
+       <span className="relative z-10 text-background text-button uppercase transition-colors duration-300 group-hover:text-primary group-active:text-muted">
+          {uploadingItems ? (
+           
+            <span className="inline-flex items-center justify-center">
+              <LoaderCircle
+                className="animate-spin"
+                size={14}
+                strokeWidth={2.5}
+              />
+            </span>
+          ) : (
+            name
+          )}
+        </span>
     </Button>
   );
 };
