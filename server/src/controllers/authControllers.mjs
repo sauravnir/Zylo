@@ -2,11 +2,17 @@ import { OTPMODEL } from "../models/CheckoutOtp.mjs";
 import { ORDERSMODEL } from "../models/Order.mjs";
 import { Resend } from "resend";
 import nodemailer from "nodemailer";
-import transporter from "../config/transporter.mjs";
 import { v4 as uuidv4 } from "uuid";
 
 // Initializing Resend to send mails
-const resend = new Resend(process.env.RESEND_API_KEY);
+const initResend = () =>{
+  const resendApi = process.env.RESEND_API_KEY;   
+  if(!resendApi){
+    throw new Error("Cannot find Resend API key.");
+  }
+  return new Resend(resendApi);
+}
+
 // Defining the client url 
 const clientUrl = process.env.CLIENT_URL || "http://localhost:5173";
 // Importing the logo to be used in the email template
@@ -22,6 +28,8 @@ export const sendOtp = async (request, response) => {
     // Deleting any exisiting otp first if there is one
     await OTPMODEL.deleteMany({ email });
     await OTPMODEL.create({ email: email, code: otp });
+
+    const resend = initResend();
 
     // Sending the otp to the client's email Id
     const { data, error } = await resend.emails.send({
@@ -129,13 +137,15 @@ export const verifyOtp = async (request, response) => {
       orderSummary: orderData.orderSummary,
     });
 
-    // Fetch the orderNumbe from the saved data
+    // Fetch the orderNumber from the saved data
     const savedData = await newOrder.save();
     const savedOrderNumber = savedData.orderNumber;
 
     // fetching the orderToken to provide a link to the users
     const savedOrderToken = savedData.orderToken;
     const orderLink = `${clientUrl}/thank-you/${savedOrderToken}`;
+
+     const resend = initResend();
 
     // Sending emails through resend
     const { data, error } = await resend.emails.send({
