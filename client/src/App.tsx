@@ -56,7 +56,20 @@ function App() {
   return (
     <>
       {/* {showLoader && <CustomLoader onFinish={handleLoaderFinish} />} */}
-      <Toaster richColors position="top-center"/>
+      <Toaster 
+        position="top-right"
+        
+        toastOptions={{
+          style: {
+            fontFamily: 'Helvetica, Arial, sans-serif',
+          },
+          classNames: {
+            toast: 'bg-[#fafbfc] border border-[#E5E5E5] text-[#0c0c0c] rounded-[2px] tracking-wide text-sm p-4 flex gap-3',
+            error: '!bg-[#e1e1e1] !text-[#ff4d4d] !border-2 !border-[#ff4d4d] font-semibold',
+            success: '!bg-[#e1e1e1] border-[#029a0a]'
+          }
+        }}
+      />
       <BrowserRouter> 
         <ScrolltoTop />
         <Routes>
