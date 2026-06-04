@@ -426,7 +426,7 @@ export function CheckoutForm({
                     field.onChange(value);
                     handleCitySelect(value);
                   }}
-                  value={field.value || ""} 
+                  value={field.value }
                 >
                   <FormControl>
                     <SelectTrigger className="border border-main shadow-lg">
@@ -440,7 +440,9 @@ export function CheckoutForm({
                         value={loc.city}
                         className="hover:bg-muted/5 cursor-pointer"
                       >
-                          <span className="text-sm font-medium">{loc.city}</span>
+                        <div className="flex justify-between w-full gap-20">
+                          <span>{loc.city}</span>
+                        </div>
                       </SelectItem>
                     ))}
                   </SelectContent>
