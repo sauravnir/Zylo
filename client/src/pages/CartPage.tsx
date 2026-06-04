@@ -25,6 +25,7 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import ProductCard from "@/components/reusable/CardComponent";
+import {LinkDown} from "@/components/reusable/ButtonComponent";
 
 export default function CartPage() {
   const storeValue = useAppSelector((state: RootState) => state.cart.items);
@@ -224,11 +225,14 @@ export default function CartPage() {
               </Link>
             </div>
           )}
+          <div className="flex justify-center mt-10 ">
+            <LinkDown id="suggestion"/>
+          </div>
         </main>
 
         {/* Suggestion Section */}
         {storeValue.length > 0 && (
-          <div className="w-full flex flex-col space-y-12 py-20">
+          <div className="w-full flex flex-col space-y-12 pt-5 pb-20" id="suggestion">
             <div className="text-center">
               <h1 className="text-main text-h3 uppercase tracking-normal">
                 Suggested Items
