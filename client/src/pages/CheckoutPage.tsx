@@ -48,14 +48,14 @@ export default function CheckoutPage() {
   const [oldParsed, setOldParsed] = useState<CheckoutSnapshot | null>(null);
   
   // Checking if the user has clicked the Buy Now button
-  const isBuyNowClicked = location.state?.isBuyNow || buyNowItem.length > 0;
+  const isBuyNowClicked = location.state?.isBuyNow || (buyNowItem?.length ?? 0) > 0;
 
   // Rendering which items to show
-  const itemsToShow = isBuyNowClicked ? buyNowItem : cartItems;
+  const itemsToShow = isBuyNowClicked ? (buyNowItem || []) : (cartItems || []);
   // Conditionally rendering the total amount 
-  const subTotal = isBuyNowClicked ? buyNowItem[0].price * buyNowItem[0].itemCartQuantity : useAppSelector(subTotalAmount);
+  const subTotal = isBuyNowClicked && buyNowItem?.[0] ? buyNowItem[0].price * buyNowItem[0].itemCartQuantity : useAppSelector(subTotalAmount);
   // Calculating the total checkout amount 
-  const checkoutAmount = subTotal + shippingCost;
+  const checkoutAmount = (subTotal || 0) + (shippingCost || 0);
   // Automatically switching the global currency to Base NPR for checkout processess
   useEffect(() => {
     // Getting the old_currency_price from the localStorage
