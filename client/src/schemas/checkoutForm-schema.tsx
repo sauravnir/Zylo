@@ -77,8 +77,7 @@ export const checkoutSchema = z.object({
   address: z.string().min(10, "Please provide detailed address."),
   zip: z
     .string()
-    .min(5, "Please provide a zip code.")
-    .optional(),
+    .min(5, "Please provide a zip code.").optional().or(z.literal("")),
   payment_method: z
     .enum(["Cash on delivery", "e-sewa", "khalti", "fonepay"])
 });
