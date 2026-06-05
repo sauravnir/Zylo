@@ -28,7 +28,7 @@ export const LinkDown = ({ id, offset = 0 }: ScrollButtonProps) => {
   return (
     <Button
       variant="outline"
-      className="relative  overflow-hidden rounded-full w-14 h-14 p-0 group border-muted "
+      className="relative bg-background overflow-hidden rounded-full w-10 h-10 p-0 group border border-black/20"
       asChild
       onClick={scrollToSection}
     >
@@ -36,11 +36,11 @@ export const LinkDown = ({ id, offset = 0 }: ScrollButtonProps) => {
         initial="rest"
         whileHover="hover"
         animate="rest"
-        className=" flex items-center justify-center shadow-xl border-none "
+        className=" flex items-center justify-center shadow-xl  "
       >
         <ChevronDown
           strokeWidth={1.5}
-          className="relative z-10 text-muted border-none transition-colors duration-300 group-hover:text-white group-active:text-muted"
+          className="relative z-10 text-black border-none transition-colors duration-300 group-hover:text-white group-active:text-muted"
         />
         <motion.div
           variants={{
