@@ -305,7 +305,7 @@ export const CartItem = ({
         <img
           src={item.primaryImage}
           alt={item.title}
-          className="h-full w-full object-cover transition-transform duration-500 hover:scale-105"
+          className="h-full w-full object-cover transition-transform duration-500 hover:scale-110"
         />
         {/* Item remove button */}
         {isReadOnly === false && (
@@ -318,7 +318,7 @@ export const CartItem = ({
       w-6 h-6 rounded-full backdrop-blur-sm transition-all  ${
         removed
           ? " text-muted/50 cursor-not-allowed"
-          : " text-main active:scale-90 hover:rotate-90 transition-transform duration-300"
+          : " text-main active:scale-90 hover:scale-125 hover:rotate-90 transition-transform duration-300"
       }`}
           >
             <X size={14} strokeWidth={2.5} />
@@ -329,12 +329,14 @@ export const CartItem = ({
       <div className="flex flex-1 flex-col justify-center py-1">
         <div className="flex flex-col gap-1.5">
           {/* Title & Quantity Display */}
-          <h3 className="text-main text-product-title tracking-wide uppercase font-semibold">
+          <div className="flex items-center gap-2">
+               <h3 className="text-main text-product-title tracking-wide uppercase font-semibold">
             {item.title}{" "}
-            {isReadOnly && (
-              <span className="font-bold">x {item.itemCartQuantity}</span>
-            )}
           </h3>
+          {isReadOnly && (
+              <span className="bg-white font-light text-sm rounded p-1 shadow text-black">x {item.itemCartQuantity}</span>
+            )}
+          </div>
 
           {/* Price */}
           <div className="text-sm tracking-wide font-medium text-neutral-700 mt-1">
