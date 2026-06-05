@@ -225,7 +225,7 @@ export default function CartPage() {
               </Link>
             </div>
           )}
-          <div className="flex justify-center mt-10 ">
+          <div className="flex justify-center mt-14 ">
             <LinkDown id="suggestion"/>
           </div>
         </main>
