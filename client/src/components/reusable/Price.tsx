@@ -28,7 +28,7 @@ if (!priceMounted || status === "idle" || status==="loading") {
     return <CircularProgress size={14} color="inherit" sx={{ opacity: 0.5 }} />
   }
   return (
-    <span>
+    <span className="border-0">
      {symbol} {convertedAmt} 
     </span>
   );
