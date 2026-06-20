@@ -84,7 +84,7 @@ export function ProductCard({
                   hover: { opacity: 1, y: 0 },
                 }}
                 transition={{ duration: 0.3 }}
-                className=" hidden md:flex absolute bottom-2 right-4 z-20 p-2 "
+                className=" hidden md:flex absolute bottom-2 right-0 z-20 p-2 "
               >
                 <motion.div
                   whileHover={{ rotate: 90 }}
