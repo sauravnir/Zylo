@@ -40,7 +40,7 @@ export function ProductModal({
 }: ProductModalProps) {
   return (
     <Dialog open={isOpenModal} onOpenChange={isSetOpenModal}>
-      <DialogContent className="max-w-4xl p-0 border-none rounded-none md:h-[85vh] max-h-[85vh] md:max-h-[700px] overflow-y-auto md:overflow-hidden">
+      <DialogContent className="max-w-3xl p-0 border-none rounded-none md:h-[55vh] max-h-[85vh] md:max-h-[700px] overflow-y-auto md:overflow-hidden">
         <DialogHeader className="sr-only">
           <DialogTitle>Quick View: {props.title || "Product"}</DialogTitle>
           <DialogDescription>
@@ -236,7 +236,7 @@ export const ProductDetail = ({
           <div
             className={`relative w-full overflow-hidden  ${
               viewMode === "modal"
-                ? "max-w-[290px] md:max-w-[340px] aspect-[2/3]"
+                ? "max-w-[300px] md:max-w-[350px] aspect-[3/4] md:mr-10"
                 : "max-w-[360px] md:max-w-[500px] aspect-[2/3] cursor-none"
             }`}
             onClick={() => viewMode === "page" && isClicked(true)}
@@ -276,7 +276,7 @@ export const ProductDetail = ({
                     e.stopPropagation();
                     prevSlide();
                   }}
-                  className="group absolute left-2 top-1/2 -translate-y-1/2 z-10 text-primary bg-white w-6 h-6 flex items-center justify-center rounded-full opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-400 active:scale-105"
+                  className="group absolute left-1 top-1/2 -translate-y-1/4 z-10 text-primary bg-white w-6 h-6 flex items-center justify-center rounded-full opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-400 active:scale-105"
                 >
                   <ChevronLeft
                     size={14}
@@ -288,7 +288,7 @@ export const ProductDetail = ({
                     e.stopPropagation();
                     nextSlide();
                   }}
-                  className="group absolute right-2 top-1/2 -translate-y-1/2 z-10 text-primary bg-white w-6 h-6 flex items-center justify-center rounded-full opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-400 active:scale-105"
+                  className="group absolute right-1 top-1/2 -translate-y-1/4 z-10 text-primary bg-white w-6 h-6 flex items-center justify-center rounded-full opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-400 active:scale-105"
                 >
                   <ChevronRight
                     size={14}
@@ -303,7 +303,7 @@ export const ProductDetail = ({
         {/* Mobile Dots - Kept at bottom */}
         {modalImage.length > 1 && (
           <div
-            className={`${viewMode === "page" && "block md:hidden"} mt-8 flex gap-1.5 mb-4`}
+            className={`${viewMode === "page" && "block md:hidden"} mt-0 flex gap-1.5 mb-24 md:mr-10`}
           >
             {modalImage.map((_, index) => (
               <button
@@ -320,15 +320,15 @@ export const ProductDetail = ({
 
       {/* RIGHT SIDE */}
       <div
-        className={`w-full md:max-w-xl md:col-span-1 flex flex-col justify-start ${viewMode === "modal" ? "p-0 my-auto" : "pt-8 md:p-8 md:mt-20 lg:mt-20 "}  md:overflow-y-auto`}
+        className={`w-full md:max-w-xl md:col-span-1 flex flex-col justify-start ${viewMode === "modal" ? "p-0 my-auto" : "pt-8 md:p-8 md:mt-20 lg:mt-20 "} md:overflow-y-auto`}
       >
-        <div className="space-y-6 flex-1">
+        <div className="space-y-6 flex-1 ">
           {/* Title & Price */}
           <div className="flex flex-col gap-1.5">
             <h1 className="text-main uppercase text-modal-title font-bold tracking-[0.15em] leading-tight">
               {props.title}
             </h1>
-            <div className="text-base tracking-[0.1em]  text-main/50 font-semibold transition-colors ">
+            <div className="text-base tracking-[0.1em] border-0  text-main/50 font-bold transition-colors ">
               <Price amount={props.price} />
             </div>
           </div>
@@ -488,12 +488,12 @@ export const ProductDetail = ({
           </div>
 
           {/* Optional Text  */}
-          <div className="flex flex-col md:flex-row justify-start space-y-2 p-0 ">
+          <div className="flex flex-col md:flex-row justify-center space-y-2 p-0 ">
             {viewMode === "modal" && (
               <div className="text-center">
                 <Link to={`/products/${props.slug}`}>
-                  <span className="text-main transition-all duration-400 font-normal  hover:text-muted text-sm uppercase underline ">
-                    View Details
+                  <span className="text-main underline-offset-4 transition-all duration-400 font-bold hover:text-muted text-tiny uppercase underline ">
+                    View Product
                   </span>
                 </Link>
               </div>
